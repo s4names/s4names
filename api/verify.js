@@ -7,55 +7,34 @@ module.exports = async function handler(req, res) {
     res.setHeader('Content-Type', 'application/json');
 
     if (req.method === 'OPTIONS') {
-        res.status(200).end();
-        return;
+        return res.status(200).end();
     }
 
     if (req.method !== 'POST') {
-        res.status(405).json({ error: 'Method not allowed' });
-        return;
+        return res.status(405).json({ error: 'Method not allowed' });
     }
 
     try {
-        let body = req.body;
-        if (typeof body === 'string') {
-            try { body = JSON.parse(body); } catch(e) { body = {}; }
-        }
-
+        const body = req.body;
         const discordId = body && body.discordId;
+
         if (!discordId) {
-            res.status(400).json({ error: 'Discord ID required' });
-            return;
+            return res.status(400).json({ error: 'Discord ID required' });
         }
 
-        const dataDir = path.join(process.cwd(), 'data');
-        if (!fs.existsSync(dataDir)) {
-            fs.mkdirSync(dataDir, { recursive: true });
-        }
-
-        const filePath = path.join(dataDir, 'users.json');
+        const filePath = '/tmp/users.json';
         let users = {};
-        
+
         if (fs.existsSync(filePath)) {
-            try {
-                const raw = fs.readFileSync(filePath, 'utf8');
-                if (raw.trim()) users = JSON.parse(raw);
-            } catch(e) {
-                users = {};
-            }
+            const raw = fs.readFileSync(filePath, 'utf8');
+            if (raw.trim()) users = JSON.parse(raw);
         }
 
         if (!users[discordId]) {
             users[discordId] = {
                 verified: true,
                 verifiedAt: new Date().toISOString(),
-                stats: {
-                    totalSnipes: 0,
-                    rareSnipes: 0,
-                    goodSnipes: 0,
-                    normalSnipes: 0,
-                    checkedCount: 0
-                }
+                stats: { totalSnipes: 0, rareSnipes: 0, goodSnipes: 0, normalSnipes: 0, checkedCount: 0 }
             };
         } else {
             users[discordId].verified = true;
@@ -63,8 +42,8 @@ module.exports = async function handler(req, res) {
 
         fs.writeFileSync(filePath, JSON.stringify(users));
 
-        res.status(200).json({ verified: true, success: true });
+        return res.status(200).json({ verified: true, success: true });
     } catch (e) {
-        res.status(500).json({ error: 'Internal error' });
+        return res.status(500).json({ error: e.message });
     }
 };
