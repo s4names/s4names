@@ -1,54 +1,49 @@
-const fs = require('fs');
+const kv = require('@vercel/kv');
 
 module.exports = async function handler(req, res) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Content-Type', 'application/json');
 
     try {
-        const filePath = '/tmp/users.json';
-        let users = {};
-
-        if (fs.existsSync(filePath)) {
-            const raw = fs.readFileSync(filePath, 'utf8');
-            if (raw.trim()) users = JSON.parse(raw);
-        }
-
+        const keys = await kv.keys('user:*');
         const entries = [];
 
-        for (const id in users) {
-            if (users[id] && users[id].verified) {
-                const s = users[id].stats || { totalSnipes: 0, rareSnipes: 0, goodSnipes: 0, normalSnipes: 0, checkedCount: 0 };
-                entries.push({
-                    discordId: id,
-                    totalSnipes: s.totalSnipes || 0,
-                    rareSnipes: s.rareSnipes || 0,
-                    goodSnipes: s.goodSnipes || 0,
-                    normalSnipes: s.normalSnipes || 0,
-                    checkedCount: s.checkedCount || 0
-                });
-            }
+        for (const key of keys) {
+            const raw = await kv.get(key);
+            if (!raw) continue;
+            const user = typeof raw === 'string' ? JSON.parse(raw) : raw;
+            if (!user.verified) continue;
+
+            const s = user.stats || {};
+            entries.push({
+                discordId: key.replace('user:', ''),
+                totalSnipes: s.totalSnipes || 0,
+                rareSnipes: s.rareSnipes || 0,
+                goodSnipes: s.goodSnipes || 0,
+                normalSnipes: s.normalSnipes || 0,
+                checkedCount: s.checkedCount || 0
+            });
         }
 
         let totalSnipes = 0, rareSnipes = 0, goodSnipes = 0, normalSnipes = 0, checkedCount = 0;
-        for (let i = 0; i < entries.length; i++) {
-            totalSnipes += entries[i].totalSnipes;
-            rareSnipes += entries[i].rareSnipes;
-            goodSnipes += entries[i].goodSnipes;
-            normalSnipes += entries[i].normalSnipes;
-            checkedCount += entries[i].checkedCount;
+        for (const e of entries) {
+            totalSnipes += e.totalSnipes;
+            rareSnipes += e.rareSnipes;
+            goodSnipes += e.goodSnipes;
+            normalSnipes += e.normalSnipes;
+            checkedCount += e.checkedCount;
         }
 
-        entries.sort(function(a, b) { return b.totalSnipes - a.totalSnipes; });
-        const leaderboard = entries.slice(0, 10);
+        entries.sort((a, b) => b.totalSnipes - a.totalSnipes);
 
         return res.status(200).json({
-            totalSnipes: totalSnipes,
-            rareSnipes: rareSnipes,
-            goodSnipes: goodSnipes,
-            normalSnipes: normalSnipes,
-            checkedCount: checkedCount,
+            totalSnipes,
+            rareSnipes,
+            goodSnipes,
+            normalSnipes,
+            checkedCount,
             verifiedCount: entries.length,
-            leaderboard: leaderboard
+            leaderboard: entries.slice(0, 10)
         });
     } catch (e) {
         return res.status(500).json({ error: e.message });
