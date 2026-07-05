@@ -1,40 +1,46 @@
 const fs = require('fs');
 const path = require('path');
 
-const DATA_FILE = path.join(process.cwd(), 'data', 'users.json');
-
-module.exports = async (req, res) => {
+module.exports = async function handler(req, res) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
     res.setHeader('Content-Type', 'application/json');
 
     if (req.method === 'OPTIONS') {
-        return res.status(200).end();
+        res.status(200).end();
+        return;
     }
 
     if (req.method !== 'POST') {
-        return res.status(405).json({ error: 'Method not allowed' });
+        res.status(405).json({ error: 'Method not allowed' });
+        return;
     }
 
     try {
-        const body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
-        const { discordId } = body || {};
+        let body = req.body;
+        if (typeof body === 'string') {
+            try { body = JSON.parse(body); } catch(e) { body = {}; }
+        }
 
+        const discordId = body && body.discordId;
         if (!discordId) {
-            return res.status(400).json({ error: 'Discord ID required' });
+            res.status(400).json({ error: 'Discord ID required' });
+            return;
         }
 
-        const dir = path.dirname(DATA_FILE);
-        if (!fs.existsSync(dir)) {
-            fs.mkdirSync(dir, { recursive: true });
+        const dataDir = path.join(process.cwd(), 'data');
+        if (!fs.existsSync(dataDir)) {
+            fs.mkdirSync(dataDir, { recursive: true });
         }
 
+        const filePath = path.join(dataDir, 'users.json');
         let users = {};
-        if (fs.existsSync(DATA_FILE)) {
+        
+        if (fs.existsSync(filePath)) {
             try {
-                const raw = fs.readFileSync(DATA_FILE, 'utf8');
-                users = JSON.parse(raw);
-            } catch (e) {
+                const raw = fs.readFileSync(filePath, 'utf8');
+                if (raw.trim()) users = JSON.parse(raw);
+            } catch(e) {
                 users = {};
             }
         }
@@ -55,10 +61,10 @@ module.exports = async (req, res) => {
             users[discordId].verified = true;
         }
 
-        fs.writeFileSync(DATA_FILE, JSON.stringify(users, null, 2));
+        fs.writeFileSync(filePath, JSON.stringify(users));
 
-        return res.status(200).json({ verified: true, success: true });
+        res.status(200).json({ verified: true, success: true });
     } catch (e) {
-        return res.status(500).json({ error: 'Server error', details: e.message });
+        res.status(500).json({ error: 'Internal error' });
     }
 };
