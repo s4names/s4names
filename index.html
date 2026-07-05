@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S4Names</title>
+    <meta name="description" content="S4N - The best Roblox username sniper. Find rare usernames.">
+    <meta property="og:title" content="S4NAMES - Snipes 4 Names">
+    <meta property="og:description" content="Find rare Roblox usernames with S4N">
+    <meta property="og:image" content="https://s4names.vercel.app/og.png">
+    <meta name="theme-color" content="#8B5CF6">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
+    
+    <style>
+        :root {
+            --bg: #09090b;
+            --bg2: #12121a;
+            --bg3: #1a1a2e;
+            --text: #f4f4f5;
+            --text2: #a1a1aa;
+            --text3: #71717a;
+            --purple: #8B5CF6;
+            --purple2: #7C3AED;
+            --pink: #EC4899;
+            --cyan: #06B6D4;
+            --green: #10B981;
+            --red: #EF4444;
+            --yellow: #F59E0B;
+            --orange: #F97316;
+            --border: #27272a;
+            --radius: 12px;
+            --radius-sm: 8px;
+            --shadow: 0 4px 24px rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--text3); }
+
+        /* Navigation */
+        .nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 16px 0; border-bottom: 1px solid var(--border);
+            position: sticky; top: 0; background: rgba(9,9,11,0.9);
+            backdrop-filter: blur(12px); z-index: 100; gap: 12px;
+        }
+        .nav-brand { display: flex; align-items: center; gap: 8px; font-size: 1.3rem; font-weight: 700; letter-spacing: -0.5px; }
+        .nav-brand .logo { font-size: 1.6rem; }
+        .nav-brand .brand-sub { color: var(--text3); font-size: 0.7rem; font-weight: 400; margin-left: 4px; }
+        .nav-links { display: flex; gap: 4px; flex-wrap: wrap; }
+        .nav-link {
+            color: var(--text2); text-decoration: none; padding: 8px 14px;
+            border-radius: var(--radius-sm); transition: all 0.2s; font-size: 0.85rem; cursor: pointer;
+            border: none; background: none; font-family: inherit;
+        }
+        .nav-link:hover, .nav-link.active { color: var(--text); background: var(--bg3); }
+
+        /* Pages */
+        .page { display: none; animation: fadeIn 0.3s ease; }
+        .page.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Hero */
+        .hero { text-align: center; padding: 80px 0 50px; }
+        .hero-badge {
+            display: inline-block; padding: 6px 16px; background: rgba(139,92,246,0.1);
+            border: 1px solid rgba(139,92,246,0.3); border-radius: 20px;
+            font-size: 0.8rem; color: var(--purple); margin-bottom: 20px;
+        }
+        .hero-title { font-size: 4rem; font-weight: 900; margin-bottom: 4px; letter-spacing: -2px; line-height: 1.1; }
+        .hero-subtitle { font-size: 1.2rem; color: var(--text2); margin-bottom: 8px; font-weight: 500; }
+        .hero-desc { color: var(--text3); max-width: 520px; margin: 0 auto 28px; font-size: 1rem; }
+        .gradient-text {
+            background: linear-gradient(135deg, var(--purple) 0%, var(--pink) 50%, var(--orange) 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .gradient-text2 {
+            background: linear-gradient(135deg, var(--cyan), var(--purple));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 50px; }
+        .hero-stats { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+        .stat-card {
+            background: var(--bg2); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 24px 32px; text-align: center; min-width: 150px;
+            transition: all 0.2s;
+        }
+        .stat-card:hover { border-color: var(--purple); transform: translateY(-2px); }
+        .stat-number { font-size: 2.2rem; font-weight: 800; display: block; letter-spacing: -1px; }
+        .stat-number.purple { color: var(--purple); }
+        .stat-number.pink { color: var(--pink); }
+        .stat-number.cyan { color: var(--cyan); }
+        .stat-label { color: var(--text3); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; display: block; }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 12px 28px; border-radius: var(--radius-sm); font-size: 0.9rem;
+            font-weight: 600; cursor: pointer; border: none; text-decoration: none;
+            transition: all 0.2s; color: white; font-family: inherit; letter-spacing: -0.3px;
+        }
+        .btn-primary { background: var(--purple); box-shadow: 0 0 20px rgba(139,92,246,0.3); }
+        .btn-primary:hover { background: var(--purple2); transform: translateY(-1px); box-shadow: 0 0 30px rgba(139,92,246,0.5); }
+        .btn-secondary { background: var(--bg3); border: 1px solid var(--border); }
+        .btn-secondary:hover { background: var(--border); }
+        .btn-green { background: var(--green); }
+        .btn-red { background: var(--red); }
+        .btn-sm { padding: 8px 16px; font-size: 0.8rem; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
+
+        /* Sections */
+        .section { padding: 70px 0; }
+        .section-title { font-size: 2.2rem; font-weight: 800; text-align: center; margin-bottom: 12px; letter-spacing: -1px; }
+        .section-desc { color: var(--text3); text-align: center; margin-bottom: 40px; max-width: 500px; margin-left: auto; margin-right: auto; }
+
+        /* Feature Grid */
+        .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+        .feature-card {
+            background: var(--bg2); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 28px; transition: all 0.3s;
+            position: relative; overflow: hidden;
+        }
+        .feature-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, var(--purple), var(--pink)); opacity: 0; transition: opacity 0.3s;
+        }
+        .feature-card:hover::before { opacity: 1; }
+        .feature-card:hover { border-color: var(--purple); transform: translateY(-3px); box-shadow: var(--shadow); }
+        .feature-icon { font-size: 2.5rem; margin-bottom: 16px; display: block; }
+        .feature-card h3 { margin-bottom: 8px; font-size: 1.15rem; font-weight: 700; }
+        .feature-card p { color: var(--text2); font-size: 0.9rem; line-height: 1.7; }
+
+        /* Tier Grid */
+        .tier-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+        .tier-card {
+            background: var(--bg2); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 24px 16px; text-align: center;
+            transition: all 0.2s;
+        }
+        .tier-card:hover { border-color: var(--purple); }
+        .tier-card.highlight { border-color: var(--cyan); background: rgba(6,182,212,0.03); }
+        .tier-badge { font-size: 2rem; margin-bottom: 8px; display: block; }
+        .tier-card h4 { font-size: 0.85rem; margin-bottom: 4px; font-weight: 700; }
+        .tier-card p { color: var(--text3); font-size: 0.75rem; }
+
+        /* Verify Card */
+        .verify-card {
+            background: var(--bg2); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 36px; max-width: 520px; margin: 0 auto;
+        }
+        .input-group { margin-bottom: 24px; }
+        .input-group label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem; }
+        .input-group input {
+            width: 100%; padding: 14px 18px; background: var(--bg);
+            border: 2px solid var(--border); border-radius: var(--radius-sm);
+            color: var(--text); font-size: 1rem; transition: all 0.2s; font-family: 'SF Mono', 'Fira Code', monospace;
+        }
+        .input-group input:focus { outline: none; border-color: var(--purple); box-shadow: 0 0 0 3px rgba(139,92,246,0.1); }
+        .help-text { color: var(--text3); font-size: 0.78rem; margin-top: 8px; }
+        .help-text code { background: var(--bg3); padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; }
+        .verify-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
+        .result-box {
+            margin-top: 24px; padding: 18px; border-radius: var(--radius-sm);
+            font-weight: 600; text-align: center; display: none; font-size: 0.95rem;
+        }
+        .result-box.success { display: block; background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.3); color: var(--green); }
+        .result-box.error { display: block; background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.3); color: var(--red); }
+        .result-box.info { display: block; background: rgba(139,92,246,0.08); border: 1px solid rgba(139,92,246,0.3); color: var(--purple); }
+
+        /* Dashboard */
+        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 40px; }
+        .dash-card {
+            background: var(--bg2); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 28px 24px; text-align: center; transition: all 0.2s;
+        }
+        .dash-card:hover { border-color: var(--purple); }
+        .dash-number { font-size: 3rem; font-weight: 900; display: block; letter-spacing: -2px; line-height: 1; }
+        .dash-label { color: var(--text3); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; margin-top: 8px; }
+        .dash-card.rare { border-left: 3px solid var(--pink); }
+        .dash-card.rare .dash-number { color: var(--pink); }
+        .dash-card.good { border-left: 3px solid var(--cyan); }
+        .dash-card.good .dash-number { color: var(--cyan); }
+        .dash-card.normal { border-left: 3px solid var(--green); }
+        .dash-card.normal .dash-number { color: var(--green); }
+        .dash-card.total { border-left: 3px solid var(--purple); }
+        .dash-card.total .dash-number { color: var(--purple); }
+        .dash-card.checked { border-left: 3px solid var(--orange); }
+        .dash-card.checked .dash-number { color: var(--orange); }
+
+        /* Leaderboard */
+        .lb-container { max-width: 650px; margin: 0 auto; }
+        .lb-item {
+            display: flex; align-items: center; gap: 16px;
+            padding: 16px 20px; background: var(--bg2); border: 1px solid var(--border);
+            border-radius: var(--radius-sm); margin-bottom: 8px; transition: all 0.2s;
+        }
+        .lb-item:hover { border-color: var(--purple); }
+        .lb-item.top-1 { border-color: #FFD700; background: rgba(255,215,0,0.03); }
+        .lb-item.top-2 { border-color: #C0C0C0; }
+        .lb-item.top-3 { border-color: #CD7F32; }
+        .lb-rank { font-size: 1.3rem; font-weight: 800; width: 40px; text-align: center; }
+        .lb-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--bg3); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+        .lb-info { flex: 1; }
+        .lb-name { font-weight: 700; font-size: 0.95rem; }
+        .lb-stats { color: var(--text3); font-size: 0.8rem; }
+        .lb-total { font-weight: 700; font-size: 1.1rem; color: var(--purple); }
+
+        /* Footer */
+        .footer { border-top: 1px solid var(--border); padding: 40px 0; margin-top: 60px; }
+        .footer-content { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 24px; margin-bottom: 20px; }
+        .footer-brand { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 1.1rem; }
+        .footer-brand p { color: var(--text3); font-weight: 400; font-size: 0.8rem; margin-top: 4px; }
+        .footer-links { display: flex; gap: 24px; }
+        .footer-links a { color: var(--text2); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+        .footer-links a:hover { color: var(--text); }
+        .footer-bottom { text-align: center; color: var(--text3); font-size: 0.78rem; padding-top: 20px; border-top: 1px solid var(--border); }
+
+        /* Toast */
+        .toast {
+            position: fixed; bottom: 24px; right: 24px; padding: 14px 24px;
+            border-radius: var(--radius-sm); font-weight: 600; font-size: 0.9rem;
+            z-index: 999; animation: slideUp 0.3s ease; box-shadow: var(--shadow);
+        }
+        .toast.success { background: var(--green); color: white; }
+        .toast.error { background: var(--red); color: white; }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        /* Loading */
+        .loading { display: inline-block; width: 20px; height: 20px; border: 2px solid var(--border); border-top-color: var(--purple); border-radius: 50%; animation: spin 0.6s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2.5rem; }
+            .hero-stats { gap: 8px; }
+            .stat-card { padding: 16px 20px; min-width: 100px; }
+            .stat-number { font-size: 1.6rem; }
+            .nav-links { gap: 2px; }
+            .nav-link { padding: 6px 10px; font-size: 0.75rem; }
+            .section-title { font-size: 1.6rem; }
+            .dashboard-grid { grid-template-columns: repeat(2, 1fr); }
+            .dash-number { font-size: 2rem; }
+            .verify-card { padding: 24px; }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title { font-size: 1.8rem; }
+            .dashboard-grid { grid-template-columns: 1fr; }
+            .feature-grid { grid-template-columns: 1fr; }
+            .hero-buttons { flex-direction: column; align-items: center; }
+            .nav { flex-direction: column; gap: 8px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation -->
+        <nav class="nav">
+            <div class="nav-brand">
+                <span class="logo">🎯</span>
+                S4N<span class="brand-sub">AMES</span>
+            </div>
+            <div class="nav-links">
+                <button class="nav-link active" onclick="showPage('home')">🏠 Home</button>
+                <button class="nav-link" onclick="showPage('verify')">✅ Verify</button>
+                <button class="nav-link" onclick="showPage('dashboard')">📊 Dashboard</button>
+                <button class="nav-link" onclick="showPage('leaderboard')">🏆 LB</button>
+                <a href="https://discord.gg/qhVBb8Yj6V" class="nav-link" target="_blank">💬 Discord</a>
+            </div>
+        </nav>
+
+        <!-- HOME -->
+        <div id="page-home" class="page active">
+            <section class="hero">
+                <div class="hero-badge">🎯 v2.0 • Snipes 4 Names</div>
+                <h1 class="hero-title"><span class="gradient-text">S4NAMES</span></h1>
+                <p class="hero-subtitle">The Ultimate Roblox Username Sniper</p>
+                <p class="hero-desc">Find rare 3-letter usernames, good short names, and normal usernames with blazing speed and precision.</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="showPage('verify')">⚡ Get Verified</button>
+                    <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-secondary" target="_blank">💬 Join Discord</a>
+                </div>
+                <div class="hero-stats" id="heroStats">
+                    <div class="stat-card"><span class="stat-number purple">...</span><span class="stat-label">Total Snipes</span></div>
+                    <div class="stat-card"><span class="stat-number pink">...</span><span class="stat-label">Rare Snipes</span></div>
+                    <div class="stat-card"><span class="stat-number cyan">...</span><span class="stat-label">Verified Users</span></div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">Why <span class="gradient-text">S4N</span>?</h2>
+                <p class="section-desc">Built for speed, designed for results.</p>
+                <div class="feature-grid">
+                    <div class="feature-card"><span class="feature-icon">⚡</span><h3>Lightning Fast</h3><p>Check thousands of usernames per minute with our optimized multi-threaded sniper engine.</p></div>
+                    <div class="feature-card"><span class="feature-icon">💎</span><h3>Rare Discoveries</h3><p>Find 3-letter gems and rare usernames that others miss. Every snipe counts.</p></div>
+                    <div class="feature-card"><span class="feature-icon">🏆</span><h3>Role Rewards</h3><p>Earn exclusive Discord roles as you climb from V1 Beginner to V10 Username God.</p></div>
+                    <div class="feature-card"><span class="feature-icon">🌐</span><h3>Global Rankings</h3><p>Compete with snipers worldwide. Track your progress on the live leaderboard.</p></div>
+                    <div class="feature-card"><span class="feature-icon">🔒</span><h3>Secure Verify</h3><p>Link your Discord account securely. Your stats are always protected.</p></div>
+                    <div class="feature-card"><span class="feature-icon">🎯</span><h3>Smart Generator</h3><p>Intelligent username patterns with optimal character distribution for maximum finds.</p></div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">Sniper <span class="gradient-text2">Tiers</span></h2>
+                <p class="section-desc">Climb the ranks. Earn your crown.</p>
+                <div class="tier-grid">
+                    <div class="tier-card"><span class="tier-badge">⭐</span><h4>V1 Beginner</h4><p>15 snipes</p></div>
+                    <div class="tier-card"><span class="tier-badge">🌟</span><h4>V2 Apprentice</h4><p>30 snipes</p></div>
+                    <div class="tier-card"><span class="tier-badge">💫</span><h4>V3 Pro</h4><p>45 snipes</p></div>
+                    <div class="tier-card"><span class="tier-badge">✨</span><h4>V4 Elite</h4><p>60 snipes</p></div>
+                    <div class="tier-card"><span class="tier-badge">🔥</span><h4>V5 Master</h4><p>75 snipes</p></div>
+                    <div class="tier-card"><span class="tier-badge">💀</span><h4>V6 Hunter</h4><p>100 snipes</p></div>
+                    <div class="tier-card"><span class="tier-badge">👻</span><h4>V7 Phantom</h4><p>150 snipes</p></div>
+                    <div class="tier-card"><span class="tier-badge">🏆</span><h4>V8 Legend</h4><p>250 snipes</p></div>
+                    <div class="tier-card"><span class="tier-badge">👑</span><h4>V9 Mythic</h4><p>500 snipes</p></div>
+                    <div class="tier-card highlight"><span class="tier-badge">🌌</span><h4>V10 God</h4><p>1000 snipes</p></div>
+                </div>
+            </section>
+        </div>
+
+        <!-- VERIFY -->
+        <div id="page-verify" class="page">
+            <section class="section">
+                <h2 class="section-title">Verify <span class="gradient-text">Account</span></h2>
+                <p class="section-desc">Link your Discord account to start tracking your snipes.</p>
+                <div class="verify-card">
+                    <div class="input-group">
+                        <label>🔑 Discord User ID</label>
+                        <input type="text" id="discordId" placeholder="123456789012345678" maxlength="20" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                        <p class="help-text">Enable <code>Developer Mode</code> in Discord Settings → Advanced. Right-click your name → <code>Copy ID</code></p>
+                    </div>
+                    <div class="verify-buttons">
+                        <button class="btn btn-primary" onclick="checkUser()">🔍 Check Status</button>
+                        <button class="btn btn-green" onclick="verifyUser()">✅ Verify Account</button>
+                    </div>
+                    <div id="verifyResult" class="result-box"></div>
+                </div>
+            </section>
+        </div>
+
+        <!-- DASHBOARD -->
+        <div id="page-dashboard" class="page">
+            <section class="section">
+                <h2 class="section-title">Your <span class="gradient-text">Dashboard</span></h2>
+                <p class="section-desc">Enter your Discord ID to view your stats.</p>
+                <div class="verify-card" style="margin-bottom: 30px;">
+                    <div class="input-group">
+                        <label>🔑 Discord User ID</label>
+                        <input type="text" id="dashboardId" placeholder="123456789012345678" maxlength="20" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                    </div>
+                    <button class="btn btn-primary" onclick="loadDashboard()">📊 Load Stats</button>
+                    <div id="dashboardResult" class="result-box" style="margin-top: 16px;"></div>
+                </div>
+                <div class="dashboard-grid" id="dashboardStats" style="display:none;">
+                    <div class="dash-card total"><span class="dash-number" id="dTotal">0</span><span class="dash-label">🏆 Total Snipes</span></div>
+                    <div class="dash-card rare"><span class="dash-number" id="dRare">0</span><span class="dash-label">💎 Rare</span></div>
+                    <div class="dash-card good"><span class="dash-number" id="dGood">0</span><span class="dash-label">🔮 Good</span></div>
+                    <div class="dash-card normal"><span class="dash-number" id="dNormal">0</span><span class="dash-label">🎪 Normal</span></div>
+                    <div class="dash-card checked"><span class="dash-number" id="dChecked">0</span><span class="dash-label">🔍 Checked</span></div>
+                </div>
+            </section>
+        </div>
+
+        <!-- LEADERBOARD -->
+        <div id="page-leaderboard" class="page">
+            <section class="section">
+                <h2 class="section-title">🏆 <span class="gradient-text">Leaderboard</span></h2>
+                <p class="section-desc">Top snipers worldwide. Updated live.</p>
+                <div class="lb-container" id="leaderboardList">
+                    <div style="text-align:center;padding:40px;"><span class="loading"></span></div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span>🎯</span>
+                    <div>
+                        <div>S4NAMES</div>
+                        <p>Snipes 4 Names © 2024</p>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <a href="#" onclick="showPage('home')">Home</a>
+                    <a href="#" onclick="showPage('verify')">Verify</a>
+                    <a href="#" onclick="showPage('leaderboard')">Leaderboard</a>
+                    <a href="https://discord.gg/qhVBb8Yj6V" target="_blank">Discord</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>S4N • Snipes 4 Names • The Ultimate Roblox Username Sniper</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // ==================== PAGE NAVIGATION ====================
+        function showPage(page) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            
+            const pageEl = document.getElementById('page-' + page);
+            if (pageEl) pageEl.classList.add('active');
+            
+            const navBtns = document.querySelectorAll('.nav-link');
+            navBtns.forEach(btn => {
+                if (btn.textContent.toLowerCase().includes(page)) btn.classList.add('active');
+            });
+            
+            if (page === 'leaderboard') loadLeaderboard();
+            if (page === 'home') loadHeroStats();
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ==================== API HELPERS ====================
+        async function apiCall(endpoint, method = 'GET', body = null) {
+            const opts = { method, headers: { 'Content-Type': 'application/json' } };
+            if (body) opts.body = JSON.stringify(body);
+            const res = await fetch('/api' + endpoint, opts);
+            return res.json();
+        }
+
+        function showToast(msg, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = msg;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        // ==================== HERO STATS ====================
+        async function loadHeroStats() {
+            try {
+                const data = await apiCall('/stats');
+                document.getElementById('heroStats').innerHTML = `
+                    <div class="stat-card"><span class="stat-number purple">${(data.totalSnipes || 0).toLocaleString()}</span><span class="stat-label">Total Snipes</span></div>
+                    <div class="stat-card"><span class="stat-number pink">${(data.rareSnipes || 0).toLocaleString()}</span><span class="stat-label">Rare Snipes</span></div>
+                    <div class="stat-card"><span class="stat-number cyan">${(data.verifiedCount || 0).toLocaleString()}</span><span class="stat-label">Verified Users</span></div>
+                `;
+            } catch(e) {
+                document.getElementById('heroStats').innerHTML = `
+                    <div class="stat-card"><span class="stat-number purple">0</span><span class="stat-label">Total Snipes</span></div>
+                    <div class="stat-card"><span class="stat-number pink">0</span><span class="stat-label">Rare Snipes</span></div>
+                    <div class="stat-card"><span class="stat-number cyan">0</span><span class="stat-label">Verified Users</span></div>
+                `;
+            }
+        }
+
+        // ==================== VERIFY ====================
+        async function checkUser() {
+            const id = document.getElementById('discordId').value.trim();
+            const result = document.getElementById('verifyResult');
+            
+            if (!id || id.length < 17) {
+                result.className = 'result-box error';
+                result.textContent = '❌ Please enter a valid Discord ID (17-20 digits)';
+                return;
+            }
+
+            result.className = 'result-box info';
+            result.textContent = '🔍 Checking...';
+
+            try {
+                const data = await apiCall('/check/' + id);
+                if (data.verified) {
+                    result.className = 'result-box success';
+                    result.innerHTML = `✅ <strong>Verified!</strong> This Discord ID is registered.${data.stats ? `<br>📊 Total Snipes: <strong>${data.stats.totalSnipes || 0}</strong>` : ''}`;
+                } else {
+                    result.className = 'result-box error';
+                    result.textContent = '❌ Not verified yet. Click "Verify Account" to register.';
+                }
+            } catch(e) {
+                result.className = 'result-box error';
+                result.textContent = '⚠️ Server error. Please try again.';
+            }
+        }
+
+        async function verifyUser() {
+            const id = document.getElementById('discordId').value.trim();
+            const result = document.getElementById('verifyResult');
+            
+            if (!id || id.length < 17) {
+                result.className = 'result-box error';
+                result.textContent = '❌ Please enter a valid Discord ID';
+                return;
+            }
+
+            result.className = 'result-box info';
+            result.textContent = '⏳ Verifying...';
+
+            try {
+                const data = await apiCall('/verify', 'POST', { discordId: id });
+                if (data.verified || data.success) {
+                    result.className = 'result-box success';
+                    result.innerHTML = '✅ <strong>Successfully Verified!</strong><br>Your account is now linked. Start sniping!';
+                    showToast('✅ Verified successfully!', 'success');
+                } else {
+                    result.className = 'result-box error';
+                    result.textContent = '❌ Verification failed. Try again.';
+                }
+            } catch(e) {
+                result.className = 'result-box error';
+                result.textContent = '⚠️ Server error. Please try again.';
+            }
+        }
+
+        // ==================== DASHBOARD ====================
+        async function loadDashboard() {
+            const id = document.getElementById('dashboardId').value.trim();
+            const result = document.getElementById('dashboardResult');
+            const statsGrid = document.getElementById('dashboardStats');
+            
+            if (!id) {
+                result.className = 'result-box error';
+                result.textContent = '❌ Please enter a Discord ID';
+                statsGrid.style.display = 'none';
+                return;
+            }
+
+            result.className = 'result-box info';
+            result.textContent = '⏳ Loading...';
+            statsGrid.style.display = 'none';
+
+            try {
+                const data = await apiCall('/check/' + id);
+                if (data.verified && data.stats) {
+                    result.className = 'result-box success';
+                    result.textContent = '✅ Stats loaded!';
+                    
+                    document.getElementById('dTotal').textContent = (data.stats.totalSnipes || 0).toLocaleString();
+                    document.getElementById('dRare').textContent = (data.stats.rareSnipes || 0).toLocaleString();
+                    document.getElementById('dGood').textContent = (data.stats.goodSnipes || 0).toLocaleString();
+                    document.getElementById('dNormal').textContent = (data.stats.normalSnipes || 0).toLocaleString();
+                    document.getElementById('dChecked').textContent = (data.stats.checkedCount || 0).toLocaleString();
+                    statsGrid.style.display = 'grid';
+                } else {
+                    result.className = 'result-box error';
+                    result.textContent = '❌ User not verified or no stats found.';
+                    statsGrid.style.display = 'none';
+                }
+            } catch(e) {
+                result.className = 'result-box error';
+                result.textContent = '⚠️ Could not load stats.';
+                statsGrid.style.display = 'none';
+            }
+        }
+
+        // ==================== LEADERBOARD ====================
+        async function loadLeaderboard() {
+            const container = document.getElementById('leaderboardList');
+            container.innerHTML = '<div style="text-align:center;padding:40px;"><span class="loading"></span></div>';
+
+            try {
+                const data = await apiCall('/stats');
+                if (!data.leaderboard || data.leaderboard.length === 0) {
+                    container.innerHTML = '<p style="text-align:center;color:var(--text3);padding:40px;">No data yet. Be the first to snipe!</p>';
+                    return;
+                }
+
+                const medals = ['🥇', '🥈', '🥉'];
+                let html = '';
+                
+                data.leaderboard.forEach((user, i) => {
+                    const topClass = i < 3 ? ` top-${i+1}` : '';
+                    const rank = i < 3 ? medals[i] : `#${i+1}`;
+                    
+                    html += `
+                        <div class="lb-item${topClass}">
+                            <span class="lb-rank">${rank}</span>
+                            <div class="lb-avatar">🎯</div>
+                            <div class="lb-info">
+                                <div class="lb-name">User #${user.discordId.slice(-6)}</div>
+                                <div class="lb-stats">💎${user.rareSnipes || 0} 🔮${user.goodSnipes || 0} 🎪${user.normalSnipes || 0}</div>
+                            </div>
+                            <span class="lb-total">${(user.totalSnipes || 0).toLocaleString()}</span>
+                        </div>
+                    `;
+                });
+
+                container.innerHTML = html;
+            } catch(e) {
+                container.innerHTML = '<p style="text-align:center;color:var(--text3);padding:40px;">⚠️ Could not load leaderboard.</p>';
+            }
+        }
+
+        loadHeroStats();
+    </script>
+</body>
+</html>
