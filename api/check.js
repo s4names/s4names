@@ -1,4 +1,4 @@
-const kv = require('@vercel/kv');
+const { db } = require('../lib/firebase');
 
 module.exports = async function handler(req, res) {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -8,15 +8,17 @@ module.exports = async function handler(req, res) {
         const url = new URL(req.url, 'http://localhost');
         const id = url.searchParams.get('id');
 
-        if (!id || id.length < 10) return res.status(400).json({ error: 'Invalid ID' });
+        if (!id || id.length < 17) return res.status(400).json({ error: 'Invalid ID' });
 
-        const raw = await kv.get('user:' + id);
-        if (!raw) return res.status(200).json({ verified: false });
+        const snapshot = await db.collection('users').where('discordId', '==', id).limit(1).get();
 
-        const user = typeof raw === 'string' ? JSON.parse(raw) : raw;
+        if (snapshot.empty) return res.status(200).json({ verified: false });
+
+        const data = snapshot.docs[0].data();
+
         return res.status(200).json({
-            verified: user.verified || false,
-            stats: user.stats || { totalSnipes: 0, rareSnipes: 0, goodSnipes: 0, normalSnipes: 0, checkedCount: 0 }
+            verified: data.verified || false,
+            stats: data.stats || { totalSnipes: 0, rareSnipes: 0, goodSnipes: 0, normalSnipes: 0, checkedCount: 0 }
         });
     } catch (e) {
         return res.status(500).json({ error: e.message });
