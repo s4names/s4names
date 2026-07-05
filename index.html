@@ -207,104 +207,104 @@
             <div class="footer-bottom"><p>S4N — Snipes 4 Names</p></div>
         </footer>
     </div>
-    <script>
-        function showPage(p) {
-            document.querySelectorAll('.page').forEach(function(e) { e.classList.remove('active'); });
-            document.querySelectorAll('.nav-link').forEach(function(e) { e.classList.remove('active'); });
-            var el = document.getElementById('page-' + p);
-            if (el) el.classList.add('active');
-            document.querySelectorAll('.nav-link').forEach(function(b) {
-                var t = b.textContent.toLowerCase();
-                if (t.includes(p) || (p === 'leaderboard' && t === 'lb')) b.classList.add('active');
-            });
-            if (p === 'leaderboard') loadLB();
-            if (p === 'home') loadStats();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+<script>
+    function showPage(p) {
+        document.querySelectorAll('.page').forEach(function(e) { e.classList.remove('active'); });
+        document.querySelectorAll('.nav-link').forEach(function(e) { e.classList.remove('active'); });
+        var el = document.getElementById('page-' + p);
+        if (el) el.classList.add('active');
+        document.querySelectorAll('.nav-link').forEach(function(b) {
+            var t = b.textContent.toLowerCase();
+            if (t.includes(p) || (p === 'leaderboard' && t === 'lb')) b.classList.add('active');
+        });
+        if (p === 'leaderboard') loadLB();
+        if (p === 'home') loadStats();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
-        async function api(url, method, body) {
-            var opts = { method: method || 'GET', headers: { 'Content-Type': 'application/json' } };
-            if (body) opts.body = JSON.stringify(body);
-            var res = await fetch('/api' + url, opts);
-            var data = await res.json();
-            return data;
-        }
+    async function api(url, method, body) {
+        var opts = { method: method || 'GET', headers: { 'Content-Type': 'application/json' } };
+        if (body) opts.body = JSON.stringify(body);
+        var res = await fetch('/api' + url, opts);
+        var data = await res.json();
+        return data;
+    }
 
-        function toast(msg) {
-            var t = document.createElement('div'); t.className = 'toast'; t.textContent = msg;
-            document.body.appendChild(t); setTimeout(function() { t.remove(); }, 2500);
-        }
+    function toast(msg) {
+        var t = document.createElement('div'); t.className = 'toast'; t.textContent = msg;
+        document.body.appendChild(t); setTimeout(function() { t.remove(); }, 2500);
+    }
 
-        async function loadStats() {
-            try {
-                var d = await api('/stats');
-                document.getElementById('heroStats').innerHTML =
-                    '<div class="stat-card"><span class="stat-number">' + (d.totalSnipes||0).toLocaleString() + '</span><span class="stat-label">Total Snipes</span></div>' +
-                    '<div class="stat-card"><span class="stat-number">' + (d.rareSnipes||0).toLocaleString() + '</span><span class="stat-label">Rare Snipes</span></div>' +
-                    '<div class="stat-card"><span class="stat-number">' + (d.verifiedCount||0).toLocaleString() + '</span><span class="stat-label">Verified Users</span></div>';
-            } catch(e) {}
-        }
+    async function loadStats() {
+        try {
+            var d = await api('/stats');
+            document.getElementById('heroStats').innerHTML =
+                '<div class="stat-card"><span class="stat-number">' + (d.totalSnipes||0).toLocaleString() + '</span><span class="stat-label">Total Snipes</span></div>' +
+                '<div class="stat-card"><span class="stat-number">' + (d.rareSnipes||0).toLocaleString() + '</span><span class="stat-label">Rare Snipes</span></div>' +
+                '<div class="stat-card"><span class="stat-number">' + (d.verifiedCount||0).toLocaleString() + '</span><span class="stat-label">Verified Users</span></div>';
+        } catch(e) {}
+    }
 
-        async function checkUser() {
-            var id = document.getElementById('discordId').value.trim();
-            var r = document.getElementById('verifyResult');
-            if (!id || id.length < 17) { r.className = 'result-box error'; r.textContent = 'Enter a valid Discord ID.'; return; }
-            r.className = 'result-box info'; r.textContent = 'Checking...';
-            try {
-                var d = await api('/check/' + id);
-                r.className = d.verified ? 'result-box success' : 'result-box error';
-                r.innerHTML = d.verified ? 'Verified. Snipes: <strong>' + (d.stats?.totalSnipes||0) + '</strong>' : 'Not verified.';
-            } catch(e) { r.className = 'result-box error'; r.textContent = 'Error.'; }
-        }
+    async function checkUser() {
+        var id = document.getElementById('discordId').value.trim();
+        var r = document.getElementById('verifyResult');
+        if (!id || id.length < 17) { r.className = 'result-box error'; r.textContent = 'Enter a valid Discord ID.'; return; }
+        r.className = 'result-box info'; r.textContent = 'Checking...';
+        try {
+            var d = await api('/check?id=' + id);
+            r.className = d.verified ? 'result-box success' : 'result-box error';
+            r.innerHTML = d.verified ? 'Verified. Snipes: <strong>' + (d.stats ? d.stats.totalSnipes || 0 : 0) + '</strong>' : 'Not verified.';
+        } catch(e) { r.className = 'result-box error'; r.textContent = 'Error.'; }
+    }
 
-        async function verifyUser() {
-            var id = document.getElementById('discordId').value.trim();
-            var r = document.getElementById('verifyResult');
-            if (!id || id.length < 17) { r.className = 'result-box error'; r.textContent = 'Enter a valid Discord ID.'; return; }
-            r.className = 'result-box info'; r.textContent = 'Verifying...';
-            try {
-                var d = await api('/verify', 'POST', { discordId: id });
-                if (d.verified || d.success) { r.className = 'result-box success'; r.innerHTML = 'Done. You are verified.'; toast('Verified'); }
-                else { r.className = 'result-box error'; r.textContent = 'Failed.'; }
-            } catch(e) { r.className = 'result-box error'; r.textContent = 'Error.'; }
-        }
+    async function verifyUser() {
+        var id = document.getElementById('discordId').value.trim();
+        var r = document.getElementById('verifyResult');
+        if (!id || id.length < 17) { r.className = 'result-box error'; r.textContent = 'Enter a valid Discord ID.'; return; }
+        r.className = 'result-box info'; r.textContent = 'Verifying...';
+        try {
+            var d = await api('/verify', 'POST', { discordId: id });
+            if (d.verified || d.success) { r.className = 'result-box success'; r.innerHTML = 'Done. You are verified.'; toast('Verified'); }
+            else { r.className = 'result-box error'; r.textContent = 'Failed.'; }
+        } catch(e) { r.className = 'result-box error'; r.textContent = 'Error.'; }
+    }
 
-        async function loadDashboard() {
-            var id = document.getElementById('dashboardId').value.trim();
-            var r = document.getElementById('dashboardResult');
-            var g = document.getElementById('dashboardStats');
-            if (!id) { r.className = 'result-box error'; r.textContent = 'Enter an ID.'; g.style.display = 'none'; return; }
-            r.className = 'result-box info'; r.textContent = 'Loading...'; g.style.display = 'none';
-            try {
-                var d = await api('/check/' + id);
-                if (d.verified && d.stats) {
-                    r.className = 'result-box success'; r.textContent = 'Loaded.';
-                    document.getElementById('dTotal').textContent = (d.stats.totalSnipes||0).toLocaleString();
-                    document.getElementById('dRare').textContent = (d.stats.rareSnipes||0).toLocaleString();
-                    document.getElementById('dGood').textContent = (d.stats.goodSnipes||0).toLocaleString();
-                    document.getElementById('dNormal').textContent = (d.stats.normalSnipes||0).toLocaleString();
-                    document.getElementById('dChecked').textContent = (d.stats.checkedCount||0).toLocaleString();
-                    g.style.display = 'grid';
-                } else { r.className = 'result-box error'; r.textContent = 'Not found.'; g.style.display = 'none'; }
-            } catch(e) { r.className = 'result-box error'; r.textContent = 'Error.'; g.style.display = 'none'; }
-        }
+    async function loadDashboard() {
+        var id = document.getElementById('dashboardId').value.trim();
+        var r = document.getElementById('dashboardResult');
+        var g = document.getElementById('dashboardStats');
+        if (!id) { r.className = 'result-box error'; r.textContent = 'Enter an ID.'; g.style.display = 'none'; return; }
+        r.className = 'result-box info'; r.textContent = 'Loading...'; g.style.display = 'none';
+        try {
+            var d = await api('/check?id=' + id);
+            if (d.verified && d.stats) {
+                r.className = 'result-box success'; r.textContent = 'Loaded.';
+                document.getElementById('dTotal').textContent = (d.stats.totalSnipes||0).toLocaleString();
+                document.getElementById('dRare').textContent = (d.stats.rareSnipes||0).toLocaleString();
+                document.getElementById('dGood').textContent = (d.stats.goodSnipes||0).toLocaleString();
+                document.getElementById('dNormal').textContent = (d.stats.normalSnipes||0).toLocaleString();
+                document.getElementById('dChecked').textContent = (d.stats.checkedCount||0).toLocaleString();
+                g.style.display = 'grid';
+            } else { r.className = 'result-box error'; r.textContent = 'Not found.'; g.style.display = 'none'; }
+        } catch(e) { r.className = 'result-box error'; r.textContent = 'Error.'; g.style.display = 'none'; }
+    }
 
-        async function loadLB() {
-            var c = document.getElementById('leaderboardList');
-            c.innerHTML = '<div style="text-align:center;padding:40px;"><span class="loading"></span></div>';
-            try {
-                var d = await api('/stats');
-                if (!d.leaderboard || !d.leaderboard.length) { c.innerHTML = '<p style="text-align:center;color:var(--text3);padding:40px;">Nothing yet.</p>'; return; }
-                var h = '';
-                for (var i = 0; i < d.leaderboard.length; i++) {
-                    var u = d.leaderboard[i];
-                    h += '<div class="lb-item"><span class="lb-rank">#' + (i+1) + '</span><div class="lb-avatar">🎯</div><div class="lb-info"><div class="lb-name">' + u.discordId.slice(-8) + '</div><div class="lb-stats">💎' + (u.rareSnipes||0) + ' 🔮' + (u.goodSnipes||0) + ' 🎪' + (u.normalSnipes||0) + '</div></div><span class="lb-total">' + (u.totalSnipes||0).toLocaleString() + '</span></div>';
-                }
-                c.innerHTML = h;
-            } catch(e) { c.innerHTML = '<p style="text-align:center;color:var(--text3);padding:40px;">Error.</p>'; }
-        }
+    async function loadLB() {
+        var c = document.getElementById('leaderboardList');
+        c.innerHTML = '<div style="text-align:center;padding:40px;"><span class="loading"></span></div>';
+        try {
+            var d = await api('/stats');
+            if (!d.leaderboard || !d.leaderboard.length) { c.innerHTML = '<p style="text-align:center;color:var(--text3);padding:40px;">Nothing yet.</p>'; return; }
+            var h = '';
+            for (var i = 0; i < d.leaderboard.length; i++) {
+                var u = d.leaderboard[i];
+                h += '<div class="lb-item"><span class="lb-rank">#' + (i+1) + '</span><div class="lb-avatar">🎯</div><div class="lb-info"><div class="lb-name">' + u.discordId.slice(-8) + '</div><div class="lb-stats">💎' + (u.rareSnipes||0) + ' 🔮' + (u.goodSnipes||0) + ' 🎪' + (u.normalSnipes||0) + '</div></div><span class="lb-total">' + (u.totalSnipes||0).toLocaleString() + '</span></div>';
+            }
+            c.innerHTML = h;
+        } catch(e) { c.innerHTML = '<p style="text-align:center;color:var(--text3);padding:40px;">Error.</p>'; }
+    }
 
-        loadStats();
-    </script>
+    loadStats();
+</script>
 </body>
 </html>
