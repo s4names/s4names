@@ -5,8 +5,8 @@ module.exports = async function handler(req, res) {
     res.setHeader('Content-Type', 'application/json');
 
     try {
-        const urlParts = req.url.split('/');
-        const id = urlParts[urlParts.length - 1].split('?')[0];
+        const url = new URL(req.url, 'http://localhost');
+        const id = url.searchParams.get('id');
 
         if (!id || id.length < 10) {
             return res.status(400).json({ error: 'Invalid ID' });
