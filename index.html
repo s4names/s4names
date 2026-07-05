@@ -10,173 +10,90 @@
     <meta name="theme-color" content="#0a0a0a">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
     <style>
-        :root {
-            --bg: #070708;
-            --bg2: #0e0e12;
-            --bg3: #16161c;
-            --text: #ffffff;
-            --text2: #999999;
-            --text3: #555555;
-            --white: #ffffff;
-            --border: #1c1c22;
-            --border2: #282830;
-            --radius: 8px;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-            line-height: 1.5;
-            -webkit-font-smoothing: antialiased;
-        }
-        .container { max-width: 1050px; margin: 0 auto; padding: 0 22px; }
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: var(--bg); }
-        ::-webkit-scrollbar-thumb { background: var(--border2); }
-        .nav {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 14px 0; border-bottom: 1px solid var(--border);
-            position: sticky; top: 0; background: rgba(7,7,8,0.94);
-            backdrop-filter: blur(10px); z-index: 100;
-        }
-        .nav-brand { font-size: 1.15rem; font-weight: 800; letter-spacing: 2px; color: var(--white); }
-        .nav-links { display: flex; gap: 2px; }
-        .nav-link {
-            color: var(--text2); text-decoration: none; padding: 7px 13px;
-            border-radius: 5px; font-size: 0.8rem; cursor: pointer;
-            border: none; background: none; font-family: inherit; font-weight: 500; transition: all 0.15s;
-        }
-        .nav-link:hover, .nav-link.active { color: var(--white); background: var(--bg3); }
-        .page { display: none; animation: in 0.3s ease; }
-        .page.active { display: block; }
-        @keyframes in { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-        .hero { text-align: center; padding: 100px 0 60px; }
-        .hero-title {
-            font-size: 4.5rem; font-weight: 900; letter-spacing: -2px; line-height: 1;
-            background: linear-gradient(180deg, #ffffff 0%, #b0b0b0 50%, #555555 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-        }
-        .hero-subtitle { font-size: 1rem; color: var(--text2); margin: 6px 0 20px; letter-spacing: 2px; }
-        .hero-desc { color: var(--text3); max-width: 480px; margin: 0 auto 32px; font-size: 0.9rem; }
-        .hero-buttons { display: flex; gap: 10px; justify-content: center; margin-bottom: 55px; }
-        .hero-stats { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-        .stat-card {
-            background: var(--bg2); border: 1px solid var(--border);
-            border-radius: var(--radius); padding: 24px 32px; text-align: center; min-width: 150px; transition: all 0.2s;
-        }
-        .stat-card:hover { border-color: var(--border2); transform: translateY(-1px); }
-        .stat-number { font-size: 2.2rem; font-weight: 900; display: block; color: var(--white); }
-        .stat-label { color: var(--text3); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; margin-top: 4px; }
-        .btn {
-            display: inline-flex; align-items: center; gap: 6px;
-            padding: 11px 26px; border-radius: var(--radius); font-size: 0.82rem;
-            font-weight: 600; cursor: pointer; border: 1px solid var(--white);
-            text-decoration: none; transition: all 0.2s; font-family: inherit;
-            background: transparent; color: var(--white); letter-spacing: 0.5px;
-        }
-        .btn:hover { background: var(--white); color: var(--bg); }
-        .btn-secondary { border-color: var(--border2); color: var(--text2); }
-        .btn-secondary:hover { border-color: var(--white); color: var(--white); background: transparent; }
-        .section { padding: 70px 0; }
-        .section-title {
-            font-size: 1.8rem; font-weight: 800; text-align: center; margin-bottom: 8px;
-            background: linear-gradient(180deg, #ffffff, #999999);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-        }
-        .section-desc { color: var(--text3); text-align: center; margin-bottom: 40px; font-size: 0.85rem; max-width: 440px; margin-left: auto; margin-right: auto; }
-        .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 10px; }
-        .feature-card {
-            background: var(--bg2); border: 1px solid var(--border);
-            border-radius: var(--radius); padding: 28px; transition: all 0.2s;
-        }
-        .feature-card:hover { border-color: var(--border2); }
-        .feature-icon { font-size: 1.8rem; margin-bottom: 14px; display: block; }
-        .feature-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 6px; color: var(--white); }
-        .feature-card p { color: var(--text2); font-size: 0.82rem; }
-        .tier-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; }
-        .tier-card {
-            background: var(--bg2); border: 1px solid var(--border);
-            border-radius: var(--radius); padding: 20px 12px; text-align: center; transition: all 0.2s;
-        }
-        .tier-card:hover { border-color: var(--border2); }
-        .tier-badge { font-size: 1.5rem; margin-bottom: 6px; display: block; }
-        .tier-card h4 { font-size: 0.78rem; font-weight: 700; color: var(--white); }
-        .tier-card p { color: var(--text3); font-size: 0.68rem; }
-        .verify-card {
-            background: var(--bg2); border: 1px solid var(--border);
-            border-radius: var(--radius); padding: 34px; max-width: 500px; margin: 0 auto;
-        }
-        .input-group { margin-bottom: 22px; }
-        .input-group label { display: block; margin-bottom: 7px; font-weight: 600; font-size: 0.8rem; color: var(--text2); }
-        .input-group input {
-            width: 100%; padding: 13px 16px; background: var(--bg);
-            border: 1px solid var(--border2); border-radius: var(--radius);
-            color: var(--white); font-size: 0.9rem; font-family: 'SF Mono', 'Fira Code', monospace; transition: all 0.2s;
-        }
-        .input-group input:focus { outline: none; border-color: var(--white); }
-        .help-text { color: var(--text3); font-size: 0.7rem; margin-top: 6px; }
-        .help-text code { background: var(--bg3); padding: 2px 5px; border-radius: 3px; font-size: 0.65rem; color: var(--text2); }
-        .verify-buttons { display: flex; gap: 8px; }
-        .result-box {
-            margin-top: 20px; padding: 14px; border-radius: var(--radius);
-            font-weight: 500; text-align: center; display: none; font-size: 0.82rem; border: 1px solid;
-        }
-        .result-box.success { display: block; border-color: rgba(255,255,255,0.15); color: var(--white); }
-        .result-box.error { display: block; border-color: rgba(255,255,255,0.08); color: var(--text2); }
-        .result-box.info { display: block; border-color: rgba(255,255,255,0.06); color: var(--text3); }
-        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; }
-        .dash-card {
-            background: var(--bg2); border: 1px solid var(--border);
-            border-radius: var(--radius); padding: 28px 20px; text-align: center; transition: all 0.2s;
-        }
-        .dash-card:hover { border-color: var(--border2); }
-        .dash-number { font-size: 3rem; font-weight: 900; display: block; color: var(--white); }
-        .dash-label { color: var(--text3); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 1.5px; margin-top: 6px; }
-        .lb-container { max-width: 580px; margin: 0 auto; }
-        .lb-item {
-            display: flex; align-items: center; gap: 12px;
-            padding: 14px 18px; background: var(--bg2); border: 1px solid var(--border);
-            border-radius: var(--radius); margin-bottom: 6px; transition: all 0.15s;
-        }
-        .lb-item:hover { border-color: var(--border2); }
-        .lb-rank { font-size: 0.9rem; font-weight: 700; width: 34px; text-align: center; color: var(--text2); }
-        .lb-avatar { width: 34px; height: 34px; background: var(--bg3); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; border: 1px solid var(--border2); }
-        .lb-info { flex: 1; }
-        .lb-name { font-weight: 600; font-size: 0.85rem; color: var(--white); }
-        .lb-stats { color: var(--text3); font-size: 0.7rem; }
-        .lb-total { font-weight: 700; font-size: 0.95rem; color: var(--white); }
-        .footer { border-top: 1px solid var(--border); padding: 32px 0; margin-top: 60px; }
-        .footer-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 14px; }
-        .footer-brand { font-weight: 700; font-size: 0.9rem; color: var(--white); }
-        .footer-brand p { color: var(--text3); font-weight: 400; font-size: 0.7rem; margin-top: 2px; }
-        .footer-links { display: flex; gap: 20px; }
-        .footer-links a { color: var(--text2); text-decoration: none; font-size: 0.78rem; transition: color 0.15s; }
-        .footer-links a:hover { color: var(--white); }
-        .footer-bottom { text-align: center; color: var(--text3); font-size: 0.68rem; padding-top: 14px; border-top: 1px solid var(--border); }
-        .toast {
-            position: fixed; bottom: 22px; right: 22px; padding: 12px 20px;
-            border-radius: var(--radius); font-weight: 600; font-size: 0.78rem;
-            z-index: 999; animation: up 0.3s ease; background: var(--white); color: var(--bg);
-        }
-        @keyframes up { from { transform: translateY(14px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        .loading { display: inline-block; width: 16px; height: 16px; border: 2px solid var(--border2); border-top-color: var(--white); border-radius: 50%; animation: spin 0.7s linear infinite; }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        @media (max-width: 768px) {
-            .hero-title { font-size: 2.8rem; }
-            .stat-card { padding: 16px 20px; min-width: 100px; }
-            .stat-number { font-size: 1.6rem; }
-            .nav-link { padding: 5px 9px; font-size: 0.7rem; }
-            .section-title { font-size: 1.4rem; }
-            .dash-number { font-size: 2rem; }
-        }
-        @media (max-width: 480px) {
-            .hero-title { font-size: 2rem; }
-            .feature-grid { grid-template-columns: 1fr; }
-            .hero-buttons { flex-direction: column; align-items: center; }
-            .nav { flex-direction: column; gap: 6px; }
-        }
+        :root{--bg:#070708;--bg2:#0e0e12;--bg3:#16161c;--text:#ffffff;--text2:#999999;--text3:#555555;--white:#ffffff;--border:#1c1c22;--border2:#282830;--radius:8px}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.5;-webkit-font-smoothing:antialiased}
+        .container{max-width:1050px;margin:0 auto;padding:0 22px}
+        ::-webkit-scrollbar{width:4px}
+        ::-webkit-scrollbar-track{background:var(--bg)}
+        ::-webkit-scrollbar-thumb{background:var(--border2)}
+        .nav{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--border);position:sticky;top:0;background:rgba(7,7,8,0.94);backdrop-filter:blur(10px);z-index:100}
+        .nav-brand{font-size:1.15rem;font-weight:800;letter-spacing:2px;color:var(--white)}
+        .nav-links{display:flex;gap:2px}
+        .nav-link{color:var(--text2);text-decoration:none;padding:7px 13px;border-radius:5px;font-size:0.8rem;cursor:pointer;border:none;background:none;font-family:inherit;font-weight:500;transition:all 0.15s}
+        .nav-link:hover,.nav-link.active{color:var(--white);background:var(--bg3)}
+        .page{display:none;animation:in 0.3s ease}
+        .page.active{display:block}
+        @keyframes in{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+        .hero{text-align:center;padding:100px 0 60px}
+        .hero-title{font-size:4.5rem;font-weight:900;letter-spacing:-2px;line-height:1;background:linear-gradient(180deg,#ffffff 0%,#b0b0b0 50%,#555555 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .hero-subtitle{font-size:1rem;color:var(--text2);margin:6px 0 20px;letter-spacing:2px}
+        .hero-desc{color:var(--text3);max-width:480px;margin:0 auto 32px;font-size:0.9rem}
+        .hero-buttons{display:flex;gap:10px;justify-content:center;margin-bottom:55px}
+        .hero-stats{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+        .stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:24px 32px;text-align:center;min-width:150px;transition:all 0.2s}
+        .stat-card:hover{border-color:var(--border2);transform:translateY(-1px)}
+        .stat-number{font-size:2.2rem;font-weight:900;display:block;color:var(--white)}
+        .stat-label{color:var(--text3);font-size:0.7rem;text-transform:uppercase;letter-spacing:2px;margin-top:4px}
+        .btn{display:inline-flex;align-items:center;gap:6px;padding:11px 26px;border-radius:var(--radius);font-size:0.82rem;font-weight:600;cursor:pointer;border:1px solid var(--white);text-decoration:none;transition:all 0.2s;font-family:inherit;background:transparent;color:var(--white);letter-spacing:0.5px}
+        .btn:hover{background:var(--white);color:var(--bg)}
+        .btn-secondary{border-color:var(--border2);color:var(--text2)}
+        .btn-secondary:hover{border-color:var(--white);color:var(--white);background:transparent}
+        .section{padding:70px 0}
+        .section-title{font-size:1.8rem;font-weight:800;text-align:center;margin-bottom:8px;background:linear-gradient(180deg,#ffffff,#999999);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .section-desc{color:var(--text3);text-align:center;margin-bottom:40px;font-size:0.85rem;max-width:440px;margin-left:auto;margin-right:auto}
+        .feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:10px}
+        .feature-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:28px;transition:all 0.2s}
+        .feature-card:hover{border-color:var(--border2)}
+        .feature-icon{font-size:1.8rem;margin-bottom:14px;display:block}
+        .feature-card h3{font-size:1rem;font-weight:700;margin-bottom:6px;color:var(--white)}
+        .feature-card p{color:var(--text2);font-size:0.82rem}
+        .tier-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px}
+        .tier-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px 12px;text-align:center;transition:all 0.2s}
+        .tier-card:hover{border-color:var(--border2)}
+        .tier-badge{font-size:1.5rem;margin-bottom:6px;display:block}
+        .tier-card h4{font-size:0.78rem;font-weight:700;color:var(--white)}
+        .tier-card p{color:var(--text3);font-size:0.68rem}
+        .verify-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:34px;max-width:500px;margin:0 auto}
+        .input-group{margin-bottom:22px}
+        .input-group label{display:block;margin-bottom:7px;font-weight:600;font-size:0.8rem;color:var(--text2)}
+        .input-group input{width:100%;padding:13px 16px;background:var(--bg);border:1px solid var(--border2);border-radius:var(--radius);color:var(--white);font-size:0.9rem;font-family:'SF Mono','Fira Code',monospace;transition:all 0.2s}
+        .input-group input:focus{outline:none;border-color:var(--white)}
+        .help-text{color:var(--text3);font-size:0.7rem;margin-top:6px}
+        .help-text code{background:var(--bg3);padding:2px 5px;border-radius:3px;font-size:0.65rem;color:var(--text2)}
+        .verify-buttons{display:flex;gap:8px}
+        .result-box{margin-top:20px;padding:14px;border-radius:var(--radius);font-weight:500;text-align:center;display:none;font-size:0.82rem;border:1px solid}
+        .result-box.success{display:block;border-color:rgba(255,255,255,0.15);color:var(--white)}
+        .result-box.error{display:block;border-color:rgba(255,255,255,0.08);color:var(--text2)}
+        .result-box.info{display:block;border-color:rgba(255,255,255,0.06);color:var(--text3)}
+        .dashboard-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px}
+        .dash-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:28px 20px;text-align:center;transition:all 0.2s}
+        .dash-card:hover{border-color:var(--border2)}
+        .dash-number{font-size:3rem;font-weight:900;display:block;color:var(--white)}
+        .dash-label{color:var(--text3);font-size:0.68rem;text-transform:uppercase;letter-spacing:1.5px;margin-top:6px}
+        .lb-container{max-width:580px;margin:0 auto}
+        .lb-item{display:flex;align-items:center;gap:12px;padding:14px 18px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:6px;transition:all 0.15s}
+        .lb-item:hover{border-color:var(--border2)}
+        .lb-rank{font-size:0.9rem;font-weight:700;width:34px;text-align:center;color:var(--text2)}
+        .lb-avatar{width:34px;height:34px;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:0.9rem;border:1px solid var(--border2)}
+        .lb-info{flex:1}
+        .lb-name{font-weight:600;font-size:0.85rem;color:var(--white)}
+        .lb-stats{color:var(--text3);font-size:0.7rem}
+        .lb-total{font-weight:700;font-size:0.95rem;color:var(--white)}
+        .footer{border-top:1px solid var(--border);padding:32px 0;margin-top:60px}
+        .footer-content{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;margin-bottom:14px}
+        .footer-brand{font-weight:700;font-size:0.9rem;color:var(--white)}
+        .footer-brand p{color:var(--text3);font-weight:400;font-size:0.7rem;margin-top:2px}
+        .footer-links{display:flex;gap:20px}
+        .footer-links a{color:var(--text2);text-decoration:none;font-size:0.78rem;transition:color 0.15s}
+        .footer-links a:hover{color:var(--white)}
+        .footer-bottom{text-align:center;color:var(--text3);font-size:0.68rem;padding-top:14px;border-top:1px solid var(--border)}
+        .toast{position:fixed;bottom:22px;right:22px;padding:12px 20px;border-radius:var(--radius);font-weight:600;font-size:0.78rem;z-index:999;animation:up 0.3s ease;background:var(--white);color:var(--bg)}
+        @keyframes up{from{transform:translateY(14px);opacity:0}to{transform:translateY(0);opacity:1}}
+        .loading{display:inline-block;width:16px;height:16px;border:2px solid var(--border2);border-top-color:var(--white);border-radius:50%;animation:spin 0.7s linear infinite}
+        @keyframes spin{to{transform:rotate(360deg)}}
+        @media(max-width:768px){.hero-title{font-size:2.8rem}.stat-card{padding:16px 20px;min-width:100px}.stat-number{font-size:1.6rem}.nav-link{padding:5px 9px;font-size:0.7rem}.section-title{font-size:1.4rem}.dash-number{font-size:2rem}}
+        @media(max-width:480px){.hero-title{font-size:2rem}.feature-grid{grid-template-columns:1fr}.hero-buttons{flex-direction:column;align-items:center}.nav{flex-direction:column;gap:6px}}
     </style>
 </head>
 <body>
@@ -194,7 +111,7 @@
         <div id="page-home" class="page active">
             <section class="hero">
                 <h1 class="hero-title">S4NAMES</h1>
-                <p class="hero-subtitle">The Best Roblox Username Sniper</p>
+                <p class="hero-subtitle">The <br>BEST</br> and <br>FREE</br> Username Sniper.</p>
                 <p class="hero-desc">Rare 3-letter names. Short usernames. All yours with speed.</p>
                 <div class="hero-buttons">
                     <button class="btn" onclick="showPage('verify')">Get Verified</button>
@@ -210,28 +127,28 @@
                 <h2 class="section-title">Why S4N</h2>
                 <p class="section-desc">Speed. Precision. Results.</p>
                 <div class="feature-grid">
-                    <div class="feature-card"><span class="feature-icon">⚡</span><h3>Fast</h3><p>Thousands checked per minute. Multi-threaded engine. No delays.</p></div>
-                    <div class="feature-card"><span class="feature-icon">💎</span><h3>Rare Finds</h3><p>3-letter names. Short usernames. The ones nobody else gets.</p></div>
+                    <div class="feature-card"><span class="feature-icon">⚡</span><h3>Fast</h3><p>Thousands checked per minute. Multi-threaded engine.</p></div>
+                    <div class="feature-card"><span class="feature-icon">💎</span><h3>Rare</h3><p>3-letter names. Short usernames. The ones nobody else gets.</p></div>
                     <div class="feature-card"><span class="feature-icon">🏆</span><h3>Roles</h3><p>V1 to V10. Climb the ranks. Earn your spot.</p></div>
-                    <div class="feature-card"><span class="feature-icon">🌐</span><h3>Leaderboard</h3><p>Global rankings. See where you stand against everyone.</p></div>
+                    <div class="feature-card"><span class="feature-icon">🌐</span><h3>LB</h3><p>Global rankings. See where you stand.</p></div>
                     <div class="feature-card"><span class="feature-icon">🔒</span><h3>Secure</h3><p>Discord-linked. Your stats stay yours.</p></div>
-                    <div class="feature-card"><span class="feature-icon">🎯</span><h3>Smart Gen</h3><p>Optimal patterns. Better character distribution.</p></div>
+                    <div class="feature-card"><span class="feature-icon">🎯</span><h3>Smart</h3><p>Optimal patterns. Better distribution.</p></div>
                 </div>
             </section>
             <section class="section">
                 <h2 class="section-title">Tiers</h2>
                 <p class="section-desc">Snipes earned. Ranks unlocked.</p>
                 <div class="tier-grid">
-                    <div class="tier-card"><span class="tier-badge">⭐</span><h4>V1 Beginner</h4><p>15 snipes</p></div>
-                    <div class="tier-card"><span class="tier-badge">🌟</span><h4>V2 Apprentice</h4><p>30 snipes</p></div>
-                    <div class="tier-card"><span class="tier-badge">💫</span><h4>V3 Pro</h4><p>45 snipes</p></div>
-                    <div class="tier-card"><span class="tier-badge">✨</span><h4>V4 Elite</h4><p>60 snipes</p></div>
-                    <div class="tier-card"><span class="tier-badge">🔥</span><h4>V5 Master</h4><p>75 snipes</p></div>
-                    <div class="tier-card"><span class="tier-badge">💀</span><h4>V6 Hunter</h4><p>100 snipes</p></div>
-                    <div class="tier-card"><span class="tier-badge">👻</span><h4>V7 Phantom</h4><p>150 snipes</p></div>
-                    <div class="tier-card"><span class="tier-badge">🏆</span><h4>V8 Legend</h4><p>250 snipes</p></div>
-                    <div class="tier-card"><span class="tier-badge">👑</span><h4>V9 Mythic</h4><p>500 snipes</p></div>
-                    <div class="tier-card"><span class="tier-badge">🌌</span><h4>V10 God</h4><p>1000 snipes</p></div>
+                    <div class="tier-card"><span class="tier-badge">⭐</span><h4>V1 Beginner</h4><p>15</p></div>
+                    <div class="tier-card"><span class="tier-badge">🌟</span><h4>V2 Apprentice</h4><p>30</p></div>
+                    <div class="tier-card"><span class="tier-badge">💫</span><h4>V3 Pro</h4><p>45</p></div>
+                    <div class="tier-card"><span class="tier-badge">✨</span><h4>V4 Elite</h4><p>60</p></div>
+                    <div class="tier-card"><span class="tier-badge">🔥</span><h4>V5 Master</h4><p>75</p></div>
+                    <div class="tier-card"><span class="tier-badge">💀</span><h4>V6 Hunter</h4><p>100</p></div>
+                    <div class="tier-card"><span class="tier-badge">👻</span><h4>V7 Phantom</h4><p>150</p></div>
+                    <div class="tier-card"><span class="tier-badge">🏆</span><h4>V8 Legend</h4><p>250</p></div>
+                    <div class="tier-card"><span class="tier-badge">👑</span><h4>V9 Mythic</h4><p>500</p></div>
+                    <div class="tier-card"><span class="tier-badge">🌌</span><h4>V10 God</h4><p>1000</p></div>
                 </div>
             </section>
         </div>
@@ -293,75 +210,74 @@
     </div>
     <script>
         function showPage(p) {
-            document.querySelectorAll('.page').forEach(e => e.classList.remove('active'));
-            document.querySelectorAll('.nav-link').forEach(e => e.classList.remove('active'));
-            const el = document.getElementById('page-' + p);
+            document.querySelectorAll('.page').forEach(function(e) { e.classList.remove('active'); });
+            document.querySelectorAll('.nav-link').forEach(function(e) { e.classList.remove('active'); });
+            var el = document.getElementById('page-' + p);
             if (el) el.classList.add('active');
-            document.querySelectorAll('.nav-link').forEach(b => {
-                const t = b.textContent.toLowerCase();
+            document.querySelectorAll('.nav-link').forEach(function(b) {
+                var t = b.textContent.toLowerCase();
                 if (t.includes(p) || (p === 'leaderboard' && t === 'lb')) b.classList.add('active');
             });
             if (p === 'leaderboard') loadLB();
             if (p === 'home') loadStats();
-            scrollTo({ top: 0, behavior: 'smooth' });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         async function api(url, method, body) {
-            const opts = { method: method || 'GET', headers: { 'Content-Type': 'application/json' } };
+            var opts = { method: method || 'GET', headers: { 'Content-Type': 'application/json' } };
             if (body) opts.body = JSON.stringify(body);
-            const res = await fetch('/api' + url, opts);
-            const data = await res.json();
-            if (!res.ok) throw new Error(data.error || 'Request failed');
+            var res = await fetch('/api' + url, opts);
+            var data = await res.json();
             return data;
         }
 
         function toast(msg) {
-            const t = document.createElement('div'); t.className = 'toast'; t.textContent = msg;
-            document.body.appendChild(t); setTimeout(() => t.remove(), 2500);
+            var t = document.createElement('div'); t.className = 'toast'; t.textContent = msg;
+            document.body.appendChild(t); setTimeout(function() { t.remove(); }, 2500);
         }
 
         async function loadStats() {
             try {
-                const d = await api('/stats');
-                document.getElementById('heroStats').innerHTML = `
-                    <div class="stat-card"><span class="stat-number">${(d.totalSnipes||0).toLocaleString()}</span><span class="stat-label">Total Snipes</span></div>
-                    <div class="stat-card"><span class="stat-number">${(d.rareSnipes||0).toLocaleString()}</span><span class="stat-label">Rare Snipes</span></div>
-                    <div class="stat-card"><span class="stat-number">${(d.verifiedCount||0).toLocaleString()}</span><span class="stat-label">Verified Users</span></div>`;
+                var d = await api('/stats');
+                document.getElementById('heroStats').innerHTML =
+                    '<div class="stat-card"><span class="stat-number">' + (d.totalSnipes||0).toLocaleString() + '</span><span class="stat-label">Total Snipes</span></div>' +
+                    '<div class="stat-card"><span class="stat-number">' + (d.rareSnipes||0).toLocaleString() + '</span><span class="stat-label">Rare Snipes</span></div>' +
+                    '<div class="stat-card"><span class="stat-number">' + (d.verifiedCount||0).toLocaleString() + '</span><span class="stat-label">Verified Users</span></div>';
             } catch(e) {}
         }
 
         async function checkUser() {
-            const id = document.getElementById('discordId').value.trim();
-            const r = document.getElementById('verifyResult');
+            var id = document.getElementById('discordId').value.trim();
+            var r = document.getElementById('verifyResult');
             if (!id || id.length < 17) { r.className = 'result-box error'; r.textContent = 'Enter a valid Discord ID.'; return; }
             r.className = 'result-box info'; r.textContent = 'Checking...';
             try {
-                const d = await api('/check/' + id);
+                var d = await api('/check/' + id);
                 r.className = d.verified ? 'result-box success' : 'result-box error';
                 r.innerHTML = d.verified ? 'Verified. Snipes: <strong>' + (d.stats?.totalSnipes||0) + '</strong>' : 'Not verified.';
-            } catch(e) { r.className = 'result-box error'; r.textContent = 'Error: ' + (e.message || 'Server error'); }
+            } catch(e) { r.className = 'result-box error'; r.textContent = 'Error.'; }
         }
 
         async function verifyUser() {
-            const id = document.getElementById('discordId').value.trim();
-            const r = document.getElementById('verifyResult');
+            var id = document.getElementById('discordId').value.trim();
+            var r = document.getElementById('verifyResult');
             if (!id || id.length < 17) { r.className = 'result-box error'; r.textContent = 'Enter a valid Discord ID.'; return; }
             r.className = 'result-box info'; r.textContent = 'Verifying...';
             try {
-                const d = await api('/verify', 'POST', { discordId: id });
-                r.className = 'result-box success'; r.innerHTML = 'Done. You are verified.';
-                toast('Verified');
-            } catch(e) { r.className = 'result-box error'; r.textContent = 'Error: ' + (e.message || 'Server error'); }
+                var d = await api('/verify', 'POST', { discordId: id });
+                if (d.verified || d.success) { r.className = 'result-box success'; r.innerHTML = 'Done. You are verified.'; toast('Verified'); }
+                else { r.className = 'result-box error'; r.textContent = 'Failed.'; }
+            } catch(e) { r.className = 'result-box error'; r.textContent = 'Error.'; }
         }
 
         async function loadDashboard() {
-            const id = document.getElementById('dashboardId').value.trim();
-            const r = document.getElementById('dashboardResult');
-            const g = document.getElementById('dashboardStats');
+            var id = document.getElementById('dashboardId').value.trim();
+            var r = document.getElementById('dashboardResult');
+            var g = document.getElementById('dashboardStats');
             if (!id) { r.className = 'result-box error'; r.textContent = 'Enter an ID.'; g.style.display = 'none'; return; }
             r.className = 'result-box info'; r.textContent = 'Loading...'; g.style.display = 'none';
             try {
-                const d = await api('/check/' + id);
+                var d = await api('/check/' + id);
                 if (d.verified && d.stats) {
                     r.className = 'result-box success'; r.textContent = 'Loaded.';
                     document.getElementById('dTotal').textContent = (d.stats.totalSnipes||0).toLocaleString();
@@ -370,5 +286,26 @@
                     document.getElementById('dNormal').textContent = (d.stats.normalSnipes||0).toLocaleString();
                     document.getElementById('dChecked').textContent = (d.stats.checkedCount||0).toLocaleString();
                     g.style.display = 'grid';
-                } else { r.className = 'result-box error'; r.textContent = 'Not found.'; }
-           
+                } else { r.className = 'result-box error'; r.textContent = 'Not found.'; g.style.display = 'none'; }
+            } catch(e) { r.className = 'result-box error'; r.textContent = 'Error.'; g.style.display = 'none'; }
+        }
+
+        async function loadLB() {
+            var c = document.getElementById('leaderboardList');
+            c.innerHTML = '<div style="text-align:center;padding:40px;"><span class="loading"></span></div>';
+            try {
+                var d = await api('/stats');
+                if (!d.leaderboard || !d.leaderboard.length) { c.innerHTML = '<p style="text-align:center;color:var(--text3);padding:40px;">Nothing yet.</p>'; return; }
+                var h = '';
+                for (var i = 0; i < d.leaderboard.length; i++) {
+                    var u = d.leaderboard[i];
+                    h += '<div class="lb-item"><span class="lb-rank">#' + (i+1) + '</span><div class="lb-avatar">🎯</div><div class="lb-info"><div class="lb-name">' + u.discordId.slice(-8) + '</div><div class="lb-stats">💎' + (u.rareSnipes||0) + ' 🔮' + (u.goodSnipes||0) + ' 🎪' + (u.normalSnipes||0) + '</div></div><span class="lb-total">' + (u.totalSnipes||0).toLocaleString() + '</span></div>';
+                }
+                c.innerHTML = h;
+            } catch(e) { c.innerHTML = '<p style="text-align:center;color:var(--text3);padding:40px;">Error.</p>'; }
+        }
+
+        loadStats();
+    </script>
+</body>
+</html>
