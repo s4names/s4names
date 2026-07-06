@@ -4,95 +4,99 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>S4NAMES</title>
-    <meta name="description" content="S4N - The best Roblox username sniper. Find rare usernames.">
+    <meta name="description" content="S4N - The best Roblox username sniper.">
     <meta property="og:title" content="S4NAMES - Snipes 4 Names">
     <meta property="og:description" content="Find rare Roblox usernames with S4N">
     <meta name="theme-color" content="#0a0a0a">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
     <style>
-        :root{--bg:#070708;--bg2:#0e0e12;--bg3:#16161c;--text:#ffffff;--text2:#999999;--text3:#555555;--white:#ffffff;--border:#1c1c22;--border2:#282830;--radius:8px}
+        :root{--bg:#070708;--bg2:#0e0e12;--bg3:#16161c;--text:#fff;--text2:#999;--text3:#555;--border:#1c1c22;--border2:#282830;--radius:10px}
         *{margin:0;padding:0;box-sizing:border-box}
-        body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.5;-webkit-font-smoothing:antialiased}
+        body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.5}
         .container{max-width:1050px;margin:0 auto;padding:0 22px}
         ::-webkit-scrollbar{width:4px}
         ::-webkit-scrollbar-track{background:var(--bg)}
         ::-webkit-scrollbar-thumb{background:var(--border2)}
-        .nav{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--border);position:sticky;top:0;background:rgba(7,7,8,0.94);backdrop-filter:blur(10px);z-index:100}
-        .nav-brand{font-size:1.15rem;font-weight:800;letter-spacing:2px;color:var(--white)}
-        .nav-links{display:flex;gap:2px}
+        .nav{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--border);position:sticky;top:0;background:rgba(7,7,8,0.94);backdrop-filter:blur(10px);z-index:100;gap:12px}
+        .nav-brand{font-size:1.15rem;font-weight:800;letter-spacing:2px;color:var(--text)}
+        .nav-links{display:flex;gap:2px;align-items:center}
         .nav-link{color:var(--text2);text-decoration:none;padding:7px 13px;border-radius:5px;font-size:0.8rem;cursor:pointer;border:none;background:none;font-family:inherit;font-weight:500;transition:all 0.15s}
-        .nav-link:hover,.nav-link.active{color:var(--white);background:var(--bg3)}
+        .nav-link:hover,.nav-link.active{color:var(--text);background:var(--bg3)}
+        .user-menu{display:flex;align-items:center;gap:10px;margin-left:8px}
+        .user-avatar{width:32px;height:32px;border-radius:50%;border:1px solid var(--border2);object-fit:cover}
+        .user-name{font-size:0.8rem;font-weight:600;color:var(--text)}
+        .btn-signout{font-size:0.7rem;color:var(--text3);cursor:pointer;background:none;border:none;font-family:inherit}
+        .btn-signout:hover{color:var(--text)}
         .page{display:none;animation:in 0.3s ease}
         .page.active{display:block}
         @keyframes in{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
         .hero{text-align:center;padding:100px 0 60px}
-        .hero-title{font-size:4.5rem;font-weight:900;letter-spacing:-2px;line-height:1;background:linear-gradient(180deg,#ffffff 0%,#b0b0b0 50%,#555555 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .hero-title{font-size:4.5rem;font-weight:900;letter-spacing:-2px;line-height:1;background:linear-gradient(180deg,#fff 0%,#b0b0b0 50%,#555 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
         .hero-subtitle{font-size:1rem;color:var(--text2);margin:6px 0 20px;letter-spacing:2px}
         .hero-desc{color:var(--text3);max-width:480px;margin:0 auto 32px;font-size:0.9rem}
-        .hero-buttons{display:flex;gap:10px;justify-content:center;margin-bottom:55px}
+        .hero-buttons{display:flex;gap:10px;justify-content:center;margin-bottom:55px;flex-wrap:wrap}
         .hero-stats{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
         .stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:24px 32px;text-align:center;min-width:150px;transition:all 0.2s}
-        .stat-card:hover{border-color:var(--border2);transform:translateY(-1px)}
-        .stat-number{font-size:2.2rem;font-weight:900;display:block;color:var(--white)}
+        .stat-card:hover{border-color:var(--border2)}
+        .stat-number{font-size:2.2rem;font-weight:900;display:block;color:var(--text)}
         .stat-label{color:var(--text3);font-size:0.7rem;text-transform:uppercase;letter-spacing:2px;margin-top:4px}
-        .btn{display:inline-flex;align-items:center;gap:6px;padding:11px 26px;border-radius:var(--radius);font-size:0.82rem;font-weight:600;cursor:pointer;border:1px solid var(--white);text-decoration:none;transition:all 0.2s;font-family:inherit;background:transparent;color:var(--white);letter-spacing:0.5px}
-        .btn:hover{background:var(--white);color:var(--bg)}
+        .btn{display:inline-flex;align-items:center;gap:6px;padding:11px 26px;border-radius:var(--radius);font-size:0.82rem;font-weight:600;cursor:pointer;border:1px solid var(--text);text-decoration:none;transition:all 0.2s;font-family:inherit;background:transparent;color:var(--text);letter-spacing:0.5px}
+        .btn:hover{background:var(--text);color:var(--bg)}
         .btn-secondary{border-color:var(--border2);color:var(--text2)}
-        .btn-secondary:hover{border-color:var(--white);color:var(--white);background:transparent}
+        .btn-secondary:hover{border-color:var(--text);color:var(--text);background:transparent}
+        .btn-google{display:inline-flex;align-items:center;gap:8px;padding:11px 26px;border-radius:var(--radius);font-size:0.82rem;font-weight:600;cursor:pointer;border:1px solid var(--border2);background:var(--bg2);color:var(--text);font-family:inherit;transition:all 0.2s}
+        .btn-google:hover{border-color:var(--text)}
         .section{padding:70px 0}
-        .section-title{font-size:1.8rem;font-weight:800;text-align:center;margin-bottom:8px;background:linear-gradient(180deg,#ffffff,#999999);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .section-title{font-size:1.8rem;font-weight:800;text-align:center;margin-bottom:8px;background:linear-gradient(180deg,#fff,#999);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
         .section-desc{color:var(--text3);text-align:center;margin-bottom:40px;font-size:0.85rem;max-width:440px;margin-left:auto;margin-right:auto}
         .feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:10px}
         .feature-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:28px;transition:all 0.2s}
         .feature-card:hover{border-color:var(--border2)}
         .feature-icon{font-size:1.8rem;margin-bottom:14px;display:block}
-        .feature-card h3{font-size:1rem;font-weight:700;margin-bottom:6px;color:var(--white)}
+        .feature-card h3{font-size:1rem;font-weight:700;margin-bottom:6px}
         .feature-card p{color:var(--text2);font-size:0.82rem}
         .tier-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px}
         .tier-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px 12px;text-align:center;transition:all 0.2s}
         .tier-card:hover{border-color:var(--border2)}
         .tier-badge{font-size:1.5rem;margin-bottom:6px;display:block}
-        .tier-card h4{font-size:0.78rem;font-weight:700;color:var(--white)}
+        .tier-card h4{font-size:0.78rem;font-weight:700}
         .tier-card p{color:var(--text3);font-size:0.68rem}
-        .verify-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:34px;max-width:500px;margin:0 auto}
-        .input-group{margin-bottom:22px}
-        .input-group label{display:block;margin-bottom:7px;font-weight:600;font-size:0.8rem;color:var(--text2)}
-        .input-group input{width:100%;padding:13px 16px;background:var(--bg);border:1px solid var(--border2);border-radius:var(--radius);color:var(--white);font-size:0.9rem;font-family:'SF Mono','Fira Code',monospace;transition:all 0.2s}
-        .input-group input:focus{outline:none;border-color:var(--white)}
-        .help-text{color:var(--text3);font-size:0.7rem;margin-top:6px}
-        .help-text code{background:var(--bg3);padding:2px 5px;border-radius:3px;font-size:0.65rem;color:var(--text2)}
-        .verify-buttons{display:flex;gap:8px}
-        .result-box{margin-top:20px;padding:14px;border-radius:var(--radius);font-weight:500;text-align:center;display:none;font-size:0.82rem;border:1px solid}
-        .result-box.success{display:block;border-color:rgba(255,255,255,0.15);color:var(--white)}
-        .result-box.error{display:block;border-color:rgba(255,255,255,0.08);color:var(--text2)}
-        .result-box.info{display:block;border-color:rgba(255,255,255,0.06);color:var(--text3)}
-        .dashboard-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px}
-        .dash-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:28px 20px;text-align:center;transition:all 0.2s}
-        .dash-card:hover{border-color:var(--border2)}
-        .dash-number{font-size:3rem;font-weight:900;display:block;color:var(--white)}
-        .dash-label{color:var(--text3);font-size:0.68rem;text-transform:uppercase;letter-spacing:1.5px;margin-top:6px}
-        .lb-container{max-width:580px;margin:0 auto}
-        .lb-item{display:flex;align-items:center;gap:12px;padding:14px 18px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:6px;transition:all 0.15s}
+        .profile-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:40px;max-width:500px;margin:0 auto;text-align:center}
+        .profile-avatar{width:80px;height:80px;border-radius:50%;border:2px solid var(--border2);object-fit:cover;margin-bottom:16px}
+        .profile-name{font-size:1.4rem;font-weight:800}
+        .profile-id{color:var(--text3);font-size:0.8rem;margin-bottom:24px}
+        .profile-edit{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:20px}
+        .profile-edit input{padding:10px 14px;background:var(--bg);border:1px solid var(--border2);border-radius:var(--radius);color:var(--text);font-size:0.85rem;font-family:inherit}
+        .profile-edit input:focus{outline:none;border-color:var(--text)}
+        .lb-container{max-width:650px;margin:0 auto}
+        .lb-item{display:flex;align-items:center;gap:14px;padding:14px 18px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:6px;transition:all 0.15s}
         .lb-item:hover{border-color:var(--border2)}
-        .lb-rank{font-size:0.9rem;font-weight:700;width:34px;text-align:center;color:var(--text2)}
-        .lb-avatar{width:34px;height:34px;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:0.9rem;border:1px solid var(--border2)}
+        .lb-item.top-1{border-color:rgba(255,215,0,0.4);background:rgba(255,215,0,0.02)}
+        .lb-item.top-2{border-color:rgba(192,192,192,0.3)}
+        .lb-item.top-3{border-color:rgba(205,127,50,0.3)}
+        .lb-rank{font-size:1.2rem;font-weight:800;width:38px;text-align:center}
+        .lb-rank.gold{color:#FFD700}.lb-rank.silver{color:#C0C0C0}.lb-rank.bronze{color:#CD7F32}
+        .lb-avatar{width:40px;height:40px;border-radius:50%;border:1px solid var(--border2);object-fit:cover;background:var(--bg3)}
         .lb-info{flex:1}
-        .lb-name{font-weight:600;font-size:0.85rem;color:var(--white)}
-        .lb-stats{color:var(--text3);font-size:0.7rem}
-        .lb-total{font-weight:700;font-size:0.95rem;color:var(--white)}
+        .lb-name{font-weight:700;font-size:0.9rem}
+        .lb-userid{color:var(--text3);font-size:0.68rem}
+        .lb-stats{color:var(--text3);font-size:0.7rem;margin-top:2px}
+        .lb-total{font-weight:700;font-size:1rem}
         .footer{border-top:1px solid var(--border);padding:32px 0;margin-top:60px}
         .footer-content{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;margin-bottom:14px}
-        .footer-brand{font-weight:700;font-size:0.9rem;color:var(--white)}
+        .footer-brand{font-weight:700;font-size:0.9rem}
         .footer-brand p{color:var(--text3);font-weight:400;font-size:0.7rem;margin-top:2px}
         .footer-links{display:flex;gap:20px}
-        .footer-links a{color:var(--text2);text-decoration:none;font-size:0.78rem;transition:color 0.15s}
-        .footer-links a:hover{color:var(--white)}
+        .footer-links a{color:var(--text2);text-decoration:none;font-size:0.78rem}
+        .footer-links a:hover{color:var(--text)}
         .footer-bottom{text-align:center;color:var(--text3);font-size:0.68rem;padding-top:14px;border-top:1px solid var(--border)}
-        .toast{position:fixed;bottom:22px;right:22px;padding:12px 20px;border-radius:var(--radius);font-weight:600;font-size:0.78rem;z-index:999;animation:up 0.3s ease;background:var(--white);color:var(--bg)}
+        .toast{position:fixed;bottom:22px;right:22px;padding:12px 20px;border-radius:var(--radius);font-weight:600;font-size:0.78rem;z-index:999;animation:up 0.3s ease;background:var(--text);color:var(--bg)}
         @keyframes up{from{transform:translateY(14px);opacity:0}to{transform:translateY(0);opacity:1}}
-        .loading{display:inline-block;width:16px;height:16px;border:2px solid var(--border2);border-top-color:var(--white);border-radius:50%;animation:spin 0.7s linear infinite}
+        .loading{display:inline-block;width:16px;height:16px;border:2px solid var(--border2);border-top-color:var(--text);border-radius:50%;animation:spin 0.7s linear infinite}
         @keyframes spin{to{transform:rotate(360deg)}}
-        @media(max-width:768px){.hero-title{font-size:2.8rem}.stat-card{padding:16px 20px;min-width:100px}.stat-number{font-size:1.6rem}.nav-link{padding:5px 9px;font-size:0.7rem}.section-title{font-size:1.4rem}.dash-number{font-size:2rem}}
+        @media(max-width:768px){.hero-title{font-size:2.8rem}.stat-card{padding:16px 20px;min-width:100px}.stat-number{font-size:1.6rem}.nav-link{padding:5px 9px;font-size:0.7rem}.section-title{font-size:1.4rem}}
         @media(max-width:480px){.hero-title{font-size:2rem}.feature-grid{grid-template-columns:1fr}.hero-buttons{flex-direction:column;align-items:center}.nav{flex-direction:column;gap:6px}}
     </style>
 </head>
@@ -102,36 +106,46 @@
             <div class="nav-brand">🎯 S4NAMES</div>
             <div class="nav-links">
                 <button class="nav-link active" onclick="showPage('home')">Home</button>
-                <button class="nav-link" onclick="showPage('verify')">Verify</button>
-                <button class="nav-link" onclick="showPage('dashboard')">Dashboard</button>
+                <button class="nav-link" onclick="showPage('profile')" id="navProfile" style="display:none;">Profile</button>
                 <button class="nav-link" onclick="showPage('leaderboard')">LB</button>
                 <a href="https://discord.gg/qhVBb8Yj6V" class="nav-link" target="_blank">Discord</a>
+                <div class="user-menu" id="userMenu" style="display:none;">
+                    <img class="user-avatar" id="userAvatar" src="" alt="">
+                    <span class="user-name" id="userName"></span>
+                    <button class="btn-signout" onclick="signOut()">Sign out</button>
+                </div>
+                <button class="btn-google" id="btnSignIn" onclick="signInWithGoogle()">
+                    <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#fff" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#fff" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#fff" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#fff" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+                    Sign in
+                </button>
             </div>
         </nav>
+
         <div id="page-home" class="page active">
             <section class="hero">
                 <h1 class="hero-title">S4NAMES</h1>
-<p class="hero-subtitle">The <strong>BEST</strong> and <strong>FREE</strong> Username Sniper.</p>                <p class="hero-desc">Rare 3-letter names. Short usernames. All yours with speed.</p>
+                <p class="hero-subtitle">The <strong>BEST</strong> and <strong>FREE</strong> Username Sniper</p>
+                <p class="hero-desc">Rare 3-letter names. Short usernames. All yours with speed.</p>
                 <div class="hero-buttons">
-                    <button class="btn" onclick="showPage('verify')">Get Verified</button>
+                    <button class="btn" onclick="showPage('profile')">Get Started</button>
                     <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-secondary" target="_blank">Join Discord</a>
                 </div>
                 <div class="hero-stats" id="heroStats">
                     <div class="stat-card"><span class="stat-number">...</span><span class="stat-label">Total Snipes</span></div>
                     <div class="stat-card"><span class="stat-number">...</span><span class="stat-label">Rare Snipes</span></div>
-                    <div class="stat-card"><span class="stat-number">...</span><span class="stat-label">Verified Users</span></div>
+                    <div class="stat-card"><span class="stat-number">...</span><span class="stat-label">Users</span></div>
                 </div>
             </section>
             <section class="section">
                 <h2 class="section-title">Why S4N</h2>
                 <p class="section-desc">Speed. Precision. Results.</p>
                 <div class="feature-grid">
-                    <div class="feature-card"><span class="feature-icon">⚡</span><h3>Fast</h3><p>Thousands checked per minute. Multi-threaded engine.</p></div>
-                    <div class="feature-card"><span class="feature-icon">💎</span><h3>Rare</h3><p>3-letter names. Short usernames. The ones nobody else gets.</p></div>
-                    <div class="feature-card"><span class="feature-icon">🏆</span><h3>Roles</h3><p>V1 to V10. Climb the ranks. Earn your spot.</p></div>
-                    <div class="feature-card"><span class="feature-icon">🌐</span><h3>LB</h3><p>Global rankings. See where you stand.</p></div>
-                    <div class="feature-card"><span class="feature-icon">🔒</span><h3>Secure</h3><p>Discord-linked. Your stats stay yours.</p></div>
-                    <div class="feature-card"><span class="feature-icon">🎯</span><h3>Smart</h3><p>Optimal patterns. Better distribution.</p></div>
+                    <div class="feature-card"><span class="feature-icon">⚡</span><h3>Fast</h3><p>Thousands checked per minute.</p></div>
+                    <div class="feature-card"><span class="feature-icon">💎</span><h3>Rare</h3><p>3-letter names. Short usernames.</p></div>
+                    <div class="feature-card"><span class="feature-icon">🏆</span><h3>Roles</h3><p>V1 to V10. Climb the ranks.</p></div>
+                    <div class="feature-card"><span class="feature-icon">🌐</span><h3>LB</h3><p>Global rankings.</p></div>
+                    <div class="feature-card"><span class="feature-icon">🔒</span><h3>Secure</h3><p>Google sign-in. Your data stays yours.</p></div>
+                    <div class="feature-card"><span class="feature-icon">🎯</span><h3>Smart</h3><p>Optimal patterns.</p></div>
                 </div>
             </section>
             <section class="section">
@@ -151,55 +165,46 @@
                 </div>
             </section>
         </div>
-        <div id="page-verify" class="page">
+
+        <div id="page-profile" class="page">
             <section class="section">
-                <h2 class="section-title">Verify</h2>
-                <p class="section-desc">Link your Discord. Start tracking.</p>
-                <div class="verify-card">
-                    <div class="input-group">
-                        <label>Discord ID</label>
-                        <input type="text" id="discordId" placeholder="123456789012345678" maxlength="20" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
-                        <p class="help-text">Settings → Advanced → <code>Developer Mode</code>. Right-click yourself → <code>Copy ID</code></p>
+                <div class="profile-card" id="profileCard">
+                    <img class="profile-avatar" id="profileAvatar" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%2316161c'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='%23555' font-size='40'%3E?%3C/text%3E%3C/svg%3E" alt="">
+                    <h2 class="profile-name" id="profileName">Sign in to continue</h2>
+                    <p class="profile-id" id="profileId"></p>
+                    <div class="profile-edit" id="profileEdit" style="display:none;">
+                        <input type="text" id="editName" placeholder="Username" maxlength="20">
+                        <button class="btn" onclick="updateProfile()">Save</button>
                     </div>
-                    <div class="verify-buttons">
-                        <button class="btn" onclick="checkUser()">Check</button>
-                        <button class="btn btn-secondary" onclick="verifyUser()">Verify</button>
+                    <button class="btn-google" id="profileSignIn" onclick="signInWithGoogle()">
+                        <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#fff" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#fff" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#fff" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#fff" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+                        Sign in with Google
+                    </button>
+                    <div id="profileStats" style="display:none;margin-top:24px;">
+                        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+                            <div class="stat-card"><span class="stat-number" id="pTotal">0</span><span class="stat-label">Total</span></div>
+                            <div class="stat-card"><span class="stat-number" id="pRare">0</span><span class="stat-label">Rare</span></div>
+                            <div class="stat-card"><span class="stat-number" id="pGood">0</span><span class="stat-label">Good</span></div>
+                        </div>
                     </div>
-                    <div id="verifyResult" class="result-box"></div>
                 </div>
             </section>
         </div>
-        <div id="page-dashboard" class="page">
-            <section class="section">
-                <h2 class="section-title">Dashboard</h2>
-                <p class="section-desc">Your stats.</p>
-                <div class="verify-card" style="margin-bottom:24px;">
-                    <div class="input-group"><label>Discord ID</label><input type="text" id="dashboardId" placeholder="123456789012345678" maxlength="20" oninput="this.value=this.value.replace(/[^0-9]/g,'')"></div>
-                    <button class="btn" onclick="loadDashboard()">Load</button>
-                    <div id="dashboardResult" class="result-box" style="margin-top:14px;"></div>
-                </div>
-                <div class="dashboard-grid" id="dashboardStats" style="display:none;">
-                    <div class="dash-card"><span class="dash-number" id="dTotal">0</span><span class="dash-label">Total</span></div>
-                    <div class="dash-card"><span class="dash-number" id="dRare">0</span><span class="dash-label">Rare</span></div>
-                    <div class="dash-card"><span class="dash-number" id="dGood">0</span><span class="dash-label">Good</span></div>
-                    <div class="dash-card"><span class="dash-number" id="dNormal">0</span><span class="dash-label">Normal</span></div>
-                    <div class="dash-card"><span class="dash-number" id="dChecked">0</span><span class="dash-label">Checked</span></div>
-                </div>
-            </section>
-        </div>
+
         <div id="page-leaderboard" class="page">
             <section class="section">
                 <h2 class="section-title">Leaderboard</h2>
-                <p class="section-desc">Top snipers.</p>
+                <p class="section-desc">Top snipers worldwide.</p>
                 <div class="lb-container" id="leaderboardList"><div style="text-align:center;padding:40px;"><span class="loading"></span></div></div>
             </section>
         </div>
+
         <footer class="footer">
             <div class="footer-content">
                 <div class="footer-brand">🎯 S4NAMES<p>Snipes 4 Names</p></div>
                 <div class="footer-links">
                     <a href="#" onclick="showPage('home')">Home</a>
-                    <a href="#" onclick="showPage('verify')">Verify</a>
+                    <a href="#" onclick="showPage('profile')">Profile</a>
                     <a href="#" onclick="showPage('leaderboard')">LB</a>
                     <a href="https://discord.gg/qhVBb8Yj6V" target="_blank">Discord</a>
                 </div>
@@ -207,179 +212,182 @@
             <div class="footer-bottom"><p>S4N — Snipes 4 Names</p></div>
         </footer>
     </div>
-<script>
-    var currentUser = null;
-    var GOOGLE_CLIENT_ID = '842479839528-hgdf8uidvavsc2noup3uuk3qp957mr61.apps.googleusercontent.com';
 
-    function showPage(p) {
-        document.querySelectorAll('.page').forEach(function(e) { e.classList.remove('active'); });
-        document.querySelectorAll('.nav-link').forEach(function(e) { e.classList.remove('active'); });
-        var el = document.getElementById('page-' + p);
-        if (el) el.classList.add('active');
-        document.querySelectorAll('.nav-link').forEach(function(b) {
-            var t = b.textContent.toLowerCase();
-            if (t.includes(p) || (p === 'leaderboard' && t === 'lb') || (p === 'profile' && t === 'profile')) b.classList.add('active');
-        });
-        if (p === 'leaderboard') loadLB();
-        if (p === 'home') loadStats();
-        if (p === 'profile') updateProfileUI();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function updateProfileUI() {
-        if (currentUser) {
-            document.getElementById('profileAvatar').src = currentUser.picture || '';
-            document.getElementById('profileName').textContent = currentUser.username || currentUser.name || 'User';
-            document.getElementById('profileId').textContent = '@' + (currentUser.username || currentUser.id);
-            document.getElementById('profileSignIn').style.display = 'none';
-            document.getElementById('profileEdit').style.display = 'flex';
-            document.getElementById('editName').value = currentUser.username || currentUser.name || '';
-            document.getElementById('profileStats').style.display = 'block';
-            document.getElementById('navProfile').style.display = 'inline-block';
-            document.getElementById('userMenu').style.display = 'flex';
-            document.getElementById('userAvatar').src = currentUser.picture || '';
-            document.getElementById('userName').textContent = currentUser.username || currentUser.name || '';
-            document.getElementById('btnSignIn').style.display = 'none';
-            loadMyStats();
-        } else {
-            document.getElementById('profileAvatar').src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%2316161c'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='%23555' font-size='40'%3E?%3C/text%3E%3C/svg%3E";
-            document.getElementById('profileName').textContent = 'Sign in to continue';
-            document.getElementById('profileId').textContent = '';
-            document.getElementById('profileSignIn').style.display = 'inline-flex';
-            document.getElementById('profileEdit').style.display = 'none';
-            document.getElementById('profileStats').style.display = 'none';
-            document.getElementById('navProfile').style.display = 'none';
-            document.getElementById('userMenu').style.display = 'none';
-            document.getElementById('btnSignIn').style.display = 'inline-flex';
-        }
-    }
-
-    function handleGoogleResponse(response) {
-        var payload = JSON.parse(atob(response.credential.split('.')[1]));
-        currentUser = {
-            id: payload.sub,
-            name: payload.name,
-            email: payload.email,
-            picture: payload.picture,
-            username: payload.given_name || payload.name
+    <script>
+        var firebaseConfig = {
+            apiKey: "AIzaSyAqDelwa7xmrVA8pqyJFy7y687hMxZSGeg",
+            authDomain: "s4names-50d2f.firebaseapp.com",
+            projectId: "s4names-50d2f",
+            storageBucket: "s4names-50d2f.firebasestorage.app",
+            messagingSenderId: "842479839528",
+            appId: "1:842479839528:web:44cead73f33405e592c81d"
         };
-        localStorage.setItem('s4n_user', JSON.stringify(currentUser));
-        syncUserToDB();
-        updateProfileUI();
-        showPage('profile');
-        toast('Signed in as ' + currentUser.username);
-    }
 
-    function signOut() {
-        google.accounts.id.disableAutoSelect();
-        currentUser = null;
-        localStorage.removeItem('s4n_user');
-        updateProfileUI();
-        showPage('home');
-        toast('Signed out');
-    }
+        firebase.initializeApp(firebaseConfig);
+        var auth = firebase.auth();
+        var currentUser = null;
 
-    async function syncUserToDB() {
-        if (!currentUser) return;
-        try {
-            await api('/sync', 'POST', {
-                googleId: currentUser.id,
-                name: currentUser.name,
-                email: currentUser.email,
-                picture: currentUser.picture,
-                username: currentUser.username
-            });
-        } catch(e) {}
-    }
-
-    async function updateProfile() {
-        var newName = document.getElementById('editName').value.trim();
-        if (!newName || !currentUser) return;
-        currentUser.username = newName;
-        localStorage.setItem('s4n_user', JSON.stringify(currentUser));
-        try {
-            await api('/updateprofile', 'POST', { googleId: currentUser.id, username: newName, picture: currentUser.picture });
+        auth.onAuthStateChanged(function(user) {
+            if (user) {
+                currentUser = {
+                    id: user.uid,
+                    name: user.displayName,
+                    email: user.email,
+                    picture: user.photoURL,
+                    username: user.displayName ? user.displayName.split(' ')[0] : 'User'
+                };
+                localStorage.setItem('s4n_user', JSON.stringify(currentUser));
+                syncUserToDB();
+            } else {
+                currentUser = null;
+                localStorage.removeItem('s4n_user');
+            }
             updateProfileUI();
-            toast('Profile updated');
-        } catch(e) { toast('Error updating profile'); }
-    }
+        });
 
-    async function api(url, method, body) {
-        var opts = { method: method || 'GET', headers: { 'Content-Type': 'application/json' } };
-        if (body) opts.body = JSON.stringify(body);
-        var res = await fetch('/api' + url, opts);
-        return res.json();
-    }
-
-    function toast(msg) {
-        var t = document.createElement('div'); t.className = 'toast'; t.textContent = msg;
-        document.body.appendChild(t); setTimeout(function() { t.remove(); }, 2500);
-    }
-
-    async function loadStats() {
-        try {
-            var d = await api('/stats');
-            document.getElementById('heroStats').innerHTML =
-                '<div class="stat-card"><span class="stat-number">' + (d.totalSnipes||0).toLocaleString() + '</span><span class="stat-label">Total Snipes</span></div>' +
-                '<div class="stat-card"><span class="stat-number">' + (d.rareSnipes||0).toLocaleString() + '</span><span class="stat-label">Rare Snipes</span></div>' +
-                '<div class="stat-card"><span class="stat-number">' + (d.verifiedCount||0).toLocaleString() + '</span><span class="stat-label">Users</span></div>';
-        } catch(e) {}
-    }
-
-    async function loadMyStats() {
-        if (!currentUser) return;
-        try {
-            var d = await api('/check?id=' + currentUser.id);
-            if (d.stats) {
-                document.getElementById('pTotal').textContent = (d.stats.totalSnipes||0).toLocaleString();
-                document.getElementById('pRare').textContent = (d.stats.rareSnipes||0).toLocaleString();
-                document.getElementById('pGood').textContent = (d.stats.goodSnipes||0).toLocaleString();
-            }
-        } catch(e) {}
-    }
-
-    async function loadLB() {
-        var c = document.getElementById('leaderboardList');
-        c.innerHTML = '<div style="text-align:center;padding:40px;"><span class="loading"></span></div>';
-        try {
-            var d = await api('/stats');
-            if (!d.leaderboard || !d.leaderboard.length) { c.innerHTML = '<p style="text-align:center;color:var(--text3);padding:40px;">Nothing yet.</p>'; return; }
-            var h = '';
-            for (var i = 0; i < d.leaderboard.length; i++) {
-                var u = d.leaderboard[i];
-                var rankClass = i === 0 ? ' gold' : i === 1 ? ' silver' : i === 2 ? ' bronze' : '';
-                var topClass = i < 3 ? ' top-' + (i+1) : '';
-                var avatar = u.picture ? '<img class="lb-avatar" src="' + u.picture + '" alt="">' : '<div class="lb-avatar" style="display:flex;align-items:center;justify-content:center;font-size:1.2rem;">🎯</div>';
-                var name = u.username || u.name || (u.googleId || '').slice(-8);
-                var userId = u.username || (u.googleId || '').slice(-12);
-                h += '<div class="lb-item' + topClass + '">' +
-                    '<span class="lb-rank' + rankClass + '">#' + (i+1) + '</span>' +
-                    avatar +
-                    '<div class="lb-info"><div class="lb-name">' + name + '</div><div class="lb-userid">@' + userId + '</div><div class="lb-stats">💎' + (u.rareSnipes||0) + ' 🔮' + (u.goodSnipes||0) + ' 🎪' + (u.normalSnipes||0) + '</div></div>' +
-                    '<span class="lb-total">' + (u.totalSnipes||0).toLocaleString() + '</span></div>';
-            }
-            c.innerHTML = h;
-        } catch(e) { c.innerHTML = '<p style="text-align:center;color:var(--text3);padding:40px;">Error.</p>'; }
-    }
-
-    window.onload = function() {
-        var saved = localStorage.getItem('s4n_user');
-        if (saved) { 
-            currentUser = JSON.parse(saved); 
-            updateProfileUI(); 
+        function signInWithGoogle() {
+            var provider = new firebase.auth.GoogleAuthProvider();
+            auth.signInWithPopup(provider).then(function(result) {
+                toast('Signed in!');
+                showPage('profile');
+            }).catch(function(error) {
+                toast('Sign in failed: ' + error.message);
+            });
         }
-        loadStats();
-    };
 
-    google.accounts.id.initialize({
-        client_id: GOOGLE_CLIENT_ID,
-        callback: handleGoogleResponse,
-        auto_select: false
-    });
-    google.accounts.id.renderButton(
-        document.getElementById('google-signin'),
-        { type: 'standard', theme: 'filled_black', size: 'large', text: 'signin_with', shape: 'pill' }
-    );
-</script>
+        function signOut() {
+            auth.signOut();
+            toast('Signed out');
+            showPage('home');
+        }
+
+        function showPage(p) {
+            document.querySelectorAll('.page').forEach(function(e) { e.classList.remove('active'); });
+            document.querySelectorAll('.nav-link').forEach(function(e) { e.classList.remove('active'); });
+            var el = document.getElementById('page-' + p);
+            if (el) el.classList.add('active');
+            document.querySelectorAll('.nav-link').forEach(function(b) {
+                var t = b.textContent.toLowerCase();
+                if (t.includes(p) || (p === 'leaderboard' && t === 'lb') || (p === 'profile' && t === 'profile')) b.classList.add('active');
+            });
+            if (p === 'leaderboard') loadLB();
+            if (p === 'home') loadStats();
+            if (p === 'profile') updateProfileUI();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function updateProfileUI() {
+            if (currentUser) {
+                document.getElementById('profileAvatar').src = currentUser.picture || '';
+                document.getElementById('profileName').textContent = currentUser.username || currentUser.name || 'User';
+                document.getElementById('profileId').textContent = '@' + (currentUser.username || currentUser.id.slice(-12));
+                document.getElementById('profileSignIn').style.display = 'none';
+                document.getElementById('profileEdit').style.display = 'flex';
+                document.getElementById('editName').value = currentUser.username || '';
+                document.getElementById('profileStats').style.display = 'block';
+                document.getElementById('navProfile').style.display = 'inline-block';
+                document.getElementById('userMenu').style.display = 'flex';
+                document.getElementById('userAvatar').src = currentUser.picture || '';
+                document.getElementById('userName').textContent = currentUser.username || currentUser.name || '';
+                document.getElementById('btnSignIn').style.display = 'none';
+                loadMyStats();
+            } else {
+                document.getElementById('profileAvatar').src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%2316161c'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='%23555' font-size='40'%3E?%3C/text%3E%3C/svg%3E";
+                document.getElementById('profileName').textContent = 'Sign in to continue';
+                document.getElementById('profileId').textContent = '';
+                document.getElementById('profileSignIn').style.display = 'inline-flex';
+                document.getElementById('profileEdit').style.display = 'none';
+                document.getElementById('profileStats').style.display = 'none';
+                document.getElementById('navProfile').style.display = 'none';
+                document.getElementById('userMenu').style.display = 'none';
+                document.getElementById('btnSignIn').style.display = 'inline-flex';
+            }
+        }
+
+        async function syncUserToDB() {
+            if (!currentUser) return;
+            try {
+                await api('/sync', 'POST', {
+                    uid: currentUser.id,
+                    name: currentUser.name,
+                    email: currentUser.email,
+                    picture: currentUser.picture,
+                    username: currentUser.username
+                });
+            } catch(e) {}
+        }
+
+        async function updateProfile() {
+            var newName = document.getElementById('editName').value.trim();
+            if (!newName || !currentUser) return;
+            currentUser.username = newName;
+            localStorage.setItem('s4n_user', JSON.stringify(currentUser));
+            try {
+                await api('/updateprofile', 'POST', { uid: currentUser.id, username: newName, picture: currentUser.picture });
+                updateProfileUI();
+                toast('Profile updated');
+            } catch(e) { toast('Error'); }
+        }
+
+        async function api(url, method, body) {
+            var opts = { method: method || 'GET', headers: { 'Content-Type': 'application/json' } };
+            if (body) opts.body = JSON.stringify(body);
+            var res = await fetch('/api' + url, opts);
+            return res.json();
+        }
+
+        function toast(msg) {
+            var t = document.createElement('div'); t.className = 'toast'; t.textContent = msg;
+            document.body.appendChild(t); setTimeout(function() { t.remove(); }, 2500);
+        }
+
+        async function loadStats() {
+            try {
+                var d = await api('/stats');
+                document.getElementById('heroStats').innerHTML =
+                    '<div class="stat-card"><span class="stat-number">' + (d.totalSnipes||0).toLocaleString() + '</span><span class="stat-label">Total Snipes</span></div>' +
+                    '<div class="stat-card"><span class="stat-number">' + (d.rareSnipes||0).toLocaleString() + '</span><span class="stat-label">Rare Snipes</span></div>' +
+                    '<div class="stat-card"><span class="stat-number">' + (d.verifiedCount||0).toLocaleString() + '</span><span class="stat-label">Users</span></div>';
+            } catch(e) {}
+        }
+
+        async function loadMyStats() {
+            if (!currentUser) return;
+            try {
+                var d = await api('/check?uid=' + currentUser.id);
+                if (d.stats) {
+                    document.getElementById('pTotal').textContent = (d.stats.totalSnipes||0).toLocaleString();
+                    document.getElementById('pRare').textContent = (d.stats.rareSnipes||0).toLocaleString();
+                    document.getElementById('pGood').textContent = (d.stats.goodSnipes||0).toLocaleString();
+                }
+            } catch(e) {}
+        }
+
+        async function loadLB() {
+            var c = document.getElementById('leaderboardList');
+            c.innerHTML = '<div style="text-align:center;padding:40px;"><span class="loading"></span></div>';
+            try {
+                var d = await api('/stats');
+                if (!d.leaderboard || !d.leaderboard.length) { c.innerHTML = '<p style="text-align:center;color:var(--text3);padding:40px;">Nothing yet.</p>'; return; }
+                var h = '';
+                for (var i = 0; i < d.leaderboard.length; i++) {
+                    var u = d.leaderboard[i];
+                    var rankClass = i === 0 ? ' gold' : i === 1 ? ' silver' : i === 2 ? ' bronze' : '';
+                    var topClass = i < 3 ? ' top-' + (i+1) : '';
+                    var avatar = u.picture ? '<img class="lb-avatar" src="' + u.picture + '" alt="">' : '<div class="lb-avatar" style="display:flex;align-items:center;justify-content:center;font-size:1.2rem;">🎯</div>';
+                    var name = u.username || u.name || 'User';
+                    var userId = '@' + (u.username || (u.uid || '').slice(-12));
+                    h += '<div class="lb-item' + topClass + '">' +
+                        '<span class="lb-rank' + rankClass + '">#' + (i+1) + '</span>' +
+                        avatar +
+                        '<div class="lb-info"><div class="lb-name">' + name + '</div><div class="lb-userid">' + userId + '</div><div class="lb-stats">💎' + (u.rareSnipes||0) + ' 🔮' + (u.goodSnipes||0) + ' 🎪' + (u.normalSnipes||0) + '</div></div>' +
+                        '<span class="lb-total">' + (u.totalSnipes||0).toLocaleString() + '</span></div>';
+                }
+                c.innerHTML = h;
+            } catch(e) { c.innerHTML = '<p style="text-align:center;color:var(--text3);padding:40px;">Error.</p>'; }
+        }
+
+        loadStats();
+    </script>
 </body>
 </html>
