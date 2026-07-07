@@ -32,7 +32,6 @@
             line-height: 1.5;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
-            cursor: none;
         }
 
         .container{max-width:1000px;margin:0 auto;padding:0 24px}
@@ -40,33 +39,6 @@
         ::-webkit-scrollbar{width:3px}
         ::-webkit-scrollbar-track{background:var(--bg)}
         ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
-
-        /* Custom cursor */
-        .cursor {
-            width: 20px;height: 20px;
-            border: 2px solid rgba(255,255,255,0.5);
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 9999;
-            transition: width 0.3s, height 0.3s, border-color 0.3s, background 0.3s;
-            transform: translate(-50%,-50%);
-        }
-        .cursor-dot {
-            width: 4px;height: 4px;
-            background: #fff;
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 9999;
-            transform: translate(-50%,-50%);
-        }
-        .cursor.hover {
-            width: 50px;height: 50px;
-            border-color: rgba(255,255,255,0.8);
-            background: rgba(255,255,255,0.05);
-            mix-blend-mode: difference;
-        }
 
         /* ========== ANIMATIONS ========== */
         @keyframes fadeUp {
@@ -111,10 +83,6 @@
             0%{background-position:-200% 0}
             100%{background-position:200% 0}
         }
-        @keyframes spinSlow {
-            from{transform:rotate(0deg)}
-            to{transform:rotate(360deg)}
-        }
         @keyframes wiggle {
             0%,100%{transform:rotate(0)}
             25%{transform:rotate(-5deg)}
@@ -126,11 +94,6 @@
             40%{transform:translate(3px,-1px);text-shadow: -2px 0 #fff, 2px 0 rgba(255,255,255,0.3)}
             60%{transform:translate(-1px,-1px);text-shadow: 1px 0 rgba(255,255,255,0.3)}
             80%{transform:translate(1px,1px);text-shadow: none}
-        }
-        @keyframes gradientShift {
-            0%{background-position:0% 50%}
-            50%{background-position:100% 50%}
-            100%{background-position:0% 50%}
         }
 
         .reveal {
@@ -166,7 +129,7 @@
             padding: 8px 18px;
             border-radius: 6px;
             font-size: 0.82rem;
-            cursor: none;
+            cursor: pointer;
             border: none;
             background: none;
             font-family: inherit;
@@ -189,7 +152,7 @@
             transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
-        .tab-link:hover{color:var(--text);background:var(--bg3);cursor:none}
+        .tab-link:hover{color:var(--text);background:var(--bg3)}
         .tab-link:hover::after{transform:translateX(-50%) scaleX(1)}
 
         .tab-link.discord-tab {
@@ -223,7 +186,7 @@
         }
 
         .free-banner .info-icon {
-            cursor: none;
+            cursor: pointer;
             font-size: 0.85rem;
             color: var(--text);
             position: relative;
@@ -291,16 +254,6 @@
             padding: 100px 0 70px;
             position: relative;
         }
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 50%;left: 50%;
-            transform: translate(-50%,-50%);
-            width: 700px;height: 700px;
-            background: radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(255,255,255,0.03) 0%, transparent 60%);
-            pointer-events: none;
-            transition: background 0.1s;
-        }
         .hero-title {
             font-size: clamp(3.5rem, 10vw, 6rem);
             font-weight: 900;
@@ -314,7 +267,6 @@
         .hero-title:hover {
             animation: glitch 0.4s cubic-bezier(0.22, 1, 0.36, 1);
             letter-spacing: -3px;
-            cursor: none;
         }
         .hero-subtitle {
             font-size: 1rem;
@@ -339,7 +291,7 @@
             min-width: 170px;
             transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
             animation: bounceIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.6s both;
-            cursor: none;
+            cursor: default;
             position: relative;
             overflow: hidden;
         }
@@ -387,7 +339,7 @@
             border-radius: 10px;
             font-size: 0.84rem;
             font-weight: 600;
-            cursor: none;
+            cursor: pointer;
             border: 1px solid var(--text);
             text-decoration: none;
             transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
@@ -432,7 +384,7 @@
             border-radius: 12px;
             padding: 34px;
             transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-            cursor: none;
+            cursor: default;
             position: relative;
             overflow: hidden;
         }
@@ -469,7 +421,7 @@
             transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
             position: relative;
             overflow: hidden;
-            cursor: none;
+            cursor: default;
         }
         .plan-card::before {
             content: '';
@@ -524,17 +476,7 @@
             transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
             position: relative;
             overflow: hidden;
-            cursor: none;
         }
-        .cta-section::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(255,255,255,0.03) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.5s;
-        }
-        .cta-section:hover::before{opacity:1}
         .cta-section:hover{border-color:#333;transform:translateY(-4px)}
         .cta-section h2{font-size:1.8rem;font-weight:800;margin-bottom:10px}
         .cta-section p{color:var(--text2);margin-bottom:26px;font-size:0.88rem}
@@ -543,21 +485,17 @@
         /* ========== FOOTER ========== */
         .footer{border-top:1px solid var(--border);padding:34px 0;margin-top:50px}
         .footer-content{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:18px;margin-bottom:18px}
-        .footer-brand{font-weight:700;font-size:0.9rem;transition:transform 0.3s;cursor:none}
+        .footer-brand{font-weight:700;font-size:0.9rem;transition:transform 0.3s}
         .footer-brand:hover{transform:translateY(-3px)}
         .footer-brand p{color:var(--text3);font-weight:400;font-size:0.72rem;margin-top:3px}
         .footer-links{display:flex;gap:22px;flex-wrap:wrap}
-        .footer-links a{color:var(--text2);text-decoration:none;font-size:0.78rem;transition:all 0.35s cubic-bezier(0.22, 1, 0.36, 1);position:relative;cursor:none}
+        .footer-links a{color:var(--text2);text-decoration:none;font-size:0.78rem;transition:all 0.35s cubic-bezier(0.22, 1, 0.36, 1);position:relative}
         .footer-links a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;background:var(--text);transition:width 0.4s cubic-bezier(0.22, 1, 0.36, 1)}
         .footer-links a:hover{color:var(--text)}
         .footer-links a:hover::after{width:100%}
         .footer-bottom{text-align:center;color:var(--text3);font-size:0.68rem;padding-top:16px;border-top:1px solid var(--border)}
 
-        /* ========== RESPONSIVE ========== */
         @media (max-width:768px) {
-            .cursor,.cursor-dot{display:none}
-            body{cursor:auto}
-            .btn,.tab-link,.plan-card,.feature-card,.stat-card,.cta-section,.footer-brand,.footer-links a{cursor:pointer}
             .hero{padding:50px 0 30px}
             .stat-card{padding:20px 24px;min-width:110px}
             .stat-number{font-size:1.8rem}
@@ -577,9 +515,6 @@
     </style>
 </head>
 <body>
-    <div class="cursor"></div>
-    <div class="cursor-dot"></div>
-
     <div class="container">
         <div class="top-tabs">
             <a href="#home" class="tab-link">Home</a>
@@ -691,7 +626,6 @@
     </div>
 
     <script>
-        // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(a=>{
             a.addEventListener('click',function(e){
                 e.preventDefault();
@@ -700,50 +634,12 @@
             });
         });
 
-        // Scroll reveal
         const observer = new IntersectionObserver((entries)=>{
             entries.forEach(entry=>{
                 if(entry.isIntersecting) entry.target.classList.add('visible');
             });
         },{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
         document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
-
-        // Custom cursor
-        const cursor = document.querySelector('.cursor');
-        const cursorDot = document.querySelector('.cursor-dot');
-        const hoverElements = document.querySelectorAll('a, button, .btn, .tab-link, .plan-card, .feature-card, .stat-card, .cta-section, .info-icon, .footer-brand, [onclick]');
-
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-            cursorDot.style.left = e.clientX + 'px';
-            cursorDot.style.top = e.clientY + 'px';
-        });
-
-        hoverElements.forEach(el => {
-            el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-            el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-        });
-
-        // Hero glow follows cursor
-        const hero = document.querySelector('.hero');
-        hero.addEventListener('mousemove', (e) => {
-            const rect = hero.getBoundingClientRect();
-            const x = ((e.clientX - rect.left) / rect.width) * 100;
-            const y = ((e.clientY - rect.top) / rect.height) * 100;
-            hero.style.setProperty('--mx', x + '%');
-            hero.style.setProperty('--my', y + '%');
-        });
-
-        // CTA glow follows cursor
-        const cta = document.querySelector('.cta-section');
-        cta.addEventListener('mousemove', (e) => {
-            const rect = cta.getBoundingClientRect();
-            const x = ((e.clientX - rect.left) / rect.width) * 100;
-            const y = ((e.clientY - rect.top) / rect.height) * 100;
-            cta.style.setProperty('--mx', x + '%');
-            cta.style.setProperty('--my', y + '%');
-        });
     </script>
 </body>
 </html>
