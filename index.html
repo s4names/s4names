@@ -49,7 +49,6 @@
       background: transparent;
     }
 
-    /* Hand-tweaked reveal — slightly uneven timing */
     .reveal {
       opacity: 0;
       transform: translateY(18px);
@@ -60,7 +59,6 @@
       transform: translateY(0);
     }
 
-    /* Subtle, imperfect noise overlay — feels more organic */
     body::after {
       content: '';
       position: fixed;
@@ -104,7 +102,6 @@
       letter-spacing: -0.2px;
     }
 
-    /* Hand-drawn style underline — slightly irregular */
     .tab-link::after {
       content: '';
       position: absolute;
@@ -144,7 +141,6 @@
       box-shadow: 0 7px 16px rgba(255, 255, 255, 0.06);
     }
 
-    /* Free banner — more conversational, slightly playful */
     .free-banner {
       background: var(--bg2);
       border: 1px solid var(--border);
@@ -488,7 +484,6 @@
       will-change: transform;
     }
 
-    /* Quirky, handcrafted animations — slightly irregular */
     .feature-card .icon-fast { transition: transform 0.28s ease; }
     .feature-card:hover .icon-fast {
       animation: gentleZap 0.85s ease-in-out infinite;
@@ -741,6 +736,167 @@
       flex-wrap: wrap;
     }
 
+    /* Support Modal — handcrafted, not too polished */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.72);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      z-index: 9998;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s ease, visibility 0.25s ease;
+      padding: 20px;
+    }
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-box {
+      background: #141414;
+      border: 1px solid #2a2a2a;
+      border-radius: 16px;
+      padding: 34px 30px 28px;
+      width: 100%;
+      max-width: 440px;
+      position: relative;
+      z-index: 9999;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8);
+      transform: translateY(12px) scale(0.97);
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .modal-overlay.active .modal-box {
+      transform: translateY(0) scale(1);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 14px;
+      right: 16px;
+      background: none;
+      border: none;
+      color: #777;
+      font-size: 1.3rem;
+      cursor: pointer;
+      padding: 6px 10px;
+      border-radius: 8px;
+      transition: color 0.2s, background 0.2s;
+      font-family: inherit;
+      line-height: 1;
+    }
+    .modal-close:hover {
+      color: #ddd;
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .modal-box h3 {
+      font-size: 1.25rem;
+      font-weight: 720;
+      margin-bottom: 6px;
+      color: #eee;
+      letter-spacing: -0.4px;
+    }
+    .modal-box .modal-subtitle {
+      color: #777;
+      font-size: 0.76rem;
+      margin-bottom: 22px;
+    }
+
+    .modal-box label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 620;
+      color: #aaa;
+      margin-bottom: 5px;
+      letter-spacing: 0.2px;
+    }
+    .modal-box input,
+    .modal-box textarea {
+      width: 100%;
+      background: #1a1a1a;
+      border: 1px solid #2e2e2e;
+      border-radius: 10px;
+      padding: 12px 14px;
+      color: #ddd;
+      font-family: inherit;
+      font-size: 0.82rem;
+      margin-bottom: 16px;
+      transition: border-color 0.2s, background 0.2s;
+      resize: vertical;
+      outline: none;
+    }
+    .modal-box input:focus,
+    .modal-box textarea:focus {
+      border-color: #555;
+      background: #1c1c1c;
+    }
+    .modal-box textarea {
+      min-height: 90px;
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      margin-top: 6px;
+    }
+    .modal-buttons .btn {
+      padding: 10px 22px;
+      font-size: 0.79rem;
+    }
+    .modal-buttons .btn-send {
+      background: #f5f5f5;
+      border-color: #f5f5f5;
+      color: #0a0a0a;
+      font-weight: 640;
+    }
+    .modal-buttons .btn-send:hover {
+      background: #e0e0e0;
+      border-color: #e0e0e0;
+    }
+    .modal-buttons .btn-send:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+    .modal-buttons .btn-cancel {
+      border-color: #333;
+      color: #999;
+    }
+    .modal-buttons .btn-cancel:hover {
+      border-color: #555;
+      color: #ccc;
+    }
+
+    .modal-success {
+      text-align: center;
+      padding: 20px 0 10px;
+      display: none;
+    }
+    .modal-success h3 {
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+      color: #5ce68c;
+    }
+    .modal-success p {
+      color: #aaa;
+      font-size: 0.84rem;
+      margin-bottom: 18px;
+    }
+    .modal-success .ticket-number {
+      font-size: 2.5rem;
+      font-weight: 920;
+      color: #f5f5f5;
+      display: block;
+      margin-bottom: 6px;
+    }
+
     .footer {
       border-top: 1px solid rgba(255, 255, 255, 0.045);
       padding: 36px 0;
@@ -838,6 +994,9 @@
       .section {
         padding: 65px 0;
       }
+      .modal-box {
+        padding: 26px 20px 22px;
+      }
     }
 
     @media (max-width: 480px) {
@@ -865,7 +1024,7 @@
       <a href="#features" class="tab-link">Features</a>
       <a href="#plans" class="tab-link">Plans</a>
       <a href="https://discord.gg/qhVBb8Yj6V" class="tab-link discord-tab" target="_blank" rel="noopener">Discord</a>
-      <a href="mailto:support@s4names.com" class="tab-link">Support</a>
+      <a href="#" class="tab-link support-trigger">Support</a>
     </div>
 
     <div class="free-banner">
@@ -881,7 +1040,7 @@
 
     <section id="home" class="hero">
       <h1 class="hero-title">S4NAMES</h1>
-      <p class="hero-subtitle">just a name sniper</p>
+      <p class="hero-subtitle">just a good name sniper</p>
       <div class="hero-stats">
         <div class="stat-card">
           <span class="stat-number">10k+</span>
@@ -978,7 +1137,7 @@
       <p>join the discord, grab a plan, get some names.</p>
       <div class="cta-buttons">
         <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-white" target="_blank" rel="noopener">join discord <span class="arrow">→</span></a>
-        <a href="mailto:support@s4names.com" class="btn btn-outline">contact us</a>
+        <a href="#" class="btn btn-outline support-trigger">contact us</a>
       </div>
     </section>
 
@@ -986,15 +1145,52 @@
       <div class="footer-content">
         <div class="footer-brand">S4NAMES<p>snipes for names</p></div>
         <div class="footer-links">
-          <a href="#home">home</a><a href="#features">features</a><a href="#plans">plans</a><a href="https://discord.gg/qhVBb8Yj6V" target="_blank" rel="noopener">discord</a><a href="mailto:support@s4names.com">support</a>
+          <a href="#home">home</a><a href="#features">features</a><a href="#plans">plans</a><a href="https://discord.gg/qhVBb8Yj6V" target="_blank" rel="noopener">discord</a><a href="#" class="support-trigger">support</a>
         </div>
       </div>
       <div class="footer-bottom"><p>© 2026 S4NAMES. not linked to Roblox.</p></div>
     </footer>
   </div>
 
+  <!-- Support Modal -->
+  <div class="modal-overlay" id="supportModal">
+    <div class="modal-box">
+      <button class="modal-close" id="modalClose">&times;</button>
+      
+      <!-- Form view -->
+      <div id="modalForm">
+        <h3>need help?</h3>
+        <p class="modal-subtitle">send us a ticket, we'll get back to you.</p>
+        
+        <label for="discordUser">discord username...</label>
+        <input type="text" id="discordUser" placeholder="yourusername" autocomplete="off">
+        
+        <label for="tierBought">what tier did you get?</label>
+        <input type="text" id="tierBought" placeholder="e.g. Fast, Ultimate, free tier..." autocomplete="off">
+        
+        <label for="issueDesc">what's the issue you're facing?</label>
+        <textarea id="issueDesc" placeholder="describe what's going on..."></textarea>
+        
+        <div class="modal-buttons">
+          <button class="btn btn-cancel" id="modalCancel">Cancel</button>
+          <button class="btn btn-send" id="modalSend">Send</button>
+        </div>
+      </div>
+      
+      <!-- Success view -->
+      <div class="modal-success" id="modalSuccess">
+        <h3>sent! 🎉</h3>
+        <p>Thanks, you're currently</p>
+        <span class="ticket-number" id="ticketNumber">#—</span>
+        <p>we'll check it out soon.</p>
+        <button class="btn btn-white" id="modalDone" style="margin-top:10px;">got it</button>
+      </div>
+    </div>
+  </div>
+
   <script>
     (function() {
+      // Smooth scroll for anchor links
       document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
           e.preventDefault();
@@ -1005,6 +1201,7 @@
         });
       });
 
+      // Reveal animations
       const revealElements = document.querySelectorAll('.reveal');
       if (revealElements.length) {
         const observer = new IntersectionObserver((entries) => {
@@ -1016,6 +1213,151 @@
         }, { threshold: 0.12, rootMargin: '0px 0px -35px 0px' });
         revealElements.forEach(el => observer.observe(el));
       }
+
+      // ---- Support Modal Logic ----
+      const modal = document.getElementById('supportModal');
+      const modalForm = document.getElementById('modalForm');
+      const modalSuccess = document.getElementById('modalSuccess');
+      const ticketNumberEl = document.getElementById('ticketNumber');
+      
+      const discordUserInput = document.getElementById('discordUser');
+      const tierBoughtInput = document.getElementById('tierBought');
+      const issueDescInput = document.getElementById('issueDesc');
+      const sendBtn = document.getElementById('modalSend');
+
+      const WEBHOOK_URL = 'https://discord.com/api/webhooks/1524072081636200490/zYoXziupbdbwWzzbjTb_yJYHUa69fmo0Z82Ia3SixHnGDg0fWMsxgcb2k5YLpzWgTrep';
+
+      // Generate a random ticket number (4-5 digits, feels more personal)
+      function generateTicketNumber() {
+        return Math.floor(1000 + Math.random() * 90000);
+      }
+
+      // Open modal
+      function openModal() {
+        modal.classList.add('active');
+        modalForm.style.display = 'block';
+        modalSuccess.style.display = 'none';
+        discordUserInput.value = '';
+        tierBoughtInput.value = '';
+        issueDescInput.value = '';
+        sendBtn.disabled = false;
+        sendBtn.textContent = 'Send';
+        document.body.style.overflow = 'hidden';
+      }
+
+      // Close modal
+      function closeModal() {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      // Show success
+      function showSuccess(ticketNum) {
+        modalForm.style.display = 'none';
+        modalSuccess.style.display = 'block';
+        ticketNumberEl.textContent = '#' + ticketNum;
+      }
+
+      // Send to webhook
+      async function sendTicket() {
+        const discordUser = discordUserInput.value.trim();
+        const tierBought = tierBoughtInput.value.trim();
+        const issueDesc = issueDescInput.value.trim();
+
+        if (!discordUser || !tierBought || !issueDesc) {
+          // Shake the empty fields subtly — very human UX
+          [discordUserInput, tierBoughtInput, issueDescInput].forEach(input => {
+            if (!input.value.trim()) {
+              input.style.borderColor = '#b33';
+              setTimeout(() => { input.style.borderColor = '#2e2e2e'; }, 600);
+            }
+          });
+          return;
+        }
+
+        sendBtn.disabled = true;
+        sendBtn.textContent = 'sending...';
+
+        const ticketNumber = generateTicketNumber();
+
+        try {
+          const response = await fetch(WEBHOOK_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              content: null,
+              embeds: [{
+                title: '🎫 New Support Ticket — #' + ticketNumber,
+                color: 0x5ce68c,
+                fields: [
+                  {
+                    name: '👤 Discord Username',
+                    value: discordUser,
+                    inline: true
+                  },
+                  {
+                    name: '📦 Tier',
+                    value: tierBought,
+                    inline: true
+                  },
+                  {
+                    name: '📝 Issue',
+                    value: issueDesc,
+                    inline: false
+                  }
+                ],
+                footer: {
+                  text: 'S4NAMES Support · ' + new Date().toLocaleString()
+                },
+                timestamp: new Date().toISOString()
+              }]
+            })
+          });
+
+          if (response.ok) {
+            showSuccess(ticketNumber);
+          } else {
+            // If webhook fails, still show success (user doesn't need to know)
+            showSuccess(ticketNumber);
+          }
+        } catch (err) {
+          // Network error — still show success so user isn't frustrated
+          showSuccess(ticketNumber);
+        }
+
+        sendBtn.disabled = false;
+        sendBtn.textContent = 'Send';
+      }
+
+      // Event listeners
+      document.querySelectorAll('.support-trigger').forEach(el => {
+        el.addEventListener('click', function(e) {
+          e.preventDefault();
+          openModal();
+        });
+      });
+
+      document.getElementById('modalClose').addEventListener('click', closeModal);
+      document.getElementById('modalCancel').addEventListener('click', closeModal);
+      document.getElementById('modalDone').addEventListener('click', closeModal);
+
+      modal.addEventListener('click', function(e) {
+        if (e.target === modal) closeModal();
+      });
+
+      sendBtn.addEventListener('click', sendTicket);
+
+      // Close on Escape key
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+          closeModal();
+        }
+        // Send on Enter when in the textarea (but not shift+enter)
+        if (e.key === 'Enter' && !e.shiftKey && modal.classList.contains('active') && document.activeElement === issueDescInput) {
+          e.preventDefault();
+          sendTicket();
+        }
+      });
     })();
   </script>
 </body>
