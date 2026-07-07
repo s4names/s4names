@@ -22,11 +22,7 @@
             --radius: 8px;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        *{margin:0;padding:0;box-sizing:border-box}
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -35,17 +31,58 @@
             min-height: 100vh;
             line-height: 1.5;
             -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
         }
 
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
+        .container{max-width:1000px;margin:0 auto;padding:0 24px}
 
         ::-webkit-scrollbar{width:3px}
         ::-webkit-scrollbar-track{background:var(--bg)}
         ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from{opacity:0;transform:translateY(30px)}
+            to{opacity:1;transform:translateY(0)}
+        }
+        @keyframes fadeIn {
+            from{opacity:0}
+            to{opacity:1}
+        }
+        @keyframes scaleIn {
+            from{opacity:0;transform:scale(0.9)}
+            to{opacity:1;transform:scale(1)}
+        }
+        @keyframes slideDown {
+            from{opacity:0;transform:translateY(-10px)}
+            to{opacity:1;transform:translateY(0)}
+        }
+        @keyframes pulse {
+            0%,100%{opacity:1}
+            50%{opacity:0.5}
+        }
+        @keyframes countUp {
+            from{opacity:0;transform:translateY(10px)}
+            to{opacity:1;transform:translateY(0)}
+        }
+        @keyframes borderGlow {
+            0%,100%{border-color:var(--border)}
+            50%{border-color:#333}
+        }
+        @keyframes float {
+            0%,100%{transform:translateY(0)}
+            50%{transform:translateY(-6px)}
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
         /* Tabs */
         .top-tabs {
@@ -61,6 +98,7 @@
             -webkit-backdrop-filter: blur(12px);
             z-index: 100;
             border-bottom: 1px solid var(--border);
+            animation: slideDown 0.5s ease;
         }
 
         .tab-link {
@@ -74,14 +112,25 @@
             background: none;
             font-family: inherit;
             font-weight: 500;
-            transition: all 0.15s;
+            transition: all 0.2s;
             white-space: nowrap;
+            position: relative;
         }
 
-        .tab-link:hover {
-            color: var(--text);
-            background: var(--bg3);
+        .tab-link::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 50%;
+            transform: translateX(-50%) scaleX(0);
+            width: 16px;
+            height: 1px;
+            background: var(--text);
+            transition: transform 0.2s;
         }
+
+        .tab-link:hover{color:var(--text);background:var(--bg3)}
+        .tab-link:hover::after{transform:translateX(-50%) scaleX(1)}
 
         .tab-link.discord-tab {
             background: #fff;
@@ -89,12 +138,10 @@
             font-weight: 600;
             border-radius: 20px;
             padding: 7px 18px;
+            transition: all 0.2s;
         }
-
-        .tab-link.discord-tab:hover {
-            background: #ddd;
-            color: #000;
-        }
+        .tab-link.discord-tab::after{display:none}
+        .tab-link.discord-tab:hover{background:#ddd;color:#000;transform:translateY(-1px);box-shadow:0 4px 12px rgba(255,255,255,0.15)}
 
         /* Free Banner */
         .free-banner {
@@ -112,6 +159,7 @@
             position: sticky;
             top: 56px;
             z-index: 99;
+            animation: pulse 3s infinite;
         }
 
         .free-banner .info-icon {
@@ -126,15 +174,11 @@
             height: 20px;
             border-radius: 50%;
             border: 1px solid var(--border2);
-            transition: all 0.15s;
+            transition: all 0.2s;
             font-style: normal;
             font-weight: 600;
         }
-
-        .free-banner .info-icon:hover {
-            border-color: var(--text);
-            background: var(--bg3);
-        }
+        .free-banner .info-icon:hover{border-color:var(--text);background:var(--bg3);transform:scale(1.1)}
 
         .free-tooltip {
             display: none;
@@ -152,59 +196,46 @@
             color: var(--text2);
             z-index: 200;
             pointer-events: none;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.9);
+            animation: scaleIn 0.2s ease;
         }
-
-        .free-tooltip .tooltip-title {
-            font-weight: 700;
-            color: var(--text);
-            margin-bottom: 8px;
-            font-size: 0.8rem;
-        }
-
-        .free-tooltip .pros,
-        .free-tooltip .cons {
-            margin-bottom: 6px;
-        }
-
+        .free-tooltip .tooltip-title{font-weight:700;color:var(--text);margin-bottom:8px;font-size:0.8rem}
+        .free-tooltip .pros,.free-tooltip .cons{margin-bottom:6px}
         .free-tooltip .pros span{display:block;font-weight:700;margin-bottom:2px;font-size:0.68rem;text-transform:uppercase;letter-spacing:1px;color:#4ade80}
         .free-tooltip .cons span{display:block;font-weight:700;margin-bottom:2px;font-size:0.68rem;text-transform:uppercase;letter-spacing:1px;color:#f87171}
-
         .free-tooltip ul{list-style:none;padding:0}
         .free-tooltip ul li{padding:1px 0;font-size:0.7rem}
         .free-tooltip ul li::before{content:'• ';color:var(--text3)}
-
         .info-icon:hover .free-tooltip{display:block}
 
         /* Hero */
         .hero {
             text-align: center;
             padding: 80px 0 50px;
+            animation: fadeInUp 0.8s ease;
         }
-
         .hero-title {
-            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            font-size: clamp(2.5rem, 8vw, 5rem);
             font-weight: 900;
-            letter-spacing: -2px;
+            letter-spacing: -3px;
             line-height: 1;
             margin-bottom: 10px;
             color: var(--text);
         }
-
         .hero-subtitle {
             font-size: 0.95rem;
             color: var(--text2);
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             text-transform: uppercase;
+            animation: fadeIn 1s ease 0.3s both;
         }
-
         .hero-stats {
             display: flex;
             gap: 8px;
             justify-content: center;
             margin-top: 50px;
+            flex-wrap: wrap;
         }
-
         .stat-card {
             background: var(--bg2);
             border: 1px solid var(--border);
@@ -212,15 +243,21 @@
             padding: 22px 30px;
             text-align: center;
             min-width: 150px;
+            transition: all 0.3s;
+            animation: scaleIn 0.5s ease 0.5s both;
         }
-
+        .stat-card:hover {
+            border-color: var(--text);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(255,255,255,0.03);
+        }
         .stat-number {
-            font-size: 2rem;
+            font-size: 2.2rem;
             font-weight: 900;
             display: block;
             color: var(--text);
+            transition: all 0.3s;
         }
-
         .stat-label {
             color: var(--text3);
             font-size: 0.68rem;
@@ -241,275 +278,126 @@
             cursor: pointer;
             border: 1px solid var(--text);
             text-decoration: none;
-            transition: all 0.15s;
+            transition: all 0.2s;
             font-family: inherit;
             background: transparent;
             color: var(--text);
+            position: relative;
+            overflow: hidden;
         }
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;left: 50%;
+            width: 0;height: 0;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            transform: translate(-50%,-50%);
+            transition: width 0.5s, height 0.5s;
+        }
+        .btn:hover::before{width:300px;height:300px}
+        .btn:hover{background:var(--text);color:var(--bg);transform:translateY(-1px);box-shadow:0 6px 20px rgba(255,255,255,0.08)}
+        .btn:active{transform:translateY(0)}
 
-        .btn:hover {
-            background: var(--text);
-            color: var(--bg);
-        }
+        .btn-white{background:#fff;border-color:#fff;color:#000}
+        .btn-white:hover{background:#ddd;border-color:#ddd;color:#000}
 
-        .btn-white {
-            background: #fff;
-            border-color: #fff;
-            color: #000;
-        }
+        .btn-outline{border-color:var(--border2);color:var(--text2)}
+        .btn-outline:hover{border-color:var(--text);color:var(--text);background:transparent}
 
-        .btn-white:hover {
-            background: #ddd;
-            border-color: #ddd;
-            color: #000;
-        }
-
-        .btn-outline {
-            border-color: var(--border2);
-            color: var(--text2);
-        }
-
-        .btn-outline:hover {
-            border-color: var(--text);
-            color: var(--text);
-            background: transparent;
-        }
+        .btn .arrow{display:inline-block;transition:transform 0.2s}
+        .btn:hover .arrow{transform:translateX(3px)}
 
         /* Sections */
-        .section {
-            padding: 70px 0;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .section-title {
-            font-size: clamp(1.4rem, 4vw, 1.8rem);
-            font-weight: 800;
-            margin-bottom: 6px;
-            color: var(--text);
-            letter-spacing: -0.5px;
-        }
-
-        .section-desc {
-            color: var(--text3);
-            font-size: 0.82rem;
-        }
+        .section{padding:80px 0}
+        .section-header{text-align:center;margin-bottom:48px}
+        .section-title{font-size:clamp(1.4rem,4vw,2rem);font-weight:800;margin-bottom:6px;color:var(--text);letter-spacing:-0.5px}
+        .section-desc{color:var(--text3);font-size:0.82rem}
 
         /* Features */
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 8px;
-        }
-
+        .feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:8px}
         .feature-card {
             background: var(--bg2);
             border: 1px solid var(--border);
             border-radius: var(--radius);
-            padding: 24px;
-            transition: all 0.15s;
+            padding: 28px;
+            transition: all 0.3s;
+            cursor: default;
         }
-
         .feature-card:hover {
-            border-color: var(--border2);
+            border-color: var(--text);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255,255,255,0.02);
         }
-
-        .feature-icon {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-            display: block;
-        }
-
-        .feature-card h3 {
-            font-size: 0.95rem;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-
-        .feature-card p {
-            color: var(--text2);
-            font-size: 0.78rem;
-        }
+        .feature-icon{font-size:1.6rem;margin-bottom:12px;display:block;transition:transform 0.3s}
+        .feature-card:hover .feature-icon{transform:scale(1.1)}
+        .feature-card h3{font-size:1rem;font-weight:700;margin-bottom:4px}
+        .feature-card p{color:var(--text2);font-size:0.78rem}
 
         /* Plans */
-        .plans-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-            gap: 8px;
-        }
-
+        .plans-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px}
         .plan-card {
             background: var(--bg2);
             border: 1px solid var(--border);
             border-radius: var(--radius);
-            padding: 22px 14px;
+            padding: 24px 14px;
             text-align: center;
-            transition: all 0.15s;
+            transition: all 0.3s;
             position: relative;
         }
-
-        .plan-card:hover {
-            border-color: var(--border2);
-        }
-
-        .plan-card.best {
-            border-color: var(--text);
-            background: var(--bg3);
-        }
-
+        .plan-card:hover{border-color:var(--border2);transform:translateY(-3px);box-shadow:0 10px 30px rgba(0,0,0,0.5)}
+        .plan-card.best{border-color:var(--text);background:var(--bg3);animation:borderGlow 3s infinite}
         .plan-card.best::before {
             content: 'BEST';
             position: absolute;
-            top: -8px;
-            left: 50%;
+            top: -9px;left: 50%;
             transform: translateX(-50%);
             background: #fff;
             color: #000;
-            padding: 2px 10px;
-            border-radius: 8px;
-            font-size: 0.6rem;
+            padding: 3px 12px;
+            border-radius: 10px;
+            font-size: 0.62rem;
             font-weight: 700;
             letter-spacing: 1px;
+            animation: float 2s ease-in-out infinite;
         }
-
-        .plan-badge {
-            font-size: 1.5rem;
-            margin-bottom: 8px;
-            display: block;
-        }
-
-        .plan-name {
-            font-size: 0.95rem;
-            font-weight: 700;
-        }
-
-        .plan-price {
-            font-size: 1.5rem;
-            font-weight: 900;
-            margin: 8px 0 2px;
-            color: var(--text);
-        }
-
-        .plan-duration {
-            color: var(--text3);
-            font-size: 0.68rem;
-            margin-bottom: 12px;
-        }
-
-        .plan-features {
-            list-style: none;
-            padding: 0;
-            margin: 12px 0;
-            text-align: left;
-        }
-
-        .plan-features li {
-            padding: 3px 0;
-            color: var(--text2);
-            font-size: 0.7rem;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .plan-features li::before {
-            content: '✓';
-            color: var(--text);
-            font-weight: 700;
-            font-size: 0.65rem;
-        }
-
-        .plan-card .btn {
-            width: 100%;
-            justify-content: center;
-            margin-top: 10px;
-        }
+        .plan-badge{font-size:1.6rem;margin-bottom:8px;display:block;transition:transform 0.3s}
+        .plan-card:hover .plan-badge{transform:scale(1.15)}
+        .plan-name{font-size:0.95rem;font-weight:700}
+        .plan-price{font-size:1.6rem;font-weight:900;margin:8px 0 2px;color:var(--text)}
+        .plan-duration{color:var(--text3);font-size:0.68rem;margin-bottom:12px}
+        .plan-snipes{color:var(--text);font-weight:700;font-size:0.72rem;margin-bottom:10px;letter-spacing:0.5px}
+        .plan-features{list-style:none;padding:0;margin:10px 0;text-align:left}
+        .plan-features li{padding:3px 0;color:var(--text2);font-size:0.7rem;display:flex;align-items:center;gap:6px}
+        .plan-features li::before{content:'✓';color:var(--text);font-weight:700;font-size:0.65rem}
+        .plan-card .btn{width:100%;justify-content:center;margin-top:10px}
 
         /* CTA */
         .cta-section {
             background: var(--bg2);
             border: 1px solid var(--border);
             border-radius: var(--radius);
-            padding: 36px;
+            padding: 40px;
             text-align: center;
             margin: 30px 0;
+            transition: all 0.3s;
         }
-
-        .cta-section h2 {
-            font-size: 1.4rem;
-            font-weight: 800;
-            margin-bottom: 6px;
-        }
-
-        .cta-section p {
-            color: var(--text2);
-            margin-bottom: 18px;
-            font-size: 0.82rem;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 8px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
+        .cta-section:hover{border-color:var(--border2)}
+        .cta-section h2{font-size:1.5rem;font-weight:800;margin-bottom:6px}
+        .cta-section p{color:var(--text2);margin-bottom:20px;font-size:0.82rem}
+        .cta-buttons{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
 
         /* Footer */
-        .footer {
-            border-top: 1px solid var(--border);
-            padding: 28px 0;
-            margin-top: 30px;
-        }
+        .footer{border-top:1px solid var(--border);padding:28px 0;margin-top:30px}
+        .footer-content{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;margin-bottom:14px}
+        .footer-brand{font-weight:700;font-size:0.85rem}
+        .footer-brand p{color:var(--text3);font-weight:400;font-size:0.68rem;margin-top:1px}
+        .footer-links{display:flex;gap:18px;flex-wrap:wrap}
+        .footer-links a{color:var(--text2);text-decoration:none;font-size:0.75rem;transition:color 0.2s}
+        .footer-links a:hover{color:var(--text)}
+        .footer-bottom{text-align:center;color:var(--text3);font-size:0.65rem;padding-top:12px;border-top:1px solid var(--border)}
 
-        .footer-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 14px;
-            margin-bottom: 14px;
-        }
-
-        .footer-brand {
-            font-weight: 700;
-            font-size: 0.85rem;
-        }
-
-        .footer-brand p {
-            color: var(--text3);
-            font-weight: 400;
-            font-size: 0.68rem;
-            margin-top: 1px;
-        }
-
-        .footer-links {
-            display: flex;
-            gap: 18px;
-            flex-wrap: wrap;
-        }
-
-        .footer-links a {
-            color: var(--text2);
-            text-decoration: none;
-            font-size: 0.75rem;
-        }
-
-        .footer-links a:hover {
-            color: var(--text);
-        }
-
-        .footer-bottom {
-            text-align: center;
-            color: var(--text3);
-            font-size: 0.65rem;
-            padding-top: 12px;
-            border-top: 1px solid var(--border);
-        }
-
-        @media (max-width: 768px) {
+        @media (max-width:768px) {
             .hero{padding:50px 0 30px}
             .stat-card{padding:16px 20px;min-width:110px}
             .stat-number{font-size:1.5rem}
@@ -517,9 +405,9 @@
             .free-tooltip{width:240px;left:auto;right:0;transform:none}
             .top-tabs{gap:1px}
             .tab-link{padding:6px 10px;font-size:0.72rem}
+            .section{padding:50px 0}
         }
-
-        @media (max-width: 480px) {
+        @media (max-width:480px) {
             .feature-grid{grid-template-columns:1fr}
             .top-tabs{flex-wrap:wrap;gap:2px}
             .footer-content{flex-direction:column;text-align:center}
@@ -542,7 +430,7 @@
             <span class="info-icon">i
                 <div class="free-tooltip">
                     <div class="tooltip-title">Free Tier</div>
-                    <div class="pros"><span>✅ Gets</span><ul><li>Basic sniper</li><li>5–7 char names</li><li>25 snipes max</li></ul></div>
+                    <div class="pros"><span>✅ Gets</span><ul><li>Basic sniper</li><li>5–7 char names</li><li>25 snipes/day</li></ul></div>
                     <div class="cons"><span>❌ No</span><ul><li>Slow as hell</li><li>No custom length</li><li>No future snipers</li><li>No priority support</li></ul></div>
                 </div>
             </span>
@@ -554,70 +442,75 @@
             <div class="hero-stats">
                 <div class="stat-card">
                     <span class="stat-number">10k+</span>
-                    <span class="stat-label">Snipes</span>
+                    <span class="stat-label">Snipes/Day</span>
                 </div>
             </div>
         </section>
 
         <section id="features" class="section">
-            <div class="section-header">
+            <div class="section-header reveal">
                 <h2 class="section-title">Why S4N</h2>
                 <p class="section-desc">Fast. Clean. Works.</p>
             </div>
             <div class="feature-grid">
-                <div class="feature-card"><span class="feature-icon">⚡</span><h3>Fast</h3><p>Thousands per minute. You get it first.</p></div>
-                <div class="feature-card"><span class="feature-icon">💎</span><h3>Rare</h3><p>3-letters. OGs. The good stuff.</p></div>
-                <div class="feature-card"><span class="feature-icon">🎯</span><h3>Smart</h3><p>Knows what's worth sniping before it drops.</p></div>
-                <div class="feature-card"><span class="feature-icon">🔧</span><h3>Tweakable</h3><p>Set length, speed, patterns. Your call.</p></div>
-                <div class="feature-card"><span class="feature-icon">🔒</span><h3>Private</h3><p>No tracking. No BS. Just snipes.</p></div>
-                <div class="feature-card"><span class="feature-icon">🚀</span><h3>Updates</h3><p>New snipers drop. Paid gets em first.</p></div>
+                <div class="feature-card reveal"><span class="feature-icon">⚡</span><h3>Fast</h3><p>Thousands per minute. You get it first.</p></div>
+                <div class="feature-card reveal"><span class="feature-icon">💎</span><h3>Rare</h3><p>3-letters. OGs. The good stuff.</p></div>
+                <div class="feature-card reveal"><span class="feature-icon">🎯</span><h3>Smart</h3><p>Knows what's worth sniping before it drops.</p></div>
+                <div class="feature-card reveal"><span class="feature-icon">🔧</span><h3>Tweakable</h3><p>Set length, speed, patterns. Your call.</p></div>
+                <div class="feature-card reveal"><span class="feature-icon">🔒</span><h3>Private</h3><p>No tracking. No BS. Just snipes.</p></div>
+                <div class="feature-card reveal"><span class="feature-icon">🚀</span><h3>Updates</h3><p>New snipers drop. Paid gets em first.</p></div>
             </div>
         </section>
 
         <section id="plans" class="section">
-            <div class="section-header">
+            <div class="section-header reveal">
                 <h2 class="section-title">Plans</h2>
                 <p class="section-desc">Pick one. Start sniping.</p>
             </div>
             <div class="plans-grid">
-                <div class="plan-card">
+                <div class="plan-card reveal">
                     <span class="plan-badge">🟢</span><h3 class="plan-name">Basic</h3>
                     <div class="plan-price">50</div><p class="plan-duration">Robux • 1 Week</p>
-                    <ul class="plan-features"><li>Slow speed</li><li>7–10 char</li><li>150 snipes</li><li>Basic support</li></ul>
-                    <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-outline" target="_blank">Buy</a>
+                    <p class="plan-snipes">150 snipes/day</p>
+                    <ul class="plan-features"><li>Slow speed</li><li>7–10 char</li><li>Basic support</li></ul>
+                    <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-outline" target="_blank">Buy <span class="arrow">→</span></a>
                 </div>
-                <div class="plan-card">
+                <div class="plan-card reveal">
                     <span class="plan-badge">🔵</span><h3 class="plan-name">Mid</h3>
                     <div class="plan-price">150</div><p class="plan-duration">Robux • 2 Weeks</p>
-                    <ul class="plan-features"><li>Faster</li><li>5–7 char</li><li>500 snipes</li><li>Custom length</li><li>Future snipers</li><li>Priority support</li></ul>
-                    <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-outline" target="_blank">Buy</a>
+                    <p class="plan-snipes">500 snipes/day</p>
+                    <ul class="plan-features"><li>Faster</li><li>5–7 char</li><li>Custom length</li><li>Future snipers</li><li>Priority support</li></ul>
+                    <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-outline" target="_blank">Buy <span class="arrow">→</span></a>
                 </div>
-                <div class="plan-card best">
+                <div class="plan-card best reveal">
                     <span class="plan-badge">🟠</span><h3 class="plan-name">Fast</h3>
                     <div class="plan-price">400</div><p class="plan-duration">Robux • 1 Month</p>
-                    <ul class="plan-features"><li>Fast</li><li>3–7 char</li><li>2,500 snipes</li><li>Custom length</li><li>All snipers</li><li>Priority support</li></ul>
-                    <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-white" target="_blank">Buy</a>
+                    <p class="plan-snipes">2,500 snipes/day</p>
+                    <ul class="plan-features"><li>Fast</li><li>3–7 char</li><li>Custom length</li><li>All snipers</li><li>Priority support</li></ul>
+                    <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-white" target="_blank">Buy <span class="arrow">→</span></a>
                 </div>
-                <div class="plan-card">
+                <div class="plan-card reveal">
                     <span class="plan-badge">🔴</span><h3 class="plan-name">Pro</h3>
                     <div class="plan-price">555</div><p class="plan-duration">Robux • 2 Months</p>
-                    <ul class="plan-features"><li>Very fast</li><li>3–10 char</li><li>5,000 snipes</li><li>Custom length</li><li>All snipers</li><li>VIP support</li></ul>
-                    <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-outline" target="_blank">Buy</a>
+                    <p class="plan-snipes">5,000 snipes/day</p>
+                    <ul class="plan-features"><li>Very fast</li><li>3–10 char</li><li>Custom length</li><li>All snipers</li><li>VIP support</li></ul>
+                    <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-outline" target="_blank">Buy <span class="arrow">→</span></a>
                 </div>
-                <div class="plan-card">
+                <div class="plan-card reveal">
                     <span class="plan-badge">👑</span><h3 class="plan-name">Ultimate</h3>
                     <div class="plan-price">1,000</div><p class="plan-duration">Robux • Lifetime</p>
-                    <ul class="plan-features"><li>Fastest</li><li>3–10 char</li><li>Unlimited</li><li>Custom length</li><li>All snipers</li><li>Early access</li><li>VIP support</li></ul>
-                    <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-outline" target="_blank">Buy</a>
+                    <p class="plan-snipes">Unlimited snipes/day</p>
+                    <ul class="plan-features"><li>Fastest</li><li>3–10 char</li><li>Custom length</li><li>All snipers</li><li>Early access</li><li>VIP support</li></ul>
+                    <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-outline" target="_blank">Buy <span class="arrow">→</span></a>
                 </div>
             </div>
         </section>
 
-        <section class="cta-section">
+        <section class="cta-section reveal">
             <h2>Ready?</h2>
             <p>Join Discord. Pick a plan. Get names.</p>
             <div class="cta-buttons">
-                <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-white" target="_blank">Join Discord</a>
+                <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-white" target="_blank">Join Discord <span class="arrow">→</span></a>
                 <a href="mailto:support@s4names.com" class="btn btn-outline">Support</a>
             </div>
         </section>
@@ -634,7 +527,36 @@
     </div>
 
     <script>
-        document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',function(e){e.preventDefault();const t=document.querySelector(this.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'})})});
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(a=>{
+            a.addEventListener('click',function(e){
+                e.preventDefault();
+                const t=document.querySelector(this.getAttribute('href'));
+                if(t)t.scrollIntoView({behavior:'smooth',block:'start'});
+            });
+        });
+
+        // Scroll reveal
+        const revealElements = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries)=>{
+            entries.forEach(entry=>{
+                if(entry.isIntersecting){
+                    entry.target.classList.add('visible');
+                }
+            });
+        },{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+
+        revealElements.forEach(el=>observer.observe(el));
+
+        // Stat hover glitch
+        const statNumber = document.querySelector('.stat-number');
+        const originalText = statNumber.textContent;
+        statNumber.addEventListener('mouseenter',()=>{
+            statNumber.style.transform='scale(1.05)';
+        });
+        statNumber.addEventListener('mouseleave',()=>{
+            statNumber.style.transform='scale(1)';
+        });
     </script>
 </body>
 </html>
