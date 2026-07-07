@@ -7,19 +7,19 @@
     <meta name="description" content="S4N - Roblox username sniper.">
     <meta property="og:title" content="S4NAMES">
     <meta property="og:description" content="Find rare Roblox usernames.">
-    <meta name="theme-color" content="#000">
+    <meta name="theme-color" content="#0a0a0a">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
     <style>
         :root {
-            --bg: #000;
-            --bg2: #0a0a0a;
-            --bg3: #111;
+            --bg: #0a0a0a;
+            --bg2: #0f0f0f;
+            --bg3: #161616;
             --text: #fff;
-            --text2: #888;
-            --text3: #444;
-            --border: #1a1a1a;
-            --border2: #222;
-            --radius: 8px;
+            --text2: #999;
+            --text3: #555;
+            --border: #1c1c1c;
+            --border2: #282828;
+            --radius: 10px;
         }
 
         *{margin:0;padding:0;box-sizing:border-box}
@@ -40,9 +40,13 @@
         ::-webkit-scrollbar-track{background:var(--bg)}
         ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
 
-        /* Animations */
-        @keyframes fadeInUp {
-            from{opacity:0;transform:translateY(30px)}
+        /* ========== ANIMATIONS ========== */
+        @keyframes fadeUp {
+            from{opacity:0;transform:translateY(40px)}
+            to{opacity:1;transform:translateY(0)}
+        }
+        @keyframes fadeDown {
+            from{opacity:0;transform:translateY(-20px)}
             to{opacity:1;transform:translateY(0)}
         }
         @keyframes fadeIn {
@@ -50,41 +54,71 @@
             to{opacity:1}
         }
         @keyframes scaleIn {
-            from{opacity:0;transform:scale(0.9)}
+            from{opacity:0;transform:scale(0.85)}
             to{opacity:1;transform:scale(1)}
         }
-        @keyframes slideDown {
-            from{opacity:0;transform:translateY(-10px)}
-            to{opacity:1;transform:translateY(0)}
+        @keyframes slideRight {
+            from{opacity:0;transform:translateX(-30px)}
+            to{opacity:1;transform:translateX(0)}
+        }
+        @keyframes slideLeft {
+            from{opacity:0;transform:translateX(30px)}
+            to{opacity:1;transform:translateX(0)}
         }
         @keyframes pulse {
-            0%,100%{opacity:1}
-            50%{opacity:0.5}
+            0%,100%{opacity:0.6}
+            50%{opacity:1}
         }
-        @keyframes countUp {
-            from{opacity:0;transform:translateY(10px)}
-            to{opacity:1;transform:translateY(0)}
+        @keyframes float {
+            0%,100%{transform:translateY(0px)}
+            50%{transform:translateY(-8px)}
         }
-        @keyframes borderGlow {
+        @keyframes glitch {
+            0%,100%{transform:translate(0)}
+            20%{transform:translate(-2px,1px)}
+            40%{transform:translate(2px,-1px)}
+            60%{transform:translate(-1px,-1px)}
+            80%{transform:translate(1px,1px)}
+        }
+        @keyframes borderPulse {
             0%,100%{border-color:var(--border)}
             50%{border-color:#333}
         }
-        @keyframes float {
-            0%,100%{transform:translateY(0)}
-            50%{transform:translateY(-6px)}
+        @keyframes shimmer {
+            0%{background-position:-200% 0}
+            100%{background-position:200% 0}
+        }
+        @keyframes spinSlow {
+            from{transform:rotate(0deg)}
+            to{transform:rotate(360deg)}
+        }
+        @keyframes bounceIn {
+            0%{opacity:0;transform:scale(0.3)}
+            50%{transform:scale(1.05)}
+            70%{transform:scale(0.95)}
+            100%{opacity:1;transform:scale(1)}
+        }
+        @keyframes wiggle {
+            0%,100%{transform:rotate(0)}
+            25%{transform:rotate(-3deg)}
+            75%{transform:rotate(3deg)}
+        }
+        @keyframes blurIn {
+            from{opacity:0;filter:blur(10px)}
+            to{opacity:1;filter:blur(0)}
         }
 
         .reveal {
             opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateY(40px);
+            transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .reveal.visible {
             opacity: 1;
             transform: translateY(0);
         }
 
-        /* Tabs */
+        /* ========== TABS ========== */
         .top-tabs {
             display: flex;
             justify-content: center;
@@ -93,26 +127,26 @@
             padding: 14px 0;
             position: sticky;
             top: 0;
-            background: rgba(0,0,0,0.9);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            background: rgba(10,10,10,0.9);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             z-index: 100;
             border-bottom: 1px solid var(--border);
-            animation: slideDown 0.5s ease;
+            animation: fadeDown 0.6s ease;
         }
 
         .tab-link {
             color: var(--text2);
             text-decoration: none;
             padding: 7px 16px;
-            border-radius: 5px;
+            border-radius: 6px;
             font-size: 0.8rem;
             cursor: pointer;
             border: none;
             background: none;
             font-family: inherit;
             font-weight: 500;
-            transition: all 0.2s;
+            transition: all 0.25s;
             white-space: nowrap;
             position: relative;
         }
@@ -123,10 +157,11 @@
             bottom: 2px;
             left: 50%;
             transform: translateX(-50%) scaleX(0);
-            width: 16px;
-            height: 1px;
+            width: 18px;
+            height: 1.5px;
             background: var(--text);
-            transition: transform 0.2s;
+            border-radius: 1px;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .tab-link:hover{color:var(--text);background:var(--bg3)}
@@ -138,12 +173,12 @@
             font-weight: 600;
             border-radius: 20px;
             padding: 7px 18px;
-            transition: all 0.2s;
+            transition: all 0.25s;
         }
         .tab-link.discord-tab::after{display:none}
-        .tab-link.discord-tab:hover{background:#ddd;color:#000;transform:translateY(-1px);box-shadow:0 4px 12px rgba(255,255,255,0.15)}
+        .tab-link.discord-tab:hover{background:#e0e0e0;color:#000;transform:translateY(-2px);box-shadow:0 8px 20px rgba(255,255,255,0.12)}
 
-        /* Free Banner */
+        /* ========== FREE BANNER ========== */
         .free-banner {
             background: var(--bg2);
             border: 1px solid var(--border);
@@ -174,11 +209,11 @@
             height: 20px;
             border-radius: 50%;
             border: 1px solid var(--border2);
-            transition: all 0.2s;
+            transition: all 0.25s;
             font-style: normal;
             font-weight: 600;
         }
-        .free-banner .info-icon:hover{border-color:var(--text);background:var(--bg3);transform:scale(1.1)}
+        .free-banner .info-icon:hover{border-color:var(--text);background:var(--bg3);transform:scale(1.15)}
 
         .free-tooltip {
             display: none;
@@ -196,7 +231,7 @@
             color: var(--text2);
             z-index: 200;
             pointer-events: none;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.9);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.9);
             animation: scaleIn 0.2s ease;
         }
         .free-tooltip .tooltip-title{font-weight:700;color:var(--text);margin-bottom:8px;font-size:0.8rem}
@@ -208,24 +243,38 @@
         .free-tooltip ul li::before{content:'• ';color:var(--text3)}
         .info-icon:hover .free-tooltip{display:block}
 
-        /* Hero */
+        /* ========== HERO ========== */
         .hero {
             text-align: center;
-            padding: 80px 0 50px;
-            animation: fadeInUp 0.8s ease;
+            padding: 90px 0 60px;
+            position: relative;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 50%;left: 50%;
+            transform: translate(-50%,-50%);
+            width: 600px;height: 600px;
+            background: radial-gradient(circle, rgba(255,255,255,0.02) 0%, transparent 70%);
+            pointer-events: none;
+            animation: spinSlow 60s linear infinite;
         }
         .hero-title {
-            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-size: clamp(3rem, 9vw, 5.5rem);
             font-weight: 900;
-            letter-spacing: -3px;
+            letter-spacing: -4px;
             line-height: 1;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             color: var(--text);
+            animation: blurIn 1s ease;
+        }
+        .hero-title:hover {
+            animation: glitch 0.3s ease;
         }
         .hero-subtitle {
             font-size: 0.95rem;
             color: var(--text2);
-            letter-spacing: 3px;
+            letter-spacing: 4px;
             text-transform: uppercase;
             animation: fadeIn 1s ease 0.3s both;
         }
@@ -240,45 +289,50 @@
             background: var(--bg2);
             border: 1px solid var(--border);
             border-radius: var(--radius);
-            padding: 22px 30px;
+            padding: 26px 36px;
             text-align: center;
-            min-width: 150px;
-            transition: all 0.3s;
-            animation: scaleIn 0.5s ease 0.5s both;
+            min-width: 160px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            animation: bounceIn 0.6s ease 0.5s both;
+            cursor: default;
         }
         .stat-card:hover {
             border-color: var(--text);
-            transform: translateY(-4px);
-            box-shadow: 0 10px 30px rgba(255,255,255,0.03);
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(255,255,255,0.04);
         }
         .stat-number {
-            font-size: 2.2rem;
+            font-size: 2.4rem;
             font-weight: 900;
             display: block;
             color: var(--text);
             transition: all 0.3s;
         }
+        .stat-card:hover .stat-number {
+            transform: scale(1.1);
+            letter-spacing: 2px;
+        }
         .stat-label {
             color: var(--text3);
-            font-size: 0.68rem;
+            font-size: 0.7rem;
             text-transform: uppercase;
             letter-spacing: 2px;
             margin-top: 4px;
         }
 
-        /* Buttons */
+        /* ========== BUTTONS ========== */
         .btn {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            padding: 10px 24px;
+            padding: 11px 26px;
             border-radius: var(--radius);
-            font-size: 0.8rem;
+            font-size: 0.82rem;
             font-weight: 600;
             cursor: pointer;
             border: 1px solid var(--text);
             text-decoration: none;
-            transition: all 0.2s;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             font-family: inherit;
             background: transparent;
             color: var(--text);
@@ -291,121 +345,162 @@
             top: 50%;left: 50%;
             width: 0;height: 0;
             border-radius: 50%;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.08);
             transform: translate(-50%,-50%);
-            transition: width 0.5s, height 0.5s;
+            transition: width 0.6s, height 0.6s;
         }
-        .btn:hover::before{width:300px;height:300px}
-        .btn:hover{background:var(--text);color:var(--bg);transform:translateY(-1px);box-shadow:0 6px 20px rgba(255,255,255,0.08)}
-        .btn:active{transform:translateY(0)}
+        .btn:hover::before{width:400px;height:400px}
+        .btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(255,255,255,0.06)}
+        .btn:active{transform:translateY(0) scale(0.98)}
+        .btn .arrow{display:inline-block;transition:transform 0.3s}
+        .btn:hover .arrow{transform:translateX(4px)}
 
         .btn-white{background:#fff;border-color:#fff;color:#000}
-        .btn-white:hover{background:#ddd;border-color:#ddd;color:#000}
-
+        .btn-white:hover{background:#e0e0e0;border-color:#e0e0e0;color:#000;box-shadow:0 10px 30px rgba(255,255,255,0.1)}
         .btn-outline{border-color:var(--border2);color:var(--text2)}
         .btn-outline:hover{border-color:var(--text);color:var(--text);background:transparent}
 
-        .btn .arrow{display:inline-block;transition:transform 0.2s}
-        .btn:hover .arrow{transform:translateX(3px)}
+        /* ========== SECTIONS ========== */
+        .section{padding:90px 0}
+        .section-header{text-align:center;margin-bottom:50px}
+        .section-title{font-size:clamp(1.5rem,4vw,2.2rem);font-weight:800;margin-bottom:8px;color:var(--text);letter-spacing:-0.5px}
+        .section-desc{color:var(--text3);font-size:0.85rem}
 
-        /* Sections */
-        .section{padding:80px 0}
-        .section-header{text-align:center;margin-bottom:48px}
-        .section-title{font-size:clamp(1.4rem,4vw,2rem);font-weight:800;margin-bottom:6px;color:var(--text);letter-spacing:-0.5px}
-        .section-desc{color:var(--text3);font-size:0.82rem}
-
-        /* Features */
-        .feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:8px}
+        /* ========== FEATURES ========== */
+        .feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px}
         .feature-card {
             background: var(--bg2);
             border: 1px solid var(--border);
             border-radius: var(--radius);
-            padding: 28px;
-            transition: all 0.3s;
+            padding: 30px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             cursor: default;
+            position: relative;
+            overflow: hidden;
         }
+        .feature-card::after {
+            content: '';
+            position: absolute;
+            top: 0;left: 0;right: 0;bottom: 0;
+            background: linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.01) 50%, transparent 100%);
+            background-size: 200% 200%;
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        .feature-card:hover::after{opacity:1;animation:shimmer 1.5s ease infinite}
         .feature-card:hover {
-            border-color: var(--text);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(255,255,255,0.02);
+            border-color: #333;
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
         }
-        .feature-icon{font-size:1.6rem;margin-bottom:12px;display:block;transition:transform 0.3s}
-        .feature-card:hover .feature-icon{transform:scale(1.1)}
-        .feature-card h3{font-size:1rem;font-weight:700;margin-bottom:4px}
-        .feature-card p{color:var(--text2);font-size:0.78rem}
+        .feature-icon{font-size:1.8rem;margin-bottom:14px;display:block;transition:all 0.4s}
+        .feature-card:hover .feature-icon{transform:scale(1.2) rotate(-5deg)}
+        .feature-card h3{font-size:1.05rem;font-weight:700;margin-bottom:6px;transition:transform 0.3s}
+        .feature-card:hover h3{transform:translateX(4px)}
+        .feature-card p{color:var(--text2);font-size:0.8rem}
 
-        /* Plans */
-        .plans-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px}
+        /* ========== PLANS ========== */
+        .plans-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
         .plan-card {
             background: var(--bg2);
             border: 1px solid var(--border);
             border-radius: var(--radius);
-            padding: 24px 14px;
+            padding: 26px 16px;
             text-align: center;
-            transition: all 0.3s;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative;
+            overflow: hidden;
         }
-        .plan-card:hover{border-color:var(--border2);transform:translateY(-3px);box-shadow:0 10px 30px rgba(0,0,0,0.5)}
-        .plan-card.best{border-color:var(--text);background:var(--bg3);animation:borderGlow 3s infinite}
+        .plan-card::before {
+            content: '';
+            position: absolute;
+            top: 0;left: 0;right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        .plan-card:hover::before{opacity:1}
+        .plan-card:hover{border-color:#333;transform:translateY(-6px);box-shadow:0 20px 50px rgba(0,0,0,0.6)}
+        .plan-card.best{border-color:#444;background:var(--bg3);animation:borderPulse 3s infinite}
         .plan-card.best::before {
             content: 'BEST';
             position: absolute;
-            top: -9px;left: 50%;
+            top: -10px;left: 50%;
             transform: translateX(-50%);
             background: #fff;
             color: #000;
-            padding: 3px 12px;
-            border-radius: 10px;
-            font-size: 0.62rem;
+            padding: 4px 14px;
+            border-radius: 12px;
+            font-size: 0.64rem;
             font-weight: 700;
             letter-spacing: 1px;
-            animation: float 2s ease-in-out infinite;
+            animation: float 2.5s ease-in-out infinite;
+            z-index: 2;
         }
-        .plan-badge{font-size:1.6rem;margin-bottom:8px;display:block;transition:transform 0.3s}
-        .plan-card:hover .plan-badge{transform:scale(1.15)}
-        .plan-name{font-size:0.95rem;font-weight:700}
-        .plan-price{font-size:1.6rem;font-weight:900;margin:8px 0 2px;color:var(--text)}
-        .plan-duration{color:var(--text3);font-size:0.68rem;margin-bottom:12px}
-        .plan-snipes{color:var(--text);font-weight:700;font-size:0.72rem;margin-bottom:10px;letter-spacing:0.5px}
-        .plan-features{list-style:none;padding:0;margin:10px 0;text-align:left}
-        .plan-features li{padding:3px 0;color:var(--text2);font-size:0.7rem;display:flex;align-items:center;gap:6px}
+        .plan-badge{font-size:1.8rem;margin-bottom:10px;display:block;transition:all 0.4s}
+        .plan-card:hover .plan-badge{transform:scale(1.2);animation:wiggle 0.5s ease}
+        .plan-name{font-size:1rem;font-weight:700;transition:transform 0.3s}
+        .plan-card:hover .plan-name{transform:scale(1.05)}
+        .plan-price{font-size:1.8rem;font-weight:900;margin:10px 0 2px;color:var(--text);transition:all 0.3s}
+        .plan-card:hover .plan-price{transform:scale(1.08)}
+        .plan-duration{color:var(--text3);font-size:0.7rem;margin-bottom:12px}
+        .plan-snipes{color:var(--text);font-weight:700;font-size:0.74rem;margin-bottom:12px;letter-spacing:0.5px;background:var(--bg);display:inline-block;padding:4px 12px;border-radius:20px;border:1px solid var(--border)}
+        .plan-features{list-style:none;padding:0;margin:12px 0;text-align:left}
+        .plan-features li{padding:4px 0;color:var(--text2);font-size:0.72rem;display:flex;align-items:center;gap:6px;transition:all 0.2s}
+        .plan-card:hover .plan-features li{transform:translateX(2px)}
         .plan-features li::before{content:'✓';color:var(--text);font-weight:700;font-size:0.65rem}
-        .plan-card .btn{width:100%;justify-content:center;margin-top:10px}
+        .plan-card .btn{width:100%;justify-content:center;margin-top:12px}
 
-        /* CTA */
+        /* ========== CTA ========== */
         .cta-section {
             background: var(--bg2);
             border: 1px solid var(--border);
             border-radius: var(--radius);
-            padding: 40px;
+            padding: 44px;
             text-align: center;
-            margin: 30px 0;
-            transition: all 0.3s;
+            margin: 40px 0;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
         }
-        .cta-section:hover{border-color:var(--border2)}
-        .cta-section h2{font-size:1.5rem;font-weight:800;margin-bottom:6px}
-        .cta-section p{color:var(--text2);margin-bottom:20px;font-size:0.82rem}
-        .cta-buttons{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;left: 0;right: 0;bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.02) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        .cta-section:hover::before{opacity:1}
+        .cta-section:hover{border-color:#333;transform:translateY(-3px)}
+        .cta-section h2{font-size:1.6rem;font-weight:800;margin-bottom:8px}
+        .cta-section p{color:var(--text2);margin-bottom:22px;font-size:0.85rem}
+        .cta-buttons{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
 
-        /* Footer */
-        .footer{border-top:1px solid var(--border);padding:28px 0;margin-top:30px}
-        .footer-content{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;margin-bottom:14px}
-        .footer-brand{font-weight:700;font-size:0.85rem}
-        .footer-brand p{color:var(--text3);font-weight:400;font-size:0.68rem;margin-top:1px}
-        .footer-links{display:flex;gap:18px;flex-wrap:wrap}
-        .footer-links a{color:var(--text2);text-decoration:none;font-size:0.75rem;transition:color 0.2s}
+        /* ========== FOOTER ========== */
+        .footer{border-top:1px solid var(--border);padding:30px 0;margin-top:40px}
+        .footer-content{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;margin-bottom:16px}
+        .footer-brand{font-weight:700;font-size:0.88rem;transition:transform 0.3s}
+        .footer-brand:hover{transform:translateY(-2px)}
+        .footer-brand p{color:var(--text3);font-weight:400;font-size:0.7rem;margin-top:2px}
+        .footer-links{display:flex;gap:20px;flex-wrap:wrap}
+        .footer-links a{color:var(--text2);text-decoration:none;font-size:0.76rem;transition:all 0.2s;position:relative}
+        .footer-links a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:var(--text);transition:width 0.3s}
         .footer-links a:hover{color:var(--text)}
-        .footer-bottom{text-align:center;color:var(--text3);font-size:0.65rem;padding-top:12px;border-top:1px solid var(--border)}
+        .footer-links a:hover::after{width:100%}
+        .footer-bottom{text-align:center;color:var(--text3);font-size:0.66rem;padding-top:14px;border-top:1px solid var(--border)}
 
+        /* ========== RESPONSIVE ========== */
         @media (max-width:768px) {
             .hero{padding:50px 0 30px}
-            .stat-card{padding:16px 20px;min-width:110px}
-            .stat-number{font-size:1.5rem}
-            .plans-grid{grid-template-columns:1fr;max-width:360px;margin:0 auto}
+            .stat-card{padding:18px 22px;min-width:110px}
+            .stat-number{font-size:1.6rem}
+            .plans-grid{grid-template-columns:1fr;max-width:380px;margin:0 auto}
             .free-tooltip{width:240px;left:auto;right:0;transform:none}
             .top-tabs{gap:1px}
             .tab-link{padding:6px 10px;font-size:0.72rem}
-            .section{padding:50px 0}
+            .section{padding:60px 0}
         }
         @media (max-width:480px) {
             .feature-grid{grid-template-columns:1fr}
@@ -442,7 +537,7 @@
             <div class="hero-stats">
                 <div class="stat-card">
                     <span class="stat-number">10k+</span>
-                    <span class="stat-label">Snipes/Day</span>
+                    <span class="stat-label">Snipes / Day</span>
                 </div>
             </div>
         </section>
@@ -471,35 +566,35 @@
                 <div class="plan-card reveal">
                     <span class="plan-badge">🟢</span><h3 class="plan-name">Basic</h3>
                     <div class="plan-price">50</div><p class="plan-duration">Robux • 1 Week</p>
-                    <p class="plan-snipes">150 snipes/day</p>
+                    <p class="plan-snipes">150 / day</p>
                     <ul class="plan-features"><li>Slow speed</li><li>7–10 char</li><li>Basic support</li></ul>
                     <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-outline" target="_blank">Buy <span class="arrow">→</span></a>
                 </div>
                 <div class="plan-card reveal">
                     <span class="plan-badge">🔵</span><h3 class="plan-name">Mid</h3>
                     <div class="plan-price">150</div><p class="plan-duration">Robux • 2 Weeks</p>
-                    <p class="plan-snipes">500 snipes/day</p>
+                    <p class="plan-snipes">500 / day</p>
                     <ul class="plan-features"><li>Faster</li><li>5–7 char</li><li>Custom length</li><li>Future snipers</li><li>Priority support</li></ul>
                     <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-outline" target="_blank">Buy <span class="arrow">→</span></a>
                 </div>
                 <div class="plan-card best reveal">
                     <span class="plan-badge">🟠</span><h3 class="plan-name">Fast</h3>
                     <div class="plan-price">400</div><p class="plan-duration">Robux • 1 Month</p>
-                    <p class="plan-snipes">2,500 snipes/day</p>
+                    <p class="plan-snipes">2.5k / day</p>
                     <ul class="plan-features"><li>Fast</li><li>3–7 char</li><li>Custom length</li><li>All snipers</li><li>Priority support</li></ul>
                     <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-white" target="_blank">Buy <span class="arrow">→</span></a>
                 </div>
                 <div class="plan-card reveal">
                     <span class="plan-badge">🔴</span><h3 class="plan-name">Pro</h3>
                     <div class="plan-price">555</div><p class="plan-duration">Robux • 2 Months</p>
-                    <p class="plan-snipes">5,000 snipes/day</p>
+                    <p class="plan-snipes">5k / day</p>
                     <ul class="plan-features"><li>Very fast</li><li>3–10 char</li><li>Custom length</li><li>All snipers</li><li>VIP support</li></ul>
                     <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-outline" target="_blank">Buy <span class="arrow">→</span></a>
                 </div>
                 <div class="plan-card reveal">
                     <span class="plan-badge">👑</span><h3 class="plan-name">Ultimate</h3>
                     <div class="plan-price">1,000</div><p class="plan-duration">Robux • Lifetime</p>
-                    <p class="plan-snipes">Unlimited snipes/day</p>
+                    <p class="plan-snipes">∞ / day</p>
                     <ul class="plan-features"><li>Fastest</li><li>3–10 char</li><li>Custom length</li><li>All snipers</li><li>Early access</li><li>VIP support</li></ul>
                     <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-outline" target="_blank">Buy <span class="arrow">→</span></a>
                 </div>
@@ -527,7 +622,6 @@
     </div>
 
     <script>
-        // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(a=>{
             a.addEventListener('click',function(e){
                 e.preventDefault();
@@ -536,8 +630,6 @@
             });
         });
 
-        // Scroll reveal
-        const revealElements = document.querySelectorAll('.reveal');
         const observer = new IntersectionObserver((entries)=>{
             entries.forEach(entry=>{
                 if(entry.isIntersecting){
@@ -546,16 +638,16 @@
             });
         },{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
 
-        revealElements.forEach(el=>observer.observe(el));
+        document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
 
-        // Stat hover glitch
-        const statNumber = document.querySelector('.stat-number');
-        const originalText = statNumber.textContent;
-        statNumber.addEventListener('mouseenter',()=>{
-            statNumber.style.transform='scale(1.05)';
-        });
-        statNumber.addEventListener('mouseleave',()=>{
-            statNumber.style.transform='scale(1)';
+        // Parallax glow follows mouse on hero
+        const hero = document.querySelector('.hero');
+        hero.addEventListener('mousemove',(e)=>{
+            const rect = hero.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            hero.style.setProperty('--mx',`${x}px`);
+            hero.style.setProperty('--my',`${y}px`);
         });
     </script>
 </body>
