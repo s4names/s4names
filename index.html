@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S4NAMES - Roblox Username Sniper</title>
+    <title>S4NAMES</title>
     <meta name="description" content="S4N - The best Roblox username sniper. Find rare usernames with speed and precision.">
     <meta property="og:title" content="S4NAMES - Snipes 4 Names">
     <meta property="og:description" content="Find rare Roblox usernames with S4N">
@@ -418,7 +418,7 @@
         }
 
         .plan-card.featured::before {
-            content: 'POPULAR';
+            content: 'BEST VALUE';
             position: absolute;
             top: -10px;
             left: 50%;
@@ -447,11 +447,17 @@
         .plan-price {
             font-size: 1.8rem;
             font-weight: 900;
-            margin: 12px 0;
+            margin: 12px 0 4px;
             background: linear-gradient(135deg, var(--accent), var(--accent2));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+        }
+
+        .plan-duration {
+            color: var(--text3);
+            font-size: 0.75rem;
+            margin-bottom: 16px;
         }
 
         .plan-features {
@@ -737,16 +743,16 @@
         <!-- Plans / Tiers Section -->
         <section id="plans" class="section">
             <div class="section-header">
-                <h2 class="section-title">Choose Your Plan</h2>
-                <p class="section-desc">Unlock advanced sniping technology and rare username patterns.</p>
+                <h2 class="section-title">Plans & Pricing</h2>
+                <p class="section-desc">Choose your plan and start sniping rare Roblox usernames today.</p>
             </div>
             <div class="plans-grid">
                 <!-- Free Tier -->
                 <div class="plan-card">
                     <span class="plan-badge">🆓</span>
                     <h3 class="plan-name">Free</h3>
-                    <div class="plan-price">$0</div>
-                    <p style="color: var(--text3); font-size: 0.75rem;">forever</p>
+                    <div class="plan-price">Free</div>
+                    <p class="plan-duration">Forever</p>
                     <ul class="plan-features">
                         <li>Basic sniping technology</li>
                         <li>Username length: 5–7 chars</li>
@@ -754,15 +760,15 @@
                         <li>Length settings locked</li>
                         <li>Community support</li>
                     </ul>
-                    <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-secondary" target="_blank">Get Started Free</a>
+                    <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-secondary" target="_blank">Get Started</a>
                 </div>
 
                 <!-- Basic Tier -->
                 <div class="plan-card">
-                    <span class="plan-badge">⭐</span>
+                    <span class="plan-badge">🟢</span>
                     <h3 class="plan-name">Basic</h3>
-                    <div class="plan-price">$5</div>
-                    <p style="color: var(--text3); font-size: 0.75rem;">/month</p>
+                    <div class="plan-price">50 Robux</div>
+                    <p class="plan-duration">1 Week</p>
                     <ul class="plan-features">
                         <li>Less advanced sniping</li>
                         <li>Username length: 7–10 chars</li>
@@ -775,10 +781,10 @@
 
                 <!-- Mid Tier -->
                 <div class="plan-card">
-                    <span class="plan-badge">🌟</span>
+                    <span class="plan-badge">🔵</span>
                     <h3 class="plan-name">Mid</h3>
-                    <div class="plan-price">$10</div>
-                    <p style="color: var(--text3); font-size: 0.75rem;">/month</p>
+                    <div class="plan-price">150 Robux</div>
+                    <p class="plan-duration">2 Weeks</p>
                     <ul class="plan-features">
                         <li>Faster sniping tech</li>
                         <li>Username length: 5–7 chars</li>
@@ -792,10 +798,10 @@
 
                 <!-- Fast Tier -->
                 <div class="plan-card featured">
-                    <span class="plan-badge">⚡</span>
+                    <span class="plan-badge">🟠</span>
                     <h3 class="plan-name">Fast</h3>
-                    <div class="plan-price">$15</div>
-                    <p style="color: var(--text3); font-size: 0.75rem;">/month</p>
+                    <div class="plan-price">400 Robux</div>
+                    <p class="plan-duration">1 Month</p>
                     <ul class="plan-features">
                         <li>Advanced sniping tech</li>
                         <li>Username length: 3–7 chars</li>
@@ -807,12 +813,29 @@
                     <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-primary" target="_blank">Choose Fast</a>
                 </div>
 
-                <!-- Ultimate / Pro Tier -->
+                <!-- Pro Tier -->
+                <div class="plan-card">
+                    <span class="plan-badge">🔴</span>
+                    <h3 class="plan-name">Pro</h3>
+                    <div class="plan-price">555 Robux</div>
+                    <p class="plan-duration">2 Months</p>
+                    <ul class="plan-features">
+                        <li>Professional sniping tech</li>
+                        <li>Username length: 3–10 chars</li>
+                        <li>Max 5,000 snipes</li>
+                        <li>All current & future snipers</li>
+                        <li>Length fully customizable</li>
+                        <li>VIP support</li>
+                    </ul>
+                    <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-secondary" target="_blank">Choose Pro</a>
+                </div>
+
+                <!-- Ultimate Tier -->
                 <div class="plan-card">
                     <span class="plan-badge">👑</span>
-                    <h3 class="plan-name">Ultimate Pro</h3>
-                    <div class="plan-price">$25</div>
-                    <p style="color: var(--text3); font-size: 0.75rem;">/month</p>
+                    <h3 class="plan-name">Ultimate</h3>
+                    <div class="plan-price">1,000 Robux</div>
+                    <p class="plan-duration">Lifetime</p>
                     <ul class="plan-features">
                         <li>Most advanced technology</li>
                         <li>Username length: 3–10 chars</li>
@@ -877,7 +900,7 @@
             });
         });
 
-        // Add subtle animation to stat numbers
+        // subtle animation to stat numbers on scroll
         const stats = document.querySelectorAll('.stat-number');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
