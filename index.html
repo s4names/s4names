@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>S4NAMES</title>
-  <meta name="description" content="S4N — straightforward Roblox username sniper. No hype, just snipes.">
+  <meta name="description" content="S4N - just a solid name sniper.">
   <meta property="og:title" content="S4NAMES">
-  <meta property="og:description" content="Find rare Roblox usernames without the fluff.">
+  <meta property="og:description" content="Get the usernames you actually want.">
   <meta name="theme-color" content="#0a0a0a">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
   <style>
@@ -49,15 +49,10 @@
       background: transparent;
     }
 
-    @keyframes subtleFadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
     .reveal {
       opacity: 0;
       transform: translateY(20px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
+      transition: opacity 0.6s ease, transform 0.6s ease;
     }
     .reveal.visible {
       opacity: 1;
@@ -75,7 +70,6 @@
       z-index: 9999;
     }
 
-    /* ========== TABS ========== */
     .top-tabs {
       display: flex;
       justify-content: center;
@@ -89,7 +83,6 @@
       -webkit-backdrop-filter: blur(30px) saturate(180%);
       z-index: 100;
       border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-      animation: subtleFadeIn 0.7s ease;
     }
 
     .tab-link {
@@ -118,7 +111,7 @@
       height: 1.5px;
       background: var(--text);
       border-radius: 1px;
-      transition: transform 0.25s ease;
+      transition: transform 0.2s ease;
     }
 
     .tab-link:hover {
@@ -146,7 +139,6 @@
       box-shadow: 0 8px 18px rgba(255, 255, 255, 0.08);
     }
 
-    /* ========== FREE BANNER ========== */
     .free-banner {
       background: var(--bg2);
       border: 1px solid var(--border);
@@ -205,7 +197,7 @@
       z-index: 200;
       pointer-events: none;
       box-shadow: 0 25px 45px rgba(0, 0, 0, 0.9);
-      transition: opacity 0.25s ease, visibility 0.25s ease, transform 0.25s ease;
+      transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
     }
     .free-tooltip::before {
       content: '';
@@ -266,7 +258,6 @@
       transform: translateX(-50%) translateY(0);
     }
 
-    /* ========== HERO – static title ========== */
     .hero {
       text-align: center;
       padding: 100px 0 70px;
@@ -290,7 +281,7 @@
       line-height: 0.95;
       margin-bottom: 14px;
       color: var(--text);
-      transition: letter-spacing 0.4s ease;
+      transition: letter-spacing 0.3s ease;
       user-select: none;
     }
     .hero-title:hover {
@@ -301,7 +292,6 @@
       color: var(--text2);
       letter-spacing: 5px;
       text-transform: uppercase;
-      animation: subtleFadeIn 0.8s ease both;
     }
     .hero-stats {
       display: flex;
@@ -317,7 +307,7 @@
       padding: 30px 40px;
       text-align: center;
       min-width: 170px;
-      transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
       cursor: default;
       position: relative;
       overflow: hidden;
@@ -360,7 +350,6 @@
       color: var(--text2);
     }
 
-    /* ========== BUTTONS ========== */
     .btn {
       display: inline-flex;
       align-items: center;
@@ -389,7 +378,7 @@
       border-radius: 50%;
       background: rgba(255, 255, 255, 0.04);
       transform: translate(-50%, -50%);
-      transition: width 0.5s, height 0.5s;
+      transition: width 0.4s, height 0.4s;
     }
     .btn:hover::before {
       width: 400px;
@@ -404,7 +393,7 @@
     }
     .btn .arrow {
       display: inline-block;
-      transition: transform 0.25s ease;
+      transition: transform 0.2s ease;
     }
     .btn:hover .arrow {
       transform: translateX(4px);
@@ -431,7 +420,6 @@
       background: transparent;
     }
 
-    /* ========== SECTIONS ========== */
     .section {
       padding: 100px 0;
     }
@@ -451,7 +439,6 @@
       font-size: 0.88rem;
     }
 
-    /* ========== FEATURE CARDS + OUT OF THIS WORLD EMOJI ANIMATIONS ========== */
     .feature-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
@@ -462,7 +449,7 @@
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 34px;
-      transition: border-color 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+      transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
       cursor: default;
       position: relative;
       overflow: hidden;
@@ -484,103 +471,85 @@
       box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
     }
 
-    /* emoji container – extreme smooth animations */
     .feature-icon {
       font-size: 2rem;
       margin-bottom: 16px;
       display: inline-block;
-      transition: transform 0.2s ease;
-      will-change: transform, filter;
-      backface-visibility: hidden;
-      transform-style: preserve-3d;
+      transition: transform 0.25s cubic-bezier(0.22, 0.61, 0.36, 1);
+      will-change: transform;
     }
 
-    /* ⚡ Fast – electric zap with trail */
-    .feature-card .icon-fast { transition: transform 0.2s ease; }
+    /* smooth, unique emoji animations */
+    .feature-card .icon-fast { transition: transform 0.25s ease; }
     .feature-card:hover .icon-fast {
-      animation: electricZap 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+      animation: gentleZap 0.8s ease-in-out infinite;
     }
-    @keyframes electricZap {
-      0% { transform: translate(0, 0) scale(1); filter: drop-shadow(0 0 6px #fff); }
-      20% { transform: translate(12px, -10px) scale(1.4) rotate(5deg); filter: drop-shadow(0 0 18px #ffeb3b); }
-      40% { transform: translate(-8px, 8px) scale(0.9) rotate(-3deg); filter: drop-shadow(0 0 10px #fff); }
-      60% { transform: translate(14px, 4px) scale(1.5) rotate(4deg); filter: drop-shadow(0 0 22px #ffeb3b); }
-      80% { transform: translate(-12px, -6px) scale(1.1) rotate(-2deg); filter: drop-shadow(0 0 14px #fff); }
-      100% { transform: translate(0, 0) scale(1); filter: drop-shadow(0 0 6px #fff); }
+    @keyframes gentleZap {
+      0% { transform: translate(0, 0) scale(1); }
+      25% { transform: translate(6px, -6px) scale(1.25); }
+      50% { transform: translate(-4px, 4px) scale(0.95); }
+      75% { transform: translate(8px, 2px) scale(1.3); }
+      100% { transform: translate(0, 0) scale(1); }
     }
 
-    /* 💎 Rare – majestic 3D spin with glow */
-    .feature-card .icon-rare { transition: transform 0.2s ease; }
+    .feature-card .icon-rare { transition: transform 0.25s ease; }
     .feature-card:hover .icon-rare {
-      animation: diamondSpin 1.6s ease-in-out infinite;
+      animation: softSpin 2s ease-in-out infinite;
     }
-    @keyframes diamondSpin {
-      0% { transform: perspective(400px) rotateY(0deg) scale(1); filter: drop-shadow(0 0 10px #a0f); }
-      25% { transform: perspective(400px) rotateY(90deg) scale(1.3); filter: drop-shadow(0 0 25px #c084fc); }
-      50% { transform: perspective(400px) rotateY(180deg) scale(1.5); filter: drop-shadow(0 0 35px #e879f9); }
-      75% { transform: perspective(400px) rotateY(270deg) scale(1.3); filter: drop-shadow(0 0 25px #c084fc); }
-      100% { transform: perspective(400px) rotateY(360deg) scale(1); filter: drop-shadow(0 0 10px #a0f); }
+    @keyframes softSpin {
+      0% { transform: rotateY(0deg) scale(1); }
+      50% { transform: rotateY(180deg) scale(1.25); }
+      100% { transform: rotateY(360deg) scale(1); }
     }
 
-    /* 🎯 Smart – hyper-precise bouncing with target lock */
-    .feature-card .icon-smart { transition: transform 0.2s ease; }
+    .feature-card .icon-smart { transition: transform 0.25s ease; }
     .feature-card:hover .icon-smart {
-      animation: smartTarget 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+      animation: lightBounce 0.9s ease infinite;
     }
-    @keyframes smartTarget {
-      0% { transform: translateY(0) scale(1); }
-      30% { transform: translateY(-18px) scale(1.2); }
-      50% { transform: translateY(0) scale(0.9); }
-      70% { transform: translateY(-22px) scale(1.35); }
-      85% { transform: translateY(0) scale(1.05); }
-      100% { transform: translateY(0) scale(1); }
+    @keyframes lightBounce {
+      0% { transform: translateY(0); }
+      30% { transform: translateY(-14px); }
+      50% { transform: translateY(0); }
+      70% { transform: translateY(-18px); }
+      100% { transform: translateY(0); }
     }
 
-    /* 🔧 Tweakable – chaotic but smooth wrench rotation */
-    .feature-card .icon-tweak { transition: transform 0.2s ease; }
+    .feature-card .icon-tweak { transition: transform 0.25s ease; }
     .feature-card:hover .icon-tweak {
-      animation: tweakChaos 1.2s steps(8) infinite;
+      animation: calmWrench 1.5s ease-in-out infinite;
     }
-    @keyframes tweakChaos {
-      0% { transform: rotate(0deg) translateX(0); }
-      12.5% { transform: rotate(45deg) translateX(6px); }
-      25% { transform: rotate(90deg) translateX(-6px); }
-      37.5% { transform: rotate(135deg) translateX(6px); }
-      50% { transform: rotate(180deg) translateX(-6px); }
-      62.5% { transform: rotate(225deg) translateX(6px); }
-      75% { transform: rotate(270deg) translateX(-6px); }
-      87.5% { transform: rotate(315deg) translateX(6px); }
-      100% { transform: rotate(360deg) translateX(0); }
+    @keyframes calmWrench {
+      0% { transform: rotate(0deg); }
+      25% { transform: rotate(25deg); }
+      75% { transform: rotate(-25deg); }
+      100% { transform: rotate(0deg); }
     }
 
-    /* 🔒 Private – fortress shield pulse */
-    .feature-card .icon-private { transition: transform 0.2s ease; }
+    .feature-card .icon-private { transition: transform 0.25s ease; }
     .feature-card:hover .icon-private {
-      animation: shieldFortress 1.4s ease-in-out infinite;
+      animation: steadyPulse 1.2s ease-in-out infinite;
     }
-    @keyframes shieldFortress {
-      0% { transform: scale(1); filter: drop-shadow(0 0 0 transparent); }
-      30% { transform: scale(1.5); filter: drop-shadow(0 0 20px #3b82f6); }
-      60% { transform: scale(0.8); filter: drop-shadow(0 0 5px #1e3a8a); }
-      100% { transform: scale(1); filter: drop-shadow(0 0 0 transparent); }
+    @keyframes steadyPulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.4); }
+      100% { transform: scale(1); }
     }
 
-    /* 🚀 Updates – rocket flies around the card box in a figure-8 orbit! */
     .feature-card .icon-rocket {
-      transition: transform 0.2s ease;
+      transition: transform 0.25s ease;
       position: relative;
     }
     .feature-card:hover .icon-rocket {
-      animation: rocketOrbit 2.2s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+      animation: smoothOrbit 2.4s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
     }
-    @keyframes rocketOrbit {
+    @keyframes smoothOrbit {
       0% { transform: translate(0, 0) rotate(0deg) scale(1); }
-      15% { transform: translate(35px, -25px) rotate(25deg) scale(1.3); }
-      30% { transform: translate(55px, 15px) rotate(50deg) scale(1.5); }
-      45% { transform: translate(20px, 40px) rotate(20deg) scale(1.2); }
-      60% { transform: translate(-35px, 25px) rotate(-25deg) scale(1.3); }
-      75% { transform: translate(-55px, -15px) rotate(-50deg) scale(1.5); }
-      90% { transform: translate(-20px, -40px) rotate(-20deg) scale(1.2); }
+      15% { transform: translate(28px, -20px) rotate(20deg) scale(1.2); }
+      30% { transform: translate(48px, 12px) rotate(45deg) scale(1.4); }
+      45% { transform: translate(18px, 36px) rotate(15deg) scale(1.1); }
+      60% { transform: translate(-30px, 22px) rotate(-20deg) scale(1.2); }
+      75% { transform: translate(-48px, -14px) rotate(-45deg) scale(1.4); }
+      90% { transform: translate(-18px, -36px) rotate(-15deg) scale(1.1); }
       100% { transform: translate(0, 0) rotate(0deg) scale(1); }
     }
 
@@ -602,7 +571,6 @@
       color: #aaa;
     }
 
-    /* ========== PLANS ========== */
     .plans-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
@@ -614,7 +582,7 @@
       border-radius: 12px;
       padding: 28px 18px;
       text-align: center;
-      transition: border-color 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+      transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
       position: relative;
       overflow: hidden;
       cursor: default;
@@ -628,7 +596,7 @@
       height: 1px;
       background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
       opacity: 0;
-      transition: opacity 0.25s;
+      transition: opacity 0.2s;
     }
     .plan-card:hover::before {
       opacity: 1;
@@ -732,7 +700,6 @@
       margin-top: 14px;
     }
 
-    /* ========== CTA ========== */
     .cta-section {
       background: var(--bg2);
       border: 1px solid var(--border);
@@ -740,7 +707,7 @@
       padding: 50px;
       text-align: center;
       margin: 50px 0;
-      transition: border-color 0.25s ease, transform 0.2s ease;
+      transition: border-color 0.2s ease, transform 0.2s ease;
     }
     .cta-section:hover {
       border-color: rgba(255, 255, 255, 0.12);
@@ -764,7 +731,6 @@
       flex-wrap: wrap;
     }
 
-    /* ========== FOOTER ========== */
     .footer {
       border-top: 1px solid rgba(255, 255, 255, 0.04);
       padding: 34px 0;
@@ -808,7 +774,7 @@
       width: 0;
       height: 1px;
       background: var(--text);
-      transition: width 0.25s ease;
+      transition: width 0.2s ease;
     }
     .footer-links a:hover {
       color: var(--text);
@@ -890,127 +856,127 @@
     </div>
 
     <div class="free-banner">
-      ⚠️ FREE-TIER IN DISCORD
+      ⚠️ Free tier on Discord
       <span class="info-icon">i
         <div class="free-tooltip">
-          <div class="tooltip-title">Free Tier</div>
-          <div class="pros"><span>✅ Gets</span><ul><li>Basic sniper</li><li>5–7 char names</li><li>25 snipes/day</li></ul></div>
-          <div class="cons"><span>❌ No</span><ul><li>Slow speed</li><li>No custom length</li><li>No future snipers</li><li>No priority support</li></ul></div>
+          <div class="tooltip-title">Free tier</div>
+          <div class="pros"><span>✅ you get</span><ul><li>Basic sniper</li><li>5–7 char names</li><li>25 snipes a day</li></ul></div>
+          <div class="cons"><span>❌ you don't get</span><ul><li>Slow speed</li><li>No custom length</li><li>No future snipers</li><li>No priority help</li></ul></div>
         </div>
       </span>
     </div>
 
     <section id="home" class="hero">
       <h1 class="hero-title">S4NAMES</h1>
-      <p class="hero-subtitle">The best username sniper</p>
+      <p class="hero-subtitle">just a good name sniper</p>
       <div class="hero-stats">
         <div class="stat-card">
           <span class="stat-number">10k+</span>
-          <span class="stat-label">Snipes / Day</span>
+          <span class="stat-label">snipes a day</span>
         </div>
       </div>
     </section>
 
     <section id="features" class="section">
       <div class="section-header reveal">
-        <h2 class="section-title">Why S4N</h2>
-        <p class="section-desc">Fast. Clean. Works.</p>
+        <h2 class="section-title">why people use it</h2>
+        <p class="section-desc">it's quick, it's simple, it works.</p>
       </div>
       <div class="feature-grid">
         <div class="feature-card reveal">
           <span class="feature-icon icon-fast">⚡</span>
-          <h3>Fast</h3>
-          <p>Thousands per minute. You get it first.</p>
+          <h3>quick</h3>
+          <p>grabs names fast so you don't miss out.</p>
         </div>
         <div class="feature-card reveal">
           <span class="feature-icon icon-rare">💎</span>
-          <h3>Rare</h3>
-          <p>3-letters. OGs. The good stuff.</p>
+          <h3>rare names</h3>
+          <p>3-letter, OG stuff. the kind people want.</p>
         </div>
         <div class="feature-card reveal">
           <span class="feature-icon icon-smart">🎯</span>
-          <h3>Smart</h3>
-          <p>Knows what's worth sniping before it drops.</p>
+          <h3>smart picks</h3>
+          <p>knows which names are actually good.</p>
         </div>
         <div class="feature-card reveal">
           <span class="feature-icon icon-tweak">🔧</span>
-          <h3>Tweakable</h3>
-          <p>Set length, speed, patterns. Your call.</p>
+          <h3>adjustable</h3>
+          <p>change length and speed how you like.</p>
         </div>
         <div class="feature-card reveal">
           <span class="feature-icon icon-private">🔒</span>
-          <h3>Private</h3>
-          <p>No tracking. No BS. Just snipes.</p>
+          <h3>private</h3>
+          <p>no tracking, no nonsense. just names.</p>
         </div>
         <div class="feature-card reveal">
           <span class="feature-icon icon-rocket">🚀</span>
-          <h3>Updates</h3>
-          <p>New snipers drop. Paid gets em first.</p>
+          <h3>fresh tools</h3>
+          <p>new snipers drop, paid users get them early.</p>
         </div>
       </div>
     </section>
 
     <section id="plans" class="section">
       <div class="section-header reveal">
-        <h2 class="section-title">Plans</h2>
-        <p class="section-desc">Pick one. Start sniping.</p>
+        <h2 class="section-title">pick a plan</h2>
+        <p class="section-desc">simple choices, no hidden stuff.</p>
       </div>
       <div class="plans-grid">
         <div class="plan-card reveal">
           <span class="plan-badge">🟢</span><h3 class="plan-name">Basic</h3>
-          <div class="plan-price">50</div><p class="plan-duration">Robux • 1 Week</p>
+          <div class="plan-price">50</div><p class="plan-duration">robux · 1 week</p>
           <p class="plan-snipes">150 / day</p>
-          <ul class="plan-features"><li>Slow speed</li><li>7–10 char</li><li>Basic support</li></ul>
-          <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-outline" target="_blank" rel="noopener">Buy <span class="arrow">→</span></a>
+          <ul class="plan-features"><li>steady speed</li><li>7–10 letters</li><li>basic help</li></ul>
+          <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-outline" target="_blank" rel="noopener">get it <span class="arrow">→</span></a>
         </div>
         <div class="plan-card reveal">
           <span class="plan-badge">🔵</span><h3 class="plan-name">Mid</h3>
-          <div class="plan-price">150</div><p class="plan-duration">Robux • 2 Weeks</p>
+          <div class="plan-price">150</div><p class="plan-duration">robux · 2 weeks</p>
           <p class="plan-snipes">500 / day</p>
-          <ul class="plan-features"><li>Faster</li><li>5–7 char</li><li>Custom length</li><li>Future snipers</li><li>Priority support</li></ul>
-          <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-outline" target="_blank" rel="noopener">Buy <span class="arrow">→</span></a>
+          <ul class="plan-features"><li>quicker</li><li>5–7 letters</li><li>custom length</li><li>future snipers</li><li>priority help</li></ul>
+          <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-outline" target="_blank" rel="noopener">get it <span class="arrow">→</span></a>
         </div>
         <div class="plan-card best reveal">
           <span class="plan-badge">🟠</span><h3 class="plan-name">Fast</h3>
-          <div class="plan-price">400</div><p class="plan-duration">Robux • 1 Month</p>
+          <div class="plan-price">400</div><p class="plan-duration">robux · 1 month</p>
           <p class="plan-snipes">2.5k / day</p>
-          <ul class="plan-features"><li>Fast</li><li>3–7 char</li><li>Custom length</li><li>All snipers</li><li>Priority support</li></ul>
-          <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-white" target="_blank" rel="noopener">Buy <span class="arrow">→</span></a>
+          <ul class="plan-features"><li>fast</li><li>3–7 letters</li><li>custom length</li><li>all snipers</li><li>priority help</li></ul>
+          <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-white" target="_blank" rel="noopener">get it <span class="arrow">→</span></a>
         </div>
         <div class="plan-card reveal">
           <span class="plan-badge">🔴</span><h3 class="plan-name">Pro</h3>
-          <div class="plan-price">555</div><p class="plan-duration">Robux • 2 Months</p>
+          <div class="plan-price">555</div><p class="plan-duration">robux · 2 months</p>
           <p class="plan-snipes">5k / day</p>
-          <ul class="plan-features"><li>Very fast</li><li>3–10 char</li><li>Custom length</li><li>All snipers</li><li>VIP support</li></ul>
-          <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-outline" target="_blank" rel="noopener">Buy <span class="arrow">→</span></a>
+          <ul class="plan-features"><li>very fast</li><li>3–10 letters</li><li>custom length</li><li>all snipers</li><li>VIP help</li></ul>
+          <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-outline" target="_blank" rel="noopener">get it <span class="arrow">→</span></a>
         </div>
         <div class="plan-card reveal">
           <span class="plan-badge">👑</span><h3 class="plan-name">Ultimate</h3>
-          <div class="plan-price">1,000</div><p class="plan-duration">Robux • Lifetime</p>
-          <p class="plan-snipes">∞ / day</p>
-          <ul class="plan-features"><li>Fastest</li><li>3–10 char</li><li>Custom length</li><li>All snipers</li><li>Early access</li><li>VIP support</li></ul>
-          <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-outline" target="_blank" rel="noopener">Buy <span class="arrow">→</span></a>
+          <div class="plan-price">1,000</div><p class="plan-duration">robux · lifetime</p>
+          <p class="plan-snipes">no limit</p>
+          <ul class="plan-features"><li>fastest</li><li>3–10 letters</li><li>custom length</li><li>all snipers</li><li>early access</li><li>VIP help</li></ul>
+          <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-outline" target="_blank" rel="noopener">get it <span class="arrow">→</span></a>
         </div>
       </div>
     </section>
 
     <section class="cta-section reveal">
-      <h2>Ready?</h2>
-      <p>Join Discord. Pick a plan. Get names.</p>
+      <h2>ready to start?</h2>
+      <p>join the discord, grab a plan, get some names.</p>
       <div class="cta-buttons">
-        <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-white" target="_blank" rel="noopener">Join Discord <span class="arrow">→</span></a>
-        <a href="mailto:support@s4names.com" class="btn btn-outline">Support</a>
+        <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-white" target="_blank" rel="noopener">join discord <span class="arrow">→</span></a>
+        <a href="mailto:support@s4names.com" class="btn btn-outline">contact us</a>
       </div>
     </section>
 
     <footer class="footer">
       <div class="footer-content">
-        <div class="footer-brand">S4NAMES<p>Snipes 4 Names</p></div>
+        <div class="footer-brand">S4NAMES<p>snipes for names</p></div>
         <div class="footer-links">
-          <a href="#home">Home</a><a href="#features">Features</a><a href="#plans">Plans</a><a href="https://discord.gg/qhVBb8Yj6V" target="_blank" rel="noopener">Discord</a><a href="mailto:support@s4names.com">Support</a>
+          <a href="#home">home</a><a href="#features">features</a><a href="#plans">plans</a><a href="https://discord.gg/qhVBb8Yj6V" target="_blank" rel="noopener">discord</a><a href="mailto:support@s4names.com">support</a>
         </div>
       </div>
-      <div class="footer-bottom"><p>&copy; 2026 S4NAMES. Not affiliated with Roblox.</p></div>
+      <div class="footer-bottom"><p>© 2026 S4NAMES. not linked to Roblox.</p></div>
     </footer>
   </div>
 
