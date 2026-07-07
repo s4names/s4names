@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>S4NAMES · rare roblox usernames</title>
+  <title>S4NAMES</title>
   <meta name="description" content="S4N — straightforward Roblox username sniper. No hype, just snipes.">
   <meta property="og:title" content="S4NAMES">
   <meta property="og:description" content="Find rare Roblox usernames without the fluff.">
@@ -49,7 +49,6 @@
       background: transparent;
     }
 
-    /* subtle fade for reveals */
     @keyframes subtleFadeIn {
       from { opacity: 0; }
       to { opacity: 1; }
@@ -65,7 +64,6 @@
       transform: translateY(0);
     }
 
-    /* static background texture */
     body::after {
       content: '';
       position: fixed;
@@ -453,7 +451,7 @@
       font-size: 0.88rem;
     }
 
-    /* ========== FEATURE CARDS + EMOJI ANIMATIONS ========== */
+    /* ========== FEATURE CARDS + OUT OF THIS WORLD EMOJI ANIMATIONS ========== */
     .feature-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
@@ -486,76 +484,104 @@
       box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
     }
 
-    /* emoji container – each gets its own animation class */
+    /* emoji container – extreme smooth animations */
     .feature-icon {
       font-size: 2rem;
       margin-bottom: 16px;
       display: inline-block;
       transition: transform 0.2s ease;
-      will-change: transform;
+      will-change: transform, filter;
+      backface-visibility: hidden;
+      transform-style: preserve-3d;
     }
 
-    /* individual emoji animations on card hover */
+    /* ⚡ Fast – electric zap with trail */
     .feature-card .icon-fast { transition: transform 0.2s ease; }
     .feature-card:hover .icon-fast {
-      animation: fastPulse 0.6s infinite alternate ease-in-out;
+      animation: electricZap 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
     }
+    @keyframes electricZap {
+      0% { transform: translate(0, 0) scale(1); filter: drop-shadow(0 0 6px #fff); }
+      20% { transform: translate(12px, -10px) scale(1.4) rotate(5deg); filter: drop-shadow(0 0 18px #ffeb3b); }
+      40% { transform: translate(-8px, 8px) scale(0.9) rotate(-3deg); filter: drop-shadow(0 0 10px #fff); }
+      60% { transform: translate(14px, 4px) scale(1.5) rotate(4deg); filter: drop-shadow(0 0 22px #ffeb3b); }
+      80% { transform: translate(-12px, -6px) scale(1.1) rotate(-2deg); filter: drop-shadow(0 0 14px #fff); }
+      100% { transform: translate(0, 0) scale(1); filter: drop-shadow(0 0 6px #fff); }
+    }
+
+    /* 💎 Rare – majestic 3D spin with glow */
     .feature-card .icon-rare { transition: transform 0.2s ease; }
     .feature-card:hover .icon-rare {
-      animation: rareSpin 0.8s ease-in-out infinite;
+      animation: diamondSpin 1.6s ease-in-out infinite;
     }
+    @keyframes diamondSpin {
+      0% { transform: perspective(400px) rotateY(0deg) scale(1); filter: drop-shadow(0 0 10px #a0f); }
+      25% { transform: perspective(400px) rotateY(90deg) scale(1.3); filter: drop-shadow(0 0 25px #c084fc); }
+      50% { transform: perspective(400px) rotateY(180deg) scale(1.5); filter: drop-shadow(0 0 35px #e879f9); }
+      75% { transform: perspective(400px) rotateY(270deg) scale(1.3); filter: drop-shadow(0 0 25px #c084fc); }
+      100% { transform: perspective(400px) rotateY(360deg) scale(1); filter: drop-shadow(0 0 10px #a0f); }
+    }
+
+    /* 🎯 Smart – hyper-precise bouncing with target lock */
     .feature-card .icon-smart { transition: transform 0.2s ease; }
     .feature-card:hover .icon-smart {
-      animation: smartBounce 0.5s ease infinite alternate;
+      animation: smartTarget 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
     }
+    @keyframes smartTarget {
+      0% { transform: translateY(0) scale(1); }
+      30% { transform: translateY(-18px) scale(1.2); }
+      50% { transform: translateY(0) scale(0.9); }
+      70% { transform: translateY(-22px) scale(1.35); }
+      85% { transform: translateY(0) scale(1.05); }
+      100% { transform: translateY(0) scale(1); }
+    }
+
+    /* 🔧 Tweakable – chaotic but smooth wrench rotation */
     .feature-card .icon-tweak { transition: transform 0.2s ease; }
     .feature-card:hover .icon-tweak {
-      animation: tweakRotate 0.7s ease-in-out infinite;
+      animation: tweakChaos 1.2s steps(8) infinite;
     }
+    @keyframes tweakChaos {
+      0% { transform: rotate(0deg) translateX(0); }
+      12.5% { transform: rotate(45deg) translateX(6px); }
+      25% { transform: rotate(90deg) translateX(-6px); }
+      37.5% { transform: rotate(135deg) translateX(6px); }
+      50% { transform: rotate(180deg) translateX(-6px); }
+      62.5% { transform: rotate(225deg) translateX(6px); }
+      75% { transform: rotate(270deg) translateX(-6px); }
+      87.5% { transform: rotate(315deg) translateX(6px); }
+      100% { transform: rotate(360deg) translateX(0); }
+    }
+
+    /* 🔒 Private – fortress shield pulse */
     .feature-card .icon-private { transition: transform 0.2s ease; }
     .feature-card:hover .icon-private {
-      animation: privateShield 0.9s ease infinite;
+      animation: shieldFortress 1.4s ease-in-out infinite;
     }
-    /* rocket flies around the card box! */
+    @keyframes shieldFortress {
+      0% { transform: scale(1); filter: drop-shadow(0 0 0 transparent); }
+      30% { transform: scale(1.5); filter: drop-shadow(0 0 20px #3b82f6); }
+      60% { transform: scale(0.8); filter: drop-shadow(0 0 5px #1e3a8a); }
+      100% { transform: scale(1); filter: drop-shadow(0 0 0 transparent); }
+    }
+
+    /* 🚀 Updates – rocket flies around the card box in a figure-8 orbit! */
     .feature-card .icon-rocket {
       transition: transform 0.2s ease;
       position: relative;
     }
     .feature-card:hover .icon-rocket {
-      animation: flyRocket 1.8s linear infinite;
+      animation: rocketOrbit 2.2s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
     }
-
-    @keyframes fastPulse {
-      0% { transform: scale(1); }
-      100% { transform: scale(1.3); }
-    }
-    @keyframes rareSpin {
-      0% { transform: rotate(0deg) scale(1); }
-      50% { transform: rotate(15deg) scale(1.2); }
-      100% { transform: rotate(0deg) scale(1); }
-    }
-    @keyframes smartBounce {
-      0% { transform: translateY(0); }
-      100% { transform: translateY(-8px); }
-    }
-    @keyframes tweakRotate {
-      0% { transform: rotate(0deg); }
-      25% { transform: rotate(10deg); }
-      75% { transform: rotate(-10deg); }
-      100% { transform: rotate(0deg); }
-    }
-    @keyframes privateShield {
-      0% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.2); opacity: 0.9; }
-      100% { transform: scale(1); opacity: 1; }
-    }
-    @keyframes flyRocket {
-      0% { transform: translate(0, 0) rotate(0deg); }
-      20% { transform: translate(18px, -12px) rotate(15deg); }
-      40% { transform: translate(30px, 8px) rotate(30deg); }
-      60% { transform: translate(12px, 20px) rotate(15deg); }
-      80% { transform: translate(-15px, 12px) rotate(0deg); }
-      100% { transform: translate(0, 0) rotate(0deg); }
+    @keyframes rocketOrbit {
+      0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+      15% { transform: translate(35px, -25px) rotate(25deg) scale(1.3); }
+      30% { transform: translate(55px, 15px) rotate(50deg) scale(1.5); }
+      45% { transform: translate(20px, 40px) rotate(20deg) scale(1.2); }
+      60% { transform: translate(-35px, 25px) rotate(-25deg) scale(1.3); }
+      75% { transform: translate(-55px, -15px) rotate(-50deg) scale(1.5); }
+      90% { transform: translate(-20px, -40px) rotate(-20deg) scale(1.2); }
+      100% { transform: translate(0, 0) rotate(0deg) scale(1); }
     }
 
     .feature-card h3 {
