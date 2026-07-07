@@ -57,6 +57,54 @@
             border-radius: 2px;
         }
 
+        /* Top Tabs - Centered */
+        .top-tabs {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 4px;
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            background: rgba(7, 7, 8, 0.95);
+            backdrop-filter: blur(12px);
+            z-index: 100;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .tab-link {
+            color: var(--text2);
+            text-decoration: none;
+            padding: 8px 18px;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-family: inherit;
+            font-weight: 500;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .tab-link:hover {
+            color: var(--text);
+            background: var(--bg3);
+        }
+
+        .tab-link.discord-tab {
+            background: #5865F2;
+            color: #fff;
+            font-weight: 600;
+            border-radius: 20px;
+            padding: 8px 20px;
+        }
+
+        .tab-link.discord-tab:hover {
+            background: #4752c4;
+            color: #fff;
+        }
+
         /* Free Tier Banner */
         .free-banner {
             background: var(--bg2);
@@ -69,11 +117,10 @@
             gap: 10px;
             font-size: 0.82rem;
             color: var(--text2);
-            margin-top: 16px;
+            margin-top: 20px;
             position: sticky;
-            top: 70px;
+            top: 60px;
             z-index: 99;
-            backdrop-filter: blur(8px);
         }
 
         .free-banner .info-icon {
@@ -99,7 +146,7 @@
         .free-tooltip {
             display: none;
             position: absolute;
-            bottom: 130%;
+            top: 130%;
             left: 50%;
             transform: translateX(-50%);
             background: var(--bg3);
@@ -159,68 +206,6 @@
 
         .info-icon:hover .free-tooltip {
             display: block;
-        }
-
-        /* Navigation */
-        .nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 14px 0;
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            background: rgba(7, 7, 8, 0.95);
-            backdrop-filter: blur(12px);
-            z-index: 100;
-            gap: 12px;
-        }
-
-        .nav-brand {
-            font-size: 1.15rem;
-            font-weight: 800;
-            letter-spacing: 2px;
-            color: var(--text);
-            text-decoration: none;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .nav-link {
-            color: var(--text2);
-            text-decoration: none;
-            padding: 7px 13px;
-            border-radius: 5px;
-            font-size: 0.8rem;
-            cursor: pointer;
-            border: none;
-            background: none;
-            font-family: inherit;
-            font-weight: 500;
-            transition: all 0.15s;
-            white-space: nowrap;
-        }
-
-        .nav-link:hover {
-            color: var(--text);
-            background: var(--bg3);
-        }
-
-        .nav-link.btn-discord {
-            background: #5865F2;
-            color: #fff;
-            font-weight: 600;
-            padding: 8px 16px;
-            border-radius: 20px;
-        }
-
-        .nav-link.btn-discord:hover {
-            background: #4752c4;
         }
 
         /* Hero */
@@ -619,6 +604,13 @@
                 right: 0;
                 transform: none;
             }
+            .top-tabs {
+                gap: 1px;
+            }
+            .tab-link {
+                padding: 6px 10px;
+                font-size: 0.75rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -628,9 +620,9 @@
             .feature-grid {
                 grid-template-columns: 1fr;
             }
-            .nav {
-                flex-direction: column;
-                gap: 6px;
+            .top-tabs {
+                flex-wrap: wrap;
+                gap: 2px;
             }
             .footer-content {
                 flex-direction: column;
@@ -644,16 +636,14 @@
 </head>
 <body>
     <div class="container">
-        <nav class="nav">
-            <a href="#" class="nav-brand">S4NAMES</a>
-            <div class="nav-links">
-                <a href="#home" class="nav-link">Home</a>
-                <a href="#features" class="nav-link">Features</a>
-                <a href="#plans" class="nav-link">Plans</a>
-                <a href="https://discord.gg/qhVBb8Yj6V" class="nav-link btn-discord" target="_blank">Discord</a>
-                <a href="mailto:support@s4names.com" class="nav-link">Support</a>
-            </div>
-        </nav>
+        <!-- Top Tabs - Centered -->
+        <div class="top-tabs">
+            <a href="#home" class="tab-link">Home</a>
+            <a href="#features" class="tab-link">Features</a>
+            <a href="#plans" class="tab-link">Plans</a>
+            <a href="https://discord.gg/qhVBb8Yj6V" class="tab-link discord-tab" target="_blank">Discord</a>
+            <a href="mailto:support@s4names.com" class="tab-link">Support</a>
+        </div>
 
         <!-- Free Tier Banner -->
         <div class="free-banner">
@@ -738,7 +728,6 @@
                 <p class="section-desc">Pick one. Start sniping.</p>
             </div>
             <div class="plans-grid">
-                <!-- Basic -->
                 <div class="plan-card">
                     <span class="plan-badge">🟢</span>
                     <h3 class="plan-name">Basic</h3>
@@ -753,7 +742,6 @@
                     <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-secondary" target="_blank">Buy</a>
                 </div>
 
-                <!-- Mid -->
                 <div class="plan-card">
                     <span class="plan-badge">🔵</span>
                     <h3 class="plan-name">Mid</h3>
@@ -770,7 +758,6 @@
                     <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-secondary" target="_blank">Buy</a>
                 </div>
 
-                <!-- Fast - BEST -->
                 <div class="plan-card best">
                     <span class="plan-badge">🟠</span>
                     <h3 class="plan-name">Fast</h3>
@@ -787,7 +774,6 @@
                     <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-primary" target="_blank">Buy</a>
                 </div>
 
-                <!-- Pro -->
                 <div class="plan-card">
                     <span class="plan-badge">🔴</span>
                     <h3 class="plan-name">Pro</h3>
@@ -804,7 +790,6 @@
                     <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-secondary" target="_blank">Buy</a>
                 </div>
 
-                <!-- Ultimate -->
                 <div class="plan-card">
                     <span class="plan-badge">👑</span>
                     <h3 class="plan-name">Ultimate</h3>
