@@ -736,6 +736,50 @@
       flex-wrap: wrap;
     }
 
+    .testimonial-strip {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 45px;
+    }
+    .testimonial-chip {
+      background: #111;
+      border: 1px solid #1f1f1f;
+      border-radius: 24px;
+      padding: 7px 16px;
+      font-size: 0.7rem;
+      color: #aaa;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      cursor: default;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .testimonial-chip:hover {
+      border-color: #333;
+      transform: translateY(-2px);
+    }
+    .testimonial-chip .chip-avatar {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #222;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6rem;
+      font-weight: 700;
+      color: #888;
+    }
+    .testimonial-chip .chip-name {
+      font-weight: 620;
+      color: #ccc;
+    }
+    .testimonial-chip .chip-msg {
+      color: #777;
+    }
+
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -958,43 +1002,6 @@
       letter-spacing: 0.1px;
     }
 
-    .version-tag {
-      display: inline-block;
-      background: #1a1a1a;
-      color: #777;
-      font-size: 0.58rem;
-      padding: 2px 8px;
-      border-radius: 10px;
-      margin-left: 6px;
-      letter-spacing: 0.4px;
-      vertical-align: middle;
-    }
-
-    .snipe-counter {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: #111;
-      border: 1px solid #222;
-      border-radius: 20px;
-      padding: 6px 14px;
-      font-size: 0.68rem;
-      color: #aaa;
-      margin-left: 8px;
-      letter-spacing: 0.3px;
-    }
-    .snipe-counter .live-dot {
-      width: 6px;
-      height: 6px;
-      background: #4ade80;
-      border-radius: 50%;
-      animation: livePulse 1.8s ease-in-out infinite;
-    }
-    @keyframes livePulse {
-      0%, 100% { opacity: 1; box-shadow: 0 0 4px #4ade80; }
-      50% { opacity: 0.3; box-shadow: 0 0 1px #4ade80; }
-    }
-
     @media (max-width: 768px) {
       .hero {
         padding: 55px 0 35px;
@@ -1064,12 +1071,11 @@
     </div>
 
     <div class="free-banner">
-      ⚠️ We have a free tier — on Discord
-      <span class="snipe-counter"><span class="live-dot"></span> sniping live</span>
+      ⚠️ We have a free tier, on Discord
       <span class="info-icon">i
         <div class="free-tooltip">
-          <div class="tooltip-title">Free tier (no catch)</div>
-          <div class="pros"><span>✅ you get</span><ul><li>Basic sniper access</li><li>5–7 character names</li><li>25 snipes a day</li></ul></div>
+          <div class="tooltip-title">Free tier, no catch</div>
+          <div class="pros"><span>✅ you get</span><ul><li>Basic sniper access</li><li>5 to 7 character names</li><li>25 snipes a day</li></ul></div>
           <div class="cons"><span>❌ you don't get</span><ul><li>Slower speed</li><li>No custom length</li><li>No future snipers</li><li>No priority help</li></ul></div>
         </div>
       </span>
@@ -1077,19 +1083,37 @@
 
     <section id="home" class="hero">
       <h1 class="hero-title">S4Names</h1>
-      <p class="hero-subtitle">snipes 4 names <span class="version-tag">v2.4</span></p>
+      <p class="hero-subtitle">snipes 4 names</p>
       <div class="hero-stats">
         <div class="stat-card">
           <span class="stat-number">10k+</span>
           <span class="stat-label">snipes a day</span>
         </div>
         <div class="stat-card">
-          <span class="stat-number">4.8k</span>
-          <span class="stat-label">happy users</span>
+          <span class="stat-number">3.2m</span>
+          <span class="stat-label">names sniped</span>
         </div>
-        <div class="stat-card">
-          <span class="stat-number">99.2%</span>
-          <span class="stat-label">uptime</span>
+      </div>
+      <div class="testimonial-strip">
+        <div class="testimonial-chip">
+          <span class="chip-avatar">K</span>
+          <span class="chip-name">kaito</span>
+          <span class="chip-msg">got a 3 letter in 2 mins lol</span>
+        </div>
+        <div class="testimonial-chip">
+          <span class="chip-avatar">V</span>
+          <span class="chip-name">vxnom</span>
+          <span class="chip-msg">actually works, no cap</span>
+        </div>
+        <div class="testimonial-chip">
+          <span class="chip-avatar">R</span>
+          <span class="chip-name">rei</span>
+          <span class="chip-msg">switched from another sniper, this one faster</span>
+        </div>
+        <div class="testimonial-chip">
+          <span class="chip-avatar">S</span>
+          <span class="chip-name">s4</span>
+          <span class="chip-msg">worth every robux fr</span>
         </div>
       </div>
     </section>
@@ -1108,7 +1132,7 @@
         <div class="feature-card reveal">
           <span class="feature-icon icon-rare">💎</span>
           <h3>rare names</h3>
-          <p>3-letter, OG stuff. the kind people want.</p>
+          <p>3 letter, OG stuff. the kind people want.</p>
         </div>
         <div class="feature-card reveal">
           <span class="feature-icon icon-smart">🎯</span>
@@ -1143,35 +1167,35 @@
           <span class="plan-badge">🟢</span><h3 class="plan-name">Basic</h3>
           <div class="plan-price">50</div><p class="plan-duration">robux · 1 week</p>
           <p class="plan-snipes">150 / day</p>
-          <ul class="plan-features"><li>steady speed</li><li>7–10 letters</li><li>basic help</li></ul>
+          <ul class="plan-features"><li>steady speed</li><li>7 to 10 letters</li><li>basic help</li></ul>
           <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-outline" target="_blank" rel="noopener">get it <span class="arrow">→</span></a>
         </div>
         <div class="plan-card reveal">
           <span class="plan-badge">🔵</span><h3 class="plan-name">Mid</h3>
           <div class="plan-price">150</div><p class="plan-duration">robux · 2 weeks</p>
           <p class="plan-snipes">500 / day</p>
-          <ul class="plan-features"><li>quicker</li><li>5–7 letters</li><li>custom length</li><li>future snipers</li><li>priority help</li></ul>
+          <ul class="plan-features"><li>quicker</li><li>5 to 7 letters</li><li>custom length</li><li>future snipers</li><li>priority help</li></ul>
           <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-outline" target="_blank" rel="noopener">get it <span class="arrow">→</span></a>
         </div>
         <div class="plan-card best reveal">
           <span class="plan-badge">🟠</span><h3 class="plan-name">Fast</h3>
           <div class="plan-price">400</div><p class="plan-duration">robux · 1 month</p>
           <p class="plan-snipes">2.5k / day</p>
-          <ul class="plan-features"><li>fast</li><li>3–7 letters</li><li>custom length</li><li>all snipers</li><li>priority help</li></ul>
+          <ul class="plan-features"><li>fast</li><li>3 to 7 letters</li><li>custom length</li><li>all snipers</li><li>priority help</li></ul>
           <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-white" target="_blank" rel="noopener">get it <span class="arrow">→</span></a>
         </div>
         <div class="plan-card reveal">
           <span class="plan-badge">🔴</span><h3 class="plan-name">Pro</h3>
           <div class="plan-price">555</div><p class="plan-duration">robux · 2 months</p>
           <p class="plan-snipes">5k / day</p>
-          <ul class="plan-features"><li>very fast</li><li>3–10 letters</li><li>custom length</li><li>all snipers</li><li>VIP help</li></ul>
+          <ul class="plan-features"><li>very fast</li><li>3 to 10 letters</li><li>custom length</li><li>all snipers</li><li>VIP help</li></ul>
           <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-outline" target="_blank" rel="noopener">get it <span class="arrow">→</span></a>
         </div>
         <div class="plan-card reveal">
           <span class="plan-badge">👑</span><h3 class="plan-name">Ultimate</h3>
           <div class="plan-price">1,000</div><p class="plan-duration">robux · lifetime</p>
           <p class="plan-snipes">no limit</p>
-          <ul class="plan-features"><li>fastest</li><li>3–10 letters</li><li>custom length</li><li>all snipers</li><li>early access</li><li>VIP help</li></ul>
+          <ul class="plan-features"><li>fastest</li><li>3 to 10 letters</li><li>custom length</li><li>all snipers</li><li>early access</li><li>VIP help</li></ul>
           <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-outline" target="_blank" rel="noopener">get it <span class="arrow">→</span></a>
         </div>
       </div>
@@ -1188,12 +1212,12 @@
 
     <footer class="footer">
       <div class="footer-content">
-        <div class="footer-brand">S4Names<span class="version-tag">v2.4</span><p>snipes 4 names — est. 2024</p></div>
+        <div class="footer-brand">S4Names<p>snipes 4 names</p></div>
         <div class="footer-links">
           <a href="#home">home</a><a href="#features">features</a><a href="#plans">plans</a><a href="https://discord.gg/qhVBb8Yj6V" target="_blank" rel="noopener">discord</a><a href="#" class="support-trigger">support</a>
         </div>
       </div>
-      <div class="footer-bottom"><p>© 2026 S4Names. not linked to Roblox. made with ❤️</p></div>
+      <div class="footer-bottom"><p>© 2026 S4Names. not linked to Roblox. made with love</p></div>
     </footer>
   </div>
 
