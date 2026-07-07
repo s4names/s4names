@@ -7,22 +7,19 @@
     <meta name="description" content="S4N - Roblox username sniper.">
     <meta property="og:title" content="S4NAMES">
     <meta property="og:description" content="Find rare Roblox usernames.">
-    <meta name="theme-color" content="#070708">
+    <meta name="theme-color" content="#000">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
     <style>
         :root {
-            --bg: #070708;
-            --bg2: #0e0e12;
-            --bg3: #16161c;
-            --bg4: #1a1a22;
+            --bg: #000;
+            --bg2: #0a0a0a;
+            --bg3: #111;
             --text: #fff;
-            --text2: #999;
-            --text3: #555;
-            --border: #1c1c22;
-            --border2: #282830;
-            --accent: #6366f1;
-            --accent2: #8b5cf6;
-            --radius: 10px;
+            --text2: #888;
+            --text3: #444;
+            --border: #1a1a1a;
+            --border2: #222;
+            --radius: 8px;
         }
 
         * {
@@ -41,33 +38,27 @@
         }
 
         .container {
-            max-width: 1050px;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 0 24px;
         }
 
-        ::-webkit-scrollbar {
-            width: 4px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--bg);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--border2);
-            border-radius: 2px;
-        }
+        ::-webkit-scrollbar{width:3px}
+        ::-webkit-scrollbar-track{background:var(--bg)}
+        ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
 
-        /* Top Tabs - Centered */
+        /* Tabs */
         .top-tabs {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 4px;
-            padding: 16px 0;
+            gap: 2px;
+            padding: 14px 0;
             position: sticky;
             top: 0;
-            background: rgba(7, 7, 8, 0.95);
+            background: rgba(0,0,0,0.9);
             backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             z-index: 100;
             border-bottom: 1px solid var(--border);
         }
@@ -75,15 +66,15 @@
         .tab-link {
             color: var(--text2);
             text-decoration: none;
-            padding: 8px 18px;
-            border-radius: 6px;
-            font-size: 0.82rem;
+            padding: 7px 16px;
+            border-radius: 5px;
+            font-size: 0.8rem;
             cursor: pointer;
             border: none;
             background: none;
             font-family: inherit;
             font-weight: 500;
-            transition: all 0.2s;
+            transition: all 0.15s;
             white-space: nowrap;
         }
 
@@ -93,40 +84,40 @@
         }
 
         .tab-link.discord-tab {
-            background: #5865F2;
-            color: #fff;
+            background: #fff;
+            color: #000;
             font-weight: 600;
             border-radius: 20px;
-            padding: 8px 20px;
+            padding: 7px 18px;
         }
 
         .tab-link.discord-tab:hover {
-            background: #4752c4;
-            color: #fff;
+            background: #ddd;
+            color: #000;
         }
 
-        /* Free Tier Banner */
+        /* Free Banner */
         .free-banner {
             background: var(--bg2);
             border: 1px solid var(--border);
             border-radius: var(--radius);
-            padding: 10px 18px;
+            padding: 9px 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            font-size: 0.82rem;
+            gap: 8px;
+            font-size: 0.78rem;
             color: var(--text2);
-            margin-top: 20px;
+            margin-top: 18px;
             position: sticky;
-            top: 60px;
+            top: 56px;
             z-index: 99;
         }
 
         .free-banner .info-icon {
             cursor: pointer;
-            font-size: 1rem;
-            color: var(--accent);
+            font-size: 0.85rem;
+            color: var(--text);
             position: relative;
             display: inline-flex;
             align-items: center;
@@ -135,11 +126,13 @@
             height: 20px;
             border-radius: 50%;
             border: 1px solid var(--border2);
-            transition: all 0.2s;
+            transition: all 0.15s;
+            font-style: normal;
+            font-weight: 600;
         }
 
         .free-banner .info-icon:hover {
-            border-color: var(--accent);
+            border-color: var(--text);
             background: var(--bg3);
         }
 
@@ -152,95 +145,54 @@
             background: var(--bg3);
             border: 1px solid var(--border2);
             border-radius: var(--radius);
-            padding: 16px 20px;
-            width: 300px;
+            padding: 14px 18px;
+            width: 280px;
             text-align: left;
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             color: var(--text2);
             z-index: 200;
             pointer-events: none;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
         }
 
         .free-tooltip .tooltip-title {
             font-weight: 700;
             color: var(--text);
-            margin-bottom: 10px;
-            font-size: 0.85rem;
+            margin-bottom: 8px;
+            font-size: 0.8rem;
         }
 
         .free-tooltip .pros,
         .free-tooltip .cons {
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
-        .free-tooltip .pros span,
-        .free-tooltip .cons span {
-            display: block;
-            font-weight: 700;
-            margin-bottom: 3px;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+        .free-tooltip .pros span{display:block;font-weight:700;margin-bottom:2px;font-size:0.68rem;text-transform:uppercase;letter-spacing:1px;color:#4ade80}
+        .free-tooltip .cons span{display:block;font-weight:700;margin-bottom:2px;font-size:0.68rem;text-transform:uppercase;letter-spacing:1px;color:#f87171}
 
-        .free-tooltip .pros span {
-            color: #4ade80;
-        }
-        .free-tooltip .cons span {
-            color: #f87171;
-        }
+        .free-tooltip ul{list-style:none;padding:0}
+        .free-tooltip ul li{padding:1px 0;font-size:0.7rem}
+        .free-tooltip ul li::before{content:'• ';color:var(--text3)}
 
-        .free-tooltip ul {
-            list-style: none;
-            padding: 0;
-        }
-        .free-tooltip ul li {
-            padding: 2px 0;
-            font-size: 0.72rem;
-        }
-        .free-tooltip ul li::before {
-            content: '• ';
-            color: var(--text3);
-        }
-
-        .info-icon:hover .free-tooltip {
-            display: block;
-        }
+        .info-icon:hover .free-tooltip{display:block}
 
         /* Hero */
         .hero {
             text-align: center;
             padding: 80px 0 50px;
-            position: relative;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(99, 102, 241, 0.06) 0%, transparent 70%);
-            pointer-events: none;
         }
 
         .hero-title {
-            font-size: 4.5rem;
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
             font-weight: 900;
             letter-spacing: -2px;
             line-height: 1;
-            margin-bottom: 12px;
-            background: linear-gradient(180deg, #fff 0%, #b0b0b0 40%, #555 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            margin-bottom: 10px;
+            color: var(--text);
         }
 
         .hero-subtitle {
-            font-size: 1rem;
+            font-size: 0.95rem;
             color: var(--text2);
             letter-spacing: 2px;
             text-transform: uppercase;
@@ -248,34 +200,30 @@
 
         .hero-stats {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             justify-content: center;
             margin-top: 50px;
-            flex-wrap: wrap;
         }
 
         .stat-card {
             background: var(--bg2);
             border: 1px solid var(--border);
             border-radius: var(--radius);
-            padding: 24px 32px;
+            padding: 22px 30px;
             text-align: center;
-            min-width: 160px;
+            min-width: 150px;
         }
 
         .stat-number {
-            font-size: 2.2rem;
+            font-size: 2rem;
             font-weight: 900;
             display: block;
-            background: linear-gradient(135deg, var(--accent), var(--accent2));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--text);
         }
 
         .stat-label {
             color: var(--text3);
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             text-transform: uppercase;
             letter-spacing: 2px;
             margin-top: 4px;
@@ -286,18 +234,17 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            padding: 11px 26px;
+            padding: 10px 24px;
             border-radius: var(--radius);
-            font-size: 0.82rem;
+            font-size: 0.8rem;
             font-weight: 600;
             cursor: pointer;
             border: 1px solid var(--text);
             text-decoration: none;
-            transition: all 0.2s;
+            transition: all 0.15s;
             font-family: inherit;
             background: transparent;
             color: var(--text);
-            letter-spacing: 0.5px;
         }
 
         .btn:hover {
@@ -305,36 +252,24 @@
             color: var(--bg);
         }
 
-        .btn-primary {
-            background: var(--accent);
-            border-color: var(--accent);
-            color: #fff;
+        .btn-white {
+            background: #fff;
+            border-color: #fff;
+            color: #000;
         }
 
-        .btn-primary:hover {
-            background: #5558e6;
-            border-color: #5558e6;
-            color: #fff;
+        .btn-white:hover {
+            background: #ddd;
+            border-color: #ddd;
+            color: #000;
         }
 
-        .btn-discord {
-            background: #5865F2;
-            border-color: #5865F2;
-            color: #fff;
-        }
-
-        .btn-discord:hover {
-            background: #4752c4;
-            border-color: #4752c4;
-            color: #fff;
-        }
-
-        .btn-secondary {
+        .btn-outline {
             border-color: var(--border2);
             color: var(--text2);
         }
 
-        .btn-secondary:hover {
+        .btn-outline:hover {
             border-color: var(--text);
             color: var(--text);
             background: transparent;
@@ -351,134 +286,130 @@
         }
 
         .section-title {
-            font-size: 1.8rem;
+            font-size: clamp(1.4rem, 4vw, 1.8rem);
             font-weight: 800;
-            margin-bottom: 8px;
-            background: linear-gradient(180deg, #fff, #999);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            margin-bottom: 6px;
+            color: var(--text);
             letter-spacing: -0.5px;
         }
 
         .section-desc {
             color: var(--text3);
-            font-size: 0.85rem;
+            font-size: 0.82rem;
         }
 
         /* Features */
         .feature-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 10px;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 8px;
         }
 
         .feature-card {
             background: var(--bg2);
             border: 1px solid var(--border);
             border-radius: var(--radius);
-            padding: 28px;
-            transition: all 0.2s;
+            padding: 24px;
+            transition: all 0.15s;
         }
 
         .feature-card:hover {
             border-color: var(--border2);
-            transform: translateY(-2px);
         }
 
         .feature-icon {
-            font-size: 1.8rem;
-            margin-bottom: 12px;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
             display: block;
         }
 
         .feature-card h3 {
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 700;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
         }
 
         .feature-card p {
             color: var(--text2);
-            font-size: 0.8rem;
+            font-size: 0.78rem;
         }
 
         /* Plans */
         .plans-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 10px;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 8px;
         }
 
         .plan-card {
             background: var(--bg2);
             border: 1px solid var(--border);
             border-radius: var(--radius);
-            padding: 24px 16px;
+            padding: 22px 14px;
             text-align: center;
-            transition: all 0.2s;
+            transition: all 0.15s;
             position: relative;
         }
 
         .plan-card:hover {
             border-color: var(--border2);
-            transform: translateY(-2px);
         }
 
         .plan-card.best {
-            border-color: var(--accent);
-            background: var(--bg4);
+            border-color: var(--text);
+            background: var(--bg3);
         }
 
         .plan-card.best::before {
-            content: 'BEST DEAL';
+            content: 'BEST';
             position: absolute;
-            top: -9px;
+            top: -8px;
             left: 50%;
             transform: translateX(-50%);
-            background: var(--accent);
-            color: #fff;
-            padding: 3px 12px;
-            border-radius: 10px;
-            font-size: 0.65rem;
+            background: #fff;
+            color: #000;
+            padding: 2px 10px;
+            border-radius: 8px;
+            font-size: 0.6rem;
             font-weight: 700;
             letter-spacing: 1px;
         }
 
         .plan-badge {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             margin-bottom: 8px;
             display: block;
         }
 
         .plan-name {
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 700;
         }
 
         .plan-price {
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             font-weight: 900;
-            margin: 10px 0 2px;
+            margin: 8px 0 2px;
+            color: var(--text);
         }
 
         .plan-duration {
             color: var(--text3);
-            font-size: 0.7rem;
-            margin-bottom: 14px;
+            font-size: 0.68rem;
+            margin-bottom: 12px;
         }
 
         .plan-features {
             list-style: none;
             padding: 0;
-            margin: 14px 0;
+            margin: 12px 0;
             text-align: left;
         }
 
         .plan-features li {
-            padding: 4px 0;
+            padding: 3px 0;
             color: var(--text2);
-            font-size: 0.73rem;
+            font-size: 0.7rem;
             display: flex;
             align-items: center;
             gap: 6px;
@@ -486,15 +417,15 @@
 
         .plan-features li::before {
             content: '✓';
-            color: var(--accent);
+            color: var(--text);
             font-weight: 700;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
         }
 
         .plan-card .btn {
             width: 100%;
             justify-content: center;
-            margin-top: 12px;
+            margin-top: 10px;
         }
 
         /* CTA */
@@ -502,26 +433,26 @@
             background: var(--bg2);
             border: 1px solid var(--border);
             border-radius: var(--radius);
-            padding: 40px;
+            padding: 36px;
             text-align: center;
             margin: 30px 0;
         }
 
         .cta-section h2 {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 800;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .cta-section p {
             color: var(--text2);
-            margin-bottom: 20px;
-            font-size: 0.85rem;
+            margin-bottom: 18px;
+            font-size: 0.82rem;
         }
 
         .cta-buttons {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             justify-content: center;
             flex-wrap: wrap;
         }
@@ -529,7 +460,7 @@
         /* Footer */
         .footer {
             border-top: 1px solid var(--border);
-            padding: 30px 0;
+            padding: 28px 0;
             margin-top: 30px;
         }
 
@@ -538,32 +469,32 @@
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 16px;
-            margin-bottom: 16px;
+            gap: 14px;
+            margin-bottom: 14px;
         }
 
         .footer-brand {
             font-weight: 700;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         .footer-brand p {
             color: var(--text3);
             font-weight: 400;
-            font-size: 0.7rem;
-            margin-top: 2px;
+            font-size: 0.68rem;
+            margin-top: 1px;
         }
 
         .footer-links {
             display: flex;
-            gap: 20px;
+            gap: 18px;
             flex-wrap: wrap;
         }
 
         .footer-links a {
             color: var(--text2);
             text-decoration: none;
-            font-size: 0.78rem;
+            font-size: 0.75rem;
         }
 
         .footer-links a:hover {
@@ -573,70 +504,31 @@
         .footer-bottom {
             text-align: center;
             color: var(--text3);
-            font-size: 0.68rem;
-            padding-top: 14px;
+            font-size: 0.65rem;
+            padding-top: 12px;
             border-top: 1px solid var(--border);
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
-            .hero-title {
-                font-size: 2.8rem;
-            }
-            .stat-card {
-                padding: 18px 22px;
-                min-width: 120px;
-            }
-            .stat-number {
-                font-size: 1.6rem;
-            }
-            .section-title {
-                font-size: 1.4rem;
-            }
-            .plans-grid {
-                grid-template-columns: 1fr;
-                max-width: 380px;
-                margin: 0 auto;
-            }
-            .free-tooltip {
-                width: 260px;
-                left: auto;
-                right: 0;
-                transform: none;
-            }
-            .top-tabs {
-                gap: 1px;
-            }
-            .tab-link {
-                padding: 6px 10px;
-                font-size: 0.75rem;
-            }
+            .hero{padding:50px 0 30px}
+            .stat-card{padding:16px 20px;min-width:110px}
+            .stat-number{font-size:1.5rem}
+            .plans-grid{grid-template-columns:1fr;max-width:360px;margin:0 auto}
+            .free-tooltip{width:240px;left:auto;right:0;transform:none}
+            .top-tabs{gap:1px}
+            .tab-link{padding:6px 10px;font-size:0.72rem}
         }
 
         @media (max-width: 480px) {
-            .hero-title {
-                font-size: 2rem;
-            }
-            .feature-grid {
-                grid-template-columns: 1fr;
-            }
-            .top-tabs {
-                flex-wrap: wrap;
-                gap: 2px;
-            }
-            .footer-content {
-                flex-direction: column;
-                text-align: center;
-            }
-            .footer-links {
-                justify-content: center;
-            }
+            .feature-grid{grid-template-columns:1fr}
+            .top-tabs{flex-wrap:wrap;gap:2px}
+            .footer-content{flex-direction:column;text-align:center}
+            .footer-links{justify-content:center}
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Top Tabs - Centered -->
         <div class="top-tabs">
             <a href="#home" class="tab-link">Home</a>
             <a href="#features" class="tab-link">Features</a>
@@ -645,29 +537,13 @@
             <a href="mailto:support@s4names.com" class="tab-link">Support</a>
         </div>
 
-        <!-- Free Tier Banner -->
         <div class="free-banner">
-            ⚠️ FREE-TIER AVAILABLE IN DISCORD
-            <span class="info-icon">🛈
+            ⚠️ FREE-TIER IN DISCORD
+            <span class="info-icon">i
                 <div class="free-tooltip">
                     <div class="tooltip-title">Free Tier</div>
-                    <div class="pros">
-                        <span>✅ Gets</span>
-                        <ul>
-                            <li>Basic sniper</li>
-                            <li>5–7 char names</li>
-                            <li>25 snipes max</li>
-                        </ul>
-                    </div>
-                    <div class="cons">
-                        <span>❌ Doesn't Get</span>
-                        <ul>
-                            <li>Slow as hell</li>
-                            <li>No custom length</li>
-                            <li>No future snipers</li>
-                            <li>No priority support</li>
-                        </ul>
-                    </div>
+                    <div class="pros"><span>✅ Gets</span><ul><li>Basic sniper</li><li>5–7 char names</li><li>25 snipes max</li></ul></div>
+                    <div class="cons"><span>❌ No</span><ul><li>Slow as hell</li><li>No custom length</li><li>No future snipers</li><li>No priority support</li></ul></div>
                 </div>
             </span>
         </div>
@@ -689,36 +565,12 @@
                 <p class="section-desc">Fast. Clean. Works.</p>
             </div>
             <div class="feature-grid">
-                <div class="feature-card">
-                    <span class="feature-icon">⚡</span>
-                    <h3>Fast</h3>
-                    <p>Checks thousands per minute. You get the name first.</p>
-                </div>
-                <div class="feature-card">
-                    <span class="feature-icon">💎</span>
-                    <h3>Rare</h3>
-                    <p>3-letter names. OG names. The good stuff.</p>
-                </div>
-                <div class="feature-card">
-                    <span class="feature-icon">🎯</span>
-                    <h3>Smart</h3>
-                    <p>Knows which names are worth sniping before they drop.</p>
-                </div>
-                <div class="feature-card">
-                    <span class="feature-icon">🔧</span>
-                    <h3>Tweakable</h3>
-                    <p>Set your length, speed, patterns. Your call.</p>
-                </div>
-                <div class="feature-card">
-                    <span class="feature-icon">🔒</span>
-                    <h3>Private</h3>
-                    <p>No tracking. No BS. Just snipes.</p>
-                </div>
-                <div class="feature-card">
-                    <span class="feature-icon">🚀</span>
-                    <h3>Updates</h3>
-                    <p>New snipers drop. Paid tiers get them first.</p>
-                </div>
+                <div class="feature-card"><span class="feature-icon">⚡</span><h3>Fast</h3><p>Thousands per minute. You get it first.</p></div>
+                <div class="feature-card"><span class="feature-icon">💎</span><h3>Rare</h3><p>3-letters. OGs. The good stuff.</p></div>
+                <div class="feature-card"><span class="feature-icon">🎯</span><h3>Smart</h3><p>Knows what's worth sniping before it drops.</p></div>
+                <div class="feature-card"><span class="feature-icon">🔧</span><h3>Tweakable</h3><p>Set length, speed, patterns. Your call.</p></div>
+                <div class="feature-card"><span class="feature-icon">🔒</span><h3>Private</h3><p>No tracking. No BS. Just snipes.</p></div>
+                <div class="feature-card"><span class="feature-icon">🚀</span><h3>Updates</h3><p>New snipers drop. Paid gets em first.</p></div>
             </div>
         </section>
 
@@ -729,82 +581,34 @@
             </div>
             <div class="plans-grid">
                 <div class="plan-card">
-                    <span class="plan-badge">🟢</span>
-                    <h3 class="plan-name">Basic</h3>
-                    <div class="plan-price">50</div>
-                    <p class="plan-duration">Robux • 1 Week</p>
-                    <ul class="plan-features">
-                        <li>Slow speed</li>
-                        <li>7–10 char names</li>
-                        <li>150 snipes</li>
-                        <li>Basic support</li>
-                    </ul>
-                    <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-secondary" target="_blank">Buy</a>
+                    <span class="plan-badge">🟢</span><h3 class="plan-name">Basic</h3>
+                    <div class="plan-price">50</div><p class="plan-duration">Robux • 1 Week</p>
+                    <ul class="plan-features"><li>Slow speed</li><li>7–10 char</li><li>150 snipes</li><li>Basic support</li></ul>
+                    <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-outline" target="_blank">Buy</a>
                 </div>
-
                 <div class="plan-card">
-                    <span class="plan-badge">🔵</span>
-                    <h3 class="plan-name">Mid</h3>
-                    <div class="plan-price">150</div>
-                    <p class="plan-duration">Robux • 2 Weeks</p>
-                    <ul class="plan-features">
-                        <li>Faster speed</li>
-                        <li>5–7 char names</li>
-                        <li>500 snipes</li>
-                        <li>Custom length</li>
-                        <li>Future snipers</li>
-                        <li>Priority support</li>
-                    </ul>
-                    <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-secondary" target="_blank">Buy</a>
+                    <span class="plan-badge">🔵</span><h3 class="plan-name">Mid</h3>
+                    <div class="plan-price">150</div><p class="plan-duration">Robux • 2 Weeks</p>
+                    <ul class="plan-features"><li>Faster</li><li>5–7 char</li><li>500 snipes</li><li>Custom length</li><li>Future snipers</li><li>Priority support</li></ul>
+                    <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-outline" target="_blank">Buy</a>
                 </div>
-
                 <div class="plan-card best">
-                    <span class="plan-badge">🟠</span>
-                    <h3 class="plan-name">Fast</h3>
-                    <div class="plan-price">400</div>
-                    <p class="plan-duration">Robux • 1 Month</p>
-                    <ul class="plan-features">
-                        <li>Fast speed</li>
-                        <li>3–7 char names</li>
-                        <li>2,500 snipes</li>
-                        <li>Custom length</li>
-                        <li>All snipers</li>
-                        <li>Priority support</li>
-                    </ul>
-                    <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-primary" target="_blank">Buy</a>
+                    <span class="plan-badge">🟠</span><h3 class="plan-name">Fast</h3>
+                    <div class="plan-price">400</div><p class="plan-duration">Robux • 1 Month</p>
+                    <ul class="plan-features"><li>Fast</li><li>3–7 char</li><li>2,500 snipes</li><li>Custom length</li><li>All snipers</li><li>Priority support</li></ul>
+                    <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-white" target="_blank">Buy</a>
                 </div>
-
                 <div class="plan-card">
-                    <span class="plan-badge">🔴</span>
-                    <h3 class="plan-name">Pro</h3>
-                    <div class="plan-price">555</div>
-                    <p class="plan-duration">Robux • 2 Months</p>
-                    <ul class="plan-features">
-                        <li>Very fast</li>
-                        <li>3–10 char names</li>
-                        <li>5,000 snipes</li>
-                        <li>Custom length</li>
-                        <li>All snipers</li>
-                        <li>VIP support</li>
-                    </ul>
-                    <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-secondary" target="_blank">Buy</a>
+                    <span class="plan-badge">🔴</span><h3 class="plan-name">Pro</h3>
+                    <div class="plan-price">555</div><p class="plan-duration">Robux • 2 Months</p>
+                    <ul class="plan-features"><li>Very fast</li><li>3–10 char</li><li>5,000 snipes</li><li>Custom length</li><li>All snipers</li><li>VIP support</li></ul>
+                    <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-outline" target="_blank">Buy</a>
                 </div>
-
                 <div class="plan-card">
-                    <span class="plan-badge">👑</span>
-                    <h3 class="plan-name">Ultimate</h3>
-                    <div class="plan-price">1,000</div>
-                    <p class="plan-duration">Robux • Lifetime</p>
-                    <ul class="plan-features">
-                        <li>Fastest speed</li>
-                        <li>3–10 char names</li>
-                        <li>Unlimited snipes</li>
-                        <li>Custom length</li>
-                        <li>All snipers</li>
-                        <li>Early access</li>
-                        <li>VIP support</li>
-                    </ul>
-                    <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-secondary" target="_blank">Buy</a>
+                    <span class="plan-badge">👑</span><h3 class="plan-name">Ultimate</h3>
+                    <div class="plan-price">1,000</div><p class="plan-duration">Robux • Lifetime</p>
+                    <ul class="plan-features"><li>Fastest</li><li>3–10 char</li><li>Unlimited</li><li>Custom length</li><li>All snipers</li><li>Early access</li><li>VIP support</li></ul>
+                    <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-outline" target="_blank">Buy</a>
                 </div>
             </div>
         </section>
@@ -813,39 +617,24 @@
             <h2>Ready?</h2>
             <p>Join Discord. Pick a plan. Get names.</p>
             <div class="cta-buttons">
-                <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-discord" target="_blank">Join Discord</a>
-                <a href="mailto:support@s4names.com" class="btn btn-secondary">Support</a>
+                <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-white" target="_blank">Join Discord</a>
+                <a href="mailto:support@s4names.com" class="btn btn-outline">Support</a>
             </div>
         </section>
 
         <footer class="footer">
             <div class="footer-content">
-                <div class="footer-brand">
-                    S4NAMES
-                    <p>Snipes 4 Names</p>
-                </div>
+                <div class="footer-brand">S4NAMES<p>Snipes 4 Names</p></div>
                 <div class="footer-links">
-                    <a href="#home">Home</a>
-                    <a href="#features">Features</a>
-                    <a href="#plans">Plans</a>
-                    <a href="https://discord.gg/qhVBb8Yj6V" target="_blank">Discord</a>
-                    <a href="mailto:support@s4names.com">Support</a>
+                    <a href="#home">Home</a><a href="#features">Features</a><a href="#plans">Plans</a><a href="https://discord.gg/qhVBb8Yj6V" target="_blank">Discord</a><a href="mailto:support@s4names.com">Support</a>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 S4NAMES. Not affiliated with Roblox.</p>
-            </div>
+            <div class="footer-bottom"><p>&copy; 2026 S4NAMES. Not affiliated with Roblox.</p></div>
         </footer>
     </div>
 
     <script>
-        document.querySelectorAll('a[href^="#"]').forEach(a => {
-            a.addEventListener('click', function(e) {
-                e.preventDefault();
-                const t = document.querySelector(this.getAttribute('href'));
-                if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            });
-        });
+        document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',function(e){e.preventDefault();const t=document.querySelector(this.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'})})});
     </script>
 </body>
 </html>
