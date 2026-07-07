@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>S4NAMES</title>
-    <meta name="description" content="S4N - The best Roblox username sniper. Find rare usernames with speed and precision.">
+    <meta name="description" content="S4N - The Roblox username sniper. Find rare usernames with speed and precision.">
     <meta property="og:title" content="S4NAMES - Snipes 4 Names">
     <meta property="og:description" content="Find rare Roblox usernames with S4N">
     <meta name="theme-color" content="#070708">
@@ -79,16 +79,6 @@
             letter-spacing: 3px;
             color: var(--text);
             text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .nav-brand span {
-            background: linear-gradient(135deg, var(--accent), var(--accent2));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
 
         .nav-links {
@@ -124,7 +114,6 @@
             font-weight: 600;
             padding: 8px 18px;
             border-radius: 20px;
-            transition: all 0.2s ease;
         }
 
         .nav-link.btn-discord:hover {
@@ -162,18 +151,6 @@
             pointer-events: none;
         }
 
-        .hero-badge {
-            display: inline-block;
-            background: var(--bg2);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 6px 16px;
-            font-size: 0.8rem;
-            color: var(--text2);
-            margin-bottom: 24px;
-            letter-spacing: 1px;
-        }
-
         .hero-title {
             font-size: 5rem;
             font-weight: 900;
@@ -189,16 +166,9 @@
         .hero-subtitle {
             font-size: 1.1rem;
             color: var(--text2);
-            margin-bottom: 8px;
+            margin-bottom: 32px;
             letter-spacing: 3px;
             text-transform: uppercase;
-        }
-
-        .hero-desc {
-            color: var(--text3);
-            max-width: 500px;
-            margin: 0 auto 40px;
-            font-size: 0.95rem;
         }
 
         .hero-buttons {
@@ -222,7 +192,7 @@
             border-radius: var(--radius);
             padding: 28px 36px;
             text-align: center;
-            min-width: 160px;
+            min-width: 200px;
             transition: all 0.3s ease;
         }
 
@@ -412,6 +382,15 @@
             transform: translateY(-2px);
         }
 
+        .plan-card.free-tier {
+            opacity: 0.6;
+            border-color: var(--border);
+        }
+
+        .plan-card.free-tier:hover {
+            opacity: 0.8;
+        }
+
         .plan-card.featured {
             border-color: var(--accent);
             background: var(--bg4);
@@ -482,6 +461,16 @@
             font-weight: 700;
         }
 
+        .plan-features li.disabled {
+            color: var(--text3);
+            text-decoration: line-through;
+        }
+
+        .plan-features li.disabled::before {
+            content: '✗';
+            color: #ff4444;
+        }
+
         .plan-card .btn {
             width: 100%;
             justify-content: center;
@@ -536,9 +525,6 @@
         .footer-brand {
             font-weight: 700;
             font-size: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
 
         .footer-brand p {
@@ -584,7 +570,7 @@
             }
             .stat-card {
                 padding: 20px 24px;
-                min-width: 120px;
+                min-width: 140px;
             }
             .stat-number {
                 font-size: 1.8rem;
@@ -637,7 +623,6 @@
             }
         }
 
-        /* Animations */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -656,9 +641,8 @@
 </head>
 <body>
     <div class="container">
-        <!-- Navigation -->
         <nav class="nav">
-            <a href="#" class="nav-brand">🎯 <span>S4NAMES</span></a>
+            <a href="#" class="nav-brand">S4NAMES</a>
             <div class="nav-links">
                 <a href="#home" class="nav-link">Home</a>
                 <a href="#features" class="nav-link">Features</a>
@@ -671,12 +655,9 @@
             </div>
         </nav>
 
-        <!-- Home Section -->
         <section id="home" class="hero">
-            <div class="hero-badge">🚀 VERSION 2.0 NOW LIVE</div>
             <h1 class="hero-title">S4NAMES</h1>
-            <p class="hero-subtitle">The <strong>Best</strong> Roblox Username Sniper</p>
-            <p class="hero-desc">Rare 3-letter names. Short usernames. Advanced sniping technology. All yours with unmatched speed and precision.</p>
+            <p class="hero-subtitle">The Best Username Sniper</p>
             <div class="hero-buttons">
                 <a href="#plans" class="btn btn-primary">View Plans</a>
                 <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-discord" target="_blank">
@@ -689,18 +670,9 @@
                     <span class="stat-number">10,000+</span>
                     <span class="stat-label">Total Snipes</span>
                 </div>
-                <div class="stat-card">
-                    <span class="stat-number">2,500+</span>
-                    <span class="stat-label">Rare Snipes</span>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-number">500+</span>
-                    <span class="stat-label">Active Users</span>
-                </div>
             </div>
         </section>
 
-        <!-- Features Section -->
         <section id="features" class="section">
             <div class="section-header">
                 <h2 class="section-title">Why Choose S4N</h2>
@@ -740,24 +712,25 @@
             </div>
         </section>
 
-        <!-- Plans / Tiers Section -->
         <section id="plans" class="section">
             <div class="section-header">
                 <h2 class="section-title">Plans & Pricing</h2>
                 <p class="section-desc">Choose your plan and start sniping rare Roblox usernames today.</p>
             </div>
             <div class="plans-grid">
-                <!-- Free Tier -->
-                <div class="plan-card">
+                <!-- Free Tier - SHITTY -->
+                <div class="plan-card free-tier">
                     <span class="plan-badge">🆓</span>
                     <h3 class="plan-name">Free</h3>
                     <div class="plan-price">Free</div>
                     <p class="plan-duration">Forever</p>
                     <ul class="plan-features">
-                        <li>Basic sniping technology</li>
+                        <li class="disabled">Extremely slow sniping</li>
+                        <li class="disabled">Most basic technology</li>
                         <li>Username length: 5–7 chars</li>
-                        <li>Max 25 snipes</li>
-                        <li>Length settings locked</li>
+                        <li class="disabled">Max 25 snipes only</li>
+                        <li class="disabled">Length settings locked</li>
+                        <li class="disabled">No future snipers</li>
                         <li>Community support</li>
                     </ul>
                     <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-secondary" target="_blank">Get Started</a>
@@ -770,10 +743,12 @@
                     <div class="plan-price">50 Robux</div>
                     <p class="plan-duration">1 Week</p>
                     <ul class="plan-features">
-                        <li>Less advanced sniping</li>
+                        <li>Slow sniping</li>
+                        <li>Less advanced technology</li>
                         <li>Username length: 7–10 chars</li>
                         <li>Max 150 snipes</li>
-                        <li>Length settings locked</li>
+                        <li class="disabled">Length settings locked</li>
+                        <li class="disabled">No future snipers</li>
                         <li>Basic support</li>
                     </ul>
                     <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-secondary" target="_blank">Choose Basic</a>
@@ -786,28 +761,30 @@
                     <div class="plan-price">150 Robux</div>
                     <p class="plan-duration">2 Weeks</p>
                     <ul class="plan-features">
-                        <li>Faster sniping tech</li>
+                        <li>Faster sniping</li>
+                        <li>More advanced technology</li>
                         <li>Username length: 5–7 chars</li>
                         <li>Max 500 snipes</li>
                         <li>Length settings unlocked</li>
-                        <li>Future snipers access</li>
+                        <li>Access to future snipers</li>
                         <li>Priority support</li>
                     </ul>
                     <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-secondary" target="_blank">Choose Mid</a>
                 </div>
 
-                <!-- Fast Tier -->
+                <!-- Fast Tier - BEST VALUE -->
                 <div class="plan-card featured">
                     <span class="plan-badge">🟠</span>
                     <h3 class="plan-name">Fast</h3>
                     <div class="plan-price">400 Robux</div>
                     <p class="plan-duration">1 Month</p>
                     <ul class="plan-features">
-                        <li>Advanced sniping tech</li>
+                        <li>Fast sniping</li>
+                        <li>Advanced technology</li>
                         <li>Username length: 3–7 chars</li>
                         <li>Max 2,500 snipes</li>
-                        <li>All current & future snipers</li>
                         <li>Length fully customizable</li>
+                        <li>All current & future snipers</li>
                         <li>Priority support</li>
                     </ul>
                     <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-primary" target="_blank">Choose Fast</a>
@@ -820,11 +797,12 @@
                     <div class="plan-price">555 Robux</div>
                     <p class="plan-duration">2 Months</p>
                     <ul class="plan-features">
-                        <li>Professional sniping tech</li>
+                        <li>Very fast sniping</li>
+                        <li>Professional technology</li>
                         <li>Username length: 3–10 chars</li>
                         <li>Max 5,000 snipes</li>
-                        <li>All current & future snipers</li>
                         <li>Length fully customizable</li>
+                        <li>All current & future snipers</li>
                         <li>VIP support</li>
                     </ul>
                     <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-secondary" target="_blank">Choose Pro</a>
@@ -837,10 +815,11 @@
                     <div class="plan-price">1,000 Robux</div>
                     <p class="plan-duration">Lifetime</p>
                     <ul class="plan-features">
+                        <li>Fastest sniping possible</li>
                         <li>Most advanced technology</li>
                         <li>Username length: 3–10 chars</li>
                         <li>Unlimited snipes</li>
-                        <li>All current & future snipers</li>
+                        <li>Length fully customizable</li>
                         <li>Priority updates & early access</li>
                         <li>VIP support</li>
                     </ul>
@@ -849,7 +828,6 @@
             </div>
         </section>
 
-        <!-- CTA Section -->
         <section class="cta-section">
             <h2>Ready to Start Sniping?</h2>
             <p>Join our Discord community to get started with S4N and claim rare Roblox usernames today.</p>
@@ -862,14 +840,11 @@
             </div>
         </section>
 
-        <!-- Footer -->
         <footer class="footer">
             <div class="footer-content">
                 <div class="footer-brand">
-                    🎯 S4NAMES
-                    <div>
-                        <p>Snipes 4 Names — The Best Roblox Username Sniper</p>
-                    </div>
+                    S4NAMES
+                    <p>Snipes 4 Names — The Best Roblox Username Sniper</p>
                 </div>
                 <div class="footer-links">
                     <a href="#home">Home</a>
@@ -886,7 +861,6 @@
     </div>
 
     <script>
-        // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -899,18 +873,6 @@
                 }
             });
         });
-
-        // subtle animation to stat numbers on scroll
-        const stats = document.querySelectorAll('.stat-number');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.animation = 'fadeInUp 0.6s ease forwards';
-                }
-            });
-        }, { threshold: 0.5 });
-
-        stats.forEach(stat => observer.observe(stat));
     </script>
 </body>
 </html>
