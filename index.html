@@ -3,665 +3,337 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S4NAMES</title>
-    <meta name="description" content="S4N - Roblox username sniper.">
-    <meta property="og:title" content="S4NAMES">
-    <meta property="og:description" content="Find rare Roblox usernames.">
-    <meta name="theme-color" content="#0a0a0a">
+    <title>S4Names - Snipes 4 Names</title>
+    <meta name="description" content="S4Names - The best Roblox username sniper. Find rare usernames.">
+    <meta property="og:title" content="S4Names - Snipes 4 Names">
+    <meta property="og:description" content="Find rare Roblox usernames with S4Names">
+    <meta name="theme-color" content="#000000">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
     <style>
-        :root {
-            --bg: #0a0a0a;
-            --bg2: #0f0f0f;
-            --bg3: #161616;
-            --text: #fff;
-            --text2: #999;
-            --text3: #555;
-            --border: #1c1c1c;
-            --border2: #282828;
-            --radius: 10px;
-        }
-
+        :root{--bg:#000;--bg2:#0a0a0a;--bg3:#111;--text:#fff;--text2:#888;--text3:#555;--accent:#fff;--border:#1a1a1a;--border2:#222;--radius:6px;--font:'Inter',system-ui,-apple-system,sans-serif}
         *{margin:0;padding:0;box-sizing:border-box}
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-            line-height: 1.5;
-            -webkit-font-smoothing: antialiased;
-            overflow-x: hidden;
-        }
-
-        .container{max-width:1000px;margin:0 auto;padding:0 24px}
-
-        ::-webkit-scrollbar{width:0}
-
-        /* ========== ANIMATIONS ========== */
-        @keyframes fadeUp {
-            from{opacity:0;transform:translateY(50px)}
-            to{opacity:1;transform:translateY(0)}
-        }
-        @keyframes fadeDown {
-            from{opacity:0;transform:translateY(-30px)}
-            to{opacity:1;transform:translateY(0)}
-        }
-        @keyframes fadeIn {
-            from{opacity:0}
-            to{opacity:1}
-        }
-        @keyframes bounceIn {
-            0%{opacity:0;transform:scale(0.3)}
-            50%{transform:scale(1.08)}
-            70%{transform:scale(0.95)}
-            100%{opacity:1;transform:scale(1)}
-        }
-        @keyframes blurIn {
-            from{opacity:0;filter:blur(20px);transform:scale(1.1)}
-            to{opacity:1;filter:blur(0);transform:scale(1)}
-        }
-        @keyframes float {
-            0%,100%{transform:translateY(0px)}
-            50%{transform:translateY(-10px)}
-        }
-        @keyframes pulse {
-            0%,100%{opacity:0.5}
-            50%{opacity:1}
-        }
-        @keyframes borderPulse {
-            0%,100%{border-color:var(--border)}
-            50%{border-color:#333}
-        }
-        @keyframes shimmer {
-            0%{background-position:-200% 0}
-            100%{background-position:200% 0}
-        }
-        @keyframes wiggle {
-            0%,100%{transform:rotate(0)}
-            25%{transform:rotate(-5deg)}
-            75%{transform:rotate(5deg)}
-        }
-        @keyframes glitch {
-            0%,100%{transform:translate(0);text-shadow: none}
-            20%{transform:translate(-3px,1px);text-shadow: 2px 0 #fff, -2px 0 rgba(255,255,255,0.3)}
-            40%{transform:translate(3px,-1px);text-shadow: -2px 0 #fff, 2px 0 rgba(255,255,255,0.3)}
-            60%{transform:translate(-1px,-1px);text-shadow: 1px 0 rgba(255,255,255,0.3)}
-            80%{transform:translate(1px,1px);text-shadow: none}
-        }
-        @keyframes bgSlide {
-            from{background-position:0 0}
-            to{background-position:40px 40px}
-        }
-
-        .reveal {
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* ========== NOISE OVERLAY ========== */
-        body::after {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.015'/%3E%3C/svg%3E");
-            background-repeat: repeat;
-            background-size: 200px 200px;
-            pointer-events: none;
-            z-index: 9999;
-            animation: bgSlide 20s linear infinite;
-        }
-
-        /* ========== TABS ========== */
-        .top-tabs {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 2px;
-            padding: 14px 0;
-            position: sticky;
-            top: 0;
-            background: rgba(10,10,10,0.85);
-            backdrop-filter: blur(30px) saturate(180%);
-            -webkit-backdrop-filter: blur(30px) saturate(180%);
-            z-index: 100;
-            border-bottom: 1px solid rgba(255,255,255,0.04);
-            animation: fadeDown 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-
-        .tab-link {
-            color: var(--text2);
-            text-decoration: none;
-            padding: 8px 18px;
-            border-radius: 6px;
-            font-size: 0.82rem;
-            cursor: pointer;
-            border: none;
-            background: none;
-            font-family: inherit;
-            font-weight: 500;
-            transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-            white-space: nowrap;
-            position: relative;
-        }
-
-        .tab-link::after {
-            content: '';
-            position: absolute;
-            bottom: 3px;
-            left: 50%;
-            transform: translateX(-50%) scaleX(0);
-            width: 20px;
-            height: 1.5px;
-            background: var(--text);
-            border-radius: 1px;
-            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-
-        .tab-link:hover{color:var(--text);background:rgba(255,255,255,0.03)}
-        .tab-link:hover::after{transform:translateX(-50%) scaleX(1)}
-
-        .tab-link.discord-tab {
-            background: #fff;
-            color: #000;
-            font-weight: 600;
-            border-radius: 20px;
-            padding: 8px 20px;
-            transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-        .tab-link.discord-tab::after{display:none}
-        .tab-link.discord-tab:hover{background:#e0e0e0;color:#000;transform:translateY(-3px);box-shadow:0 12px 30px rgba(255,255,255,0.1)}
-
-        /* ========== FREE BANNER ========== */
-        .free-banner {
-            background: var(--bg2);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 10px 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            font-size: 0.8rem;
-            color: var(--text2);
-            margin-top: 18px;
-            position: sticky;
-            top: 58px;
-            z-index: 99;
-            animation: pulse 3s infinite;
-            backdrop-filter: blur(10px);
-        }
-
-        .free-banner .info-icon {
-            cursor: pointer;
-            font-size: 0.85rem;
-            color: var(--text);
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            border: 1px solid var(--border2);
-            transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-            font-style: normal;
-            font-weight: 600;
-        }
-        .free-banner .info-icon:hover{border-color:var(--text);background:rgba(255,255,255,0.05);transform:scale(1.15)}
-
-        .free-tooltip {
-            opacity: 0;
-            visibility: hidden;
-            position: absolute;
-            top: 140%;
-            left: 50%;
-            transform: translateX(-50%) translateY(8px);
-            background: #1a1a1a;
-            border: 1px solid #333;
-            border-radius: 12px;
-            padding: 16px 20px;
-            width: 300px;
-            text-align: left;
-            font-size: 0.74rem;
-            color: var(--text2);
-            z-index: 200;
-            pointer-events: none;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.9);
-            transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-        .free-tooltip::before {
-            content: '';
-            position: absolute;
-            top: -6px;
-            left: 50%;
-            transform: translateX(-50%) rotate(45deg);
-            width: 12px;height: 12px;
-            background: #1a1a1a;
-            border-left: 1px solid #333;
-            border-top: 1px solid #333;
-        }
-        .free-tooltip .tooltip-title{font-weight:700;color:var(--text);margin-bottom:10px;font-size:0.85rem}
-        .free-tooltip .pros,.free-tooltip .cons{margin-bottom:8px}
-        .free-tooltip .pros span{display:block;font-weight:700;margin-bottom:3px;font-size:0.7rem;text-transform:uppercase;letter-spacing:1px;color:#4ade80}
-        .free-tooltip .cons span{display:block;font-weight:700;margin-bottom:3px;font-size:0.7rem;text-transform:uppercase;letter-spacing:1px;color:#f87171}
-        .free-tooltip ul{list-style:none;padding:0}
-        .free-tooltip ul li{padding:2px 0;font-size:0.72rem}
-        .free-tooltip ul li::before{content:'• ';color:var(--text3)}
-
-        .info-icon:hover .free-tooltip {
-            opacity: 1;
-            visibility: visible;
-            transform: translateX(-50%) translateY(0);
-        }
-
-        /* ========== HERO ========== */
-        .hero {
-            text-align: center;
-            padding: 100px 0 70px;
-            position: relative;
-        }
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 50%;left: 50%;
-            transform: translate(-50%,-50%);
-            width: 800px;height: 800px;
-            background: radial-gradient(circle, rgba(255,255,255,0.02) 0%, transparent 60%);
-            pointer-events: none;
-        }
-        .hero-title {
-            font-size: clamp(3.5rem, 10vw, 6rem);
-            font-weight: 900;
-            letter-spacing: -5px;
-            line-height: 0.95;
-            margin-bottom: 14px;
-            color: var(--text);
-            animation: blurIn 1.2s cubic-bezier(0.22, 1, 0.36, 1);
-            transition: letter-spacing 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-            user-select: none;
-        }
-        .hero-title:hover {
-            animation: glitch 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-            letter-spacing: -3px;
-        }
-        .hero-subtitle {
-            font-size: 1rem;
-            color: var(--text2);
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            animation: fadeIn 1.2s ease 0.4s both;
-        }
-        .hero-stats {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            margin-top: 60px;
-            flex-wrap: wrap;
-        }
-        .stat-card {
-            background: var(--bg2);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 30px 40px;
-            text-align: center;
-            min-width: 170px;
-            transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-            animation: bounceIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.6s both;
-            cursor: default;
-            position: relative;
-            overflow: hidden;
-        }
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.04) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.5s;
-        }
-        .stat-card:hover::before{opacity:1}
-        .stat-card:hover {
-            border-color: rgba(255,255,255,0.2);
-            transform: translateY(-8px) scale(1.03);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
-        }
-        .stat-number {
-            font-size: 2.8rem;
-            font-weight: 900;
-            display: block;
-            color: var(--text);
-            transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-        .stat-card:hover .stat-number {
-            transform: scale(1.15);
-            letter-spacing: 3px;
-        }
-        .stat-label {
-            color: var(--text3);
-            font-size: 0.72rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-top: 6px;
-            transition: color 0.5s;
-        }
-        .stat-card:hover .stat-label{color:var(--text2)}
-
-        /* ========== BUTTONS ========== */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 12px 28px;
-            border-radius: 10px;
-            font-size: 0.84rem;
-            font-weight: 600;
-            cursor: pointer;
-            border: 1px solid var(--text);
-            text-decoration: none;
-            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-            font-family: inherit;
-            background: transparent;
-            color: var(--text);
-            position: relative;
-            overflow: hidden;
-        }
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 50%;left: 50%;
-            width: 0;height: 0;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.06);
-            transform: translate(-50%,-50%);
-            transition: width 0.7s, height 0.7s;
-        }
-        .btn:hover::before{width:500px;height:500px}
-        .btn:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(255,255,255,0.05)}
-        .btn:active{transform:translateY(0) scale(0.97)}
-        .btn .arrow{display:inline-block;transition:transform 0.4s cubic-bezier(0.22, 1, 0.36, 1)}
-        .btn:hover .arrow{transform:translateX(5px)}
-
-        .btn-white{background:#fff;border-color:#fff;color:#000}
-        .btn-white:hover{background:#e8e8e8;border-color:#e8e8e8;color:#000;box-shadow:0 14px 40px rgba(255,255,255,0.08)}
-        .btn-outline{border-color:var(--border2);color:var(--text2)}
-        .btn-outline:hover{border-color:var(--text);color:var(--text);background:transparent}
-
-        /* ========== SECTIONS ========== */
-        .section{padding:100px 0}
-        .section-header{text-align:center;margin-bottom:56px}
-        .section-title{font-size:clamp(1.6rem,5vw,2.4rem);font-weight:800;margin-bottom:10px;color:var(--text);letter-spacing:-1px}
-        .section-desc{color:var(--text3);font-size:0.88rem}
-
-        /* ========== FEATURES ========== */
-        .feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:12px}
-        .feature-card {
-            background: var(--bg2);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 34px;
-            transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-            cursor: default;
-            position: relative;
-            overflow: hidden;
-        }
-        .feature-card::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.02) 40%, transparent 100%);
-            background-size: 200% 200%;
-            opacity: 0;
-            transition: opacity 0.5s;
-        }
-        .feature-card:hover::after{opacity:1;animation:shimmer 2s ease infinite}
-        .feature-card:hover {
-            border-color: rgba(255,255,255,0.1);
-            transform: translateY(-8px);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.6);
-        }
-        .feature-icon{font-size:2rem;margin-bottom:16px;display:block;transition:all 0.5s cubic-bezier(0.22, 1, 0.36, 1)}
-        .feature-card:hover .feature-icon{transform:scale(1.25) rotate(-8deg)}
-        .feature-card h3{font-size:1.1rem;font-weight:700;margin-bottom:8px;transition:transform 0.4s cubic-bezier(0.22, 1, 0.36, 1)}
-        .feature-card:hover h3{transform:translateX(6px)}
-        .feature-card p{color:var(--text2);font-size:0.82rem;transition:color 0.4s}
-        .feature-card:hover p{color:#aaa}
-
-        /* ========== PLANS ========== */
-        .plans-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:12px}
-        .plan-card {
-            background: var(--bg2);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 28px 18px;
-            text-align: center;
-            transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-            position: relative;
-            overflow: hidden;
-            cursor: default;
-        }
-        .plan-card::before {
-            content: '';
-            position: absolute;
-            top: 0;left: 0;right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            opacity: 0;
-            transition: opacity 0.5s;
-        }
-        .plan-card:hover::before{opacity:1}
-        .plan-card:hover{border-color:rgba(255,255,255,0.1);transform:translateY(-8px);box-shadow:0 30px 60px rgba(0,0,0,0.6)}
-        .plan-card.best{border-color:#333;background:#111;animation:borderPulse 4s infinite}
-        .plan-card.best::before {
-            content: 'BEST';
-            position: absolute;
-            top: -11px;left: 50%;
-            transform: translateX(-50%);
-            background: #fff;
-            color: #000;
-            padding: 5px 16px;
-            border-radius: 14px;
-            font-size: 0.66rem;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            animation: float 3s ease-in-out infinite;
-            z-index: 2;
-        }
-        .plan-badge{font-size:2rem;margin-bottom:12px;display:block;transition:all 0.5s cubic-bezier(0.22, 1, 0.36, 1)}
-        .plan-card:hover .plan-badge{transform:scale(1.25);animation:wiggle 0.6s cubic-bezier(0.22, 1, 0.36, 1)}
-        .plan-name{font-size:1.05rem;font-weight:700;transition:transform 0.4s cubic-bezier(0.22, 1, 0.36, 1)}
-        .plan-card:hover .plan-name{transform:scale(1.06)}
-        .plan-price{font-size:2rem;font-weight:900;margin:12px 0 2px;color:var(--text);transition:all 0.4s cubic-bezier(0.22, 1, 0.36, 1)}
-        .plan-card:hover .plan-price{transform:scale(1.1)}
-        .plan-duration{color:var(--text3);font-size:0.72rem;margin-bottom:14px}
-        .plan-snipes{color:var(--text);font-weight:700;font-size:0.76rem;margin-bottom:14px;letter-spacing:0.5px;background:var(--bg);display:inline-block;padding:5px 14px;border-radius:20px;border:1px solid var(--border);transition:all 0.4s}
-        .plan-card:hover .plan-snipes{border-color:rgba(255,255,255,0.1);background:#0d0d0d}
-        .plan-features{list-style:none;padding:0;margin:14px 0;text-align:left}
-        .plan-features li{padding:5px 0;color:var(--text2);font-size:0.74rem;display:flex;align-items:center;gap:8px;transition:all 0.35s cubic-bezier(0.22, 1, 0.36, 1)}
-        .plan-card:hover .plan-features li{transform:translateX(3px);color:#aaa}
-        .plan-features li::before{content:'✓';color:var(--text);font-weight:700;font-size:0.68rem}
-        .plan-card .btn{width:100%;justify-content:center;margin-top:14px}
-
-        /* ========== CTA ========== */
-        .cta-section {
-            background: var(--bg2);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 50px;
-            text-align: center;
-            margin: 50px 0;
-            transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-            position: relative;
-            overflow: hidden;
-        }
-        .cta-section:hover{border-color:rgba(255,255,255,0.1);transform:translateY(-4px);box-shadow:0 20px 50px rgba(0,0,0,0.4)}
-        .cta-section h2{font-size:1.8rem;font-weight:800;margin-bottom:10px}
-        .cta-section p{color:var(--text2);margin-bottom:26px;font-size:0.88rem}
-        .cta-buttons{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-
-        /* ========== FOOTER ========== */
-        .footer{border-top:1px solid rgba(255,255,255,0.04);padding:34px 0;margin-top:50px}
-        .footer-content{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:18px;margin-bottom:18px}
-        .footer-brand{font-weight:700;font-size:0.9rem;transition:transform 0.3s}
-        .footer-brand:hover{transform:translateY(-3px)}
-        .footer-brand p{color:var(--text3);font-weight:400;font-size:0.72rem;margin-top:3px}
-        .footer-links{display:flex;gap:22px;flex-wrap:wrap}
-        .footer-links a{color:var(--text2);text-decoration:none;font-size:0.78rem;transition:all 0.35s cubic-bezier(0.22, 1, 0.36, 1);position:relative}
-        .footer-links a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;background:var(--text);transition:width 0.4s cubic-bezier(0.22, 1, 0.36, 1)}
-        .footer-links a:hover{color:var(--text)}
-        .footer-links a:hover::after{width:100%}
-        .footer-bottom{text-align:center;color:var(--text3);font-size:0.68rem;padding-top:16px;border-top:1px solid rgba(255,255,255,0.04)}
-
-        @media (max-width:768px) {
-            .hero{padding:50px 0 30px}
-            .stat-card{padding:20px 24px;min-width:110px}
-            .stat-number{font-size:1.8rem}
-            .plans-grid{grid-template-columns:1fr;max-width:400px;margin:0 auto}
-            .free-tooltip{width:250px;left:auto;right:0;transform:translateY(8px)}
-            .info-icon:hover .free-tooltip{transform:translateY(0)}
-            .top-tabs{gap:1px}
-            .tab-link{padding:6px 10px;font-size:0.72rem}
-            .section{padding:60px 0}
-        }
-        @media (max-width:480px) {
-            .feature-grid{grid-template-columns:1fr}
-            .top-tabs{flex-wrap:wrap;gap:2px}
-            .footer-content{flex-direction:column;text-align:center}
-            .footer-links{justify-content:center}
-        }
+        body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;line-height:1.4;letter-spacing:-0.2px}
+        .container{max-width:1100px;margin:0 auto;padding:0 20px}
+        ::-webkit-scrollbar{width:3px}
+        ::-webkit-scrollbar-track{background:var(--bg)}
+        ::-webkit-scrollbar-thumb{background:var(--border2)}
+        .nav{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border);position:sticky;top:0;background:rgba(0,0,0,0.95);backdrop-filter:blur(10px);z-index:100;gap:8px}
+        .nav-brand{display:flex;align-items:center;gap:6px;font-size:1rem;font-weight:800;letter-spacing:1px;color:var(--text);text-decoration:none}
+        .nav-brand span{font-size:1.2rem}
+        .nav-links{display:flex;gap:0;align-items:center}
+        .nav-link{color:var(--text2);text-decoration:none;padding:6px 12px;border-radius:4px;font-size:0.75rem;cursor:pointer;border:none;background:none;font-family:inherit;font-weight:500;transition:all 0.1s;letter-spacing:0.3px}
+        .nav-link:hover,.nav-link.active{color:var(--text);background:var(--bg3)}
+        .nav-right{display:flex;align-items:center;gap:8px}
+        .user-chip{display:flex;align-items:center;gap:8px;padding:4px 10px 4px 4px;border-radius:20px;border:1px solid var(--border2);cursor:pointer;transition:all 0.15s}
+        .user-chip:hover{border-color:var(--text2)}
+        .user-chip img{width:26px;height:26px;border-radius:50%;object-fit:cover}
+        .user-chip span{font-size:0.75rem;font-weight:600;color:var(--text)}
+        .btn{display:inline-flex;align-items:center;gap:6px;padding:9px 20px;border-radius:var(--radius);font-size:0.78rem;font-weight:600;cursor:pointer;border:1px solid var(--text);text-decoration:none;transition:all 0.15s;font-family:inherit;background:transparent;color:var(--text);letter-spacing:0.3px}
+        .btn:hover{background:var(--text);color:var(--bg)}
+        .btn-ghost{border-color:var(--border2);color:var(--text2)}
+        .btn-ghost:hover{border-color:var(--text);color:var(--text);background:transparent}
+        .btn-sm{padding:6px 14px;font-size:0.7rem}
+        .btn-google{display:inline-flex;align-items:center;gap:8px;padding:9px 20px;border-radius:var(--radius);font-size:0.78rem;font-weight:600;cursor:pointer;border:1px solid var(--border2);background:var(--bg2);color:var(--text);font-family:inherit;transition:all 0.15s}
+        .btn-google:hover{border-color:var(--text)}
+        .page{display:none;animation:fade 0.25s ease}
+        .page.active{display:block}
+        @keyframes fade{from{opacity:0}to{opacity:1}}
+        .hero{text-align:center;padding:120px 0 70px}
+        .hero-title{font-size:5rem;font-weight:900;letter-spacing:-3px;line-height:0.95;margin-bottom:8px;background:linear-gradient(180deg,#fff 0%,#888 60%,#444 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .hero-subtitle{font-size:0.9rem;color:var(--text2);margin-bottom:24px;letter-spacing:2px;text-transform:uppercase}
+        .hero-buttons{display:flex;gap:8px;justify-content:center;margin-bottom:60px}
+        .hero-stats{display:flex;gap:0;justify-content:center;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;max-width:500px;margin:0 auto}
+        .stat-card{flex:1;padding:22px 16px;text-align:center;border-right:1px solid var(--border);background:var(--bg2);transition:all 0.2s}
+        .stat-card:last-child{border-right:none}
+        .stat-card:hover{background:var(--bg3)}
+        .stat-number{font-size:1.8rem;font-weight:900;display:block;color:var(--text);line-height:1}
+        .stat-label{color:var(--text3);font-size:0.6rem;text-transform:uppercase;letter-spacing:1.5px;margin-top:4px}
+        .section{padding:60px 0}
+        .section-label{text-align:center;color:var(--text3);font-size:0.6rem;text-transform:uppercase;letter-spacing:3px;margin-bottom:12px}
+        .section-title{font-size:1.6rem;font-weight:800;text-align:center;margin-bottom:6px;background:linear-gradient(180deg,#fff,#999);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .section-desc{color:var(--text3);text-align:center;margin-bottom:36px;font-size:0.8rem;max-width:400px;margin-left:auto;margin-right:auto}
+        .grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:0;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+        .grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+        .grid-item{padding:24px;background:var(--bg2);border-right:1px solid var(--border);border-bottom:1px solid var(--border);transition:all 0.15s}
+        .grid-item:hover{background:var(--bg3)}
+        .grid-2 .grid-item:nth-child(2n){border-right:none}
+        .grid-3 .grid-item:nth-child(3n){border-right:none}
+        .grid-item .icon{font-size:1.5rem;margin-bottom:10px;display:block}
+        .grid-item h3{font-size:0.9rem;font-weight:700;margin-bottom:4px}
+        .grid-item p{color:var(--text2);font-size:0.75rem;line-height:1.5}
+        .card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:28px;max-width:480px;margin:0 auto}
+        .card-wide{max-width:600px}
+        .input-group{margin-bottom:16px}
+        .input-group label{display:block;margin-bottom:6px;font-weight:600;font-size:0.75rem;color:var(--text2);text-transform:uppercase;letter-spacing:1px}
+        .input-group input,.input-group textarea{width:100%;padding:10px 14px;background:var(--bg);border:1px solid var(--border2);border-radius:var(--radius);color:var(--text);font-size:0.85rem;font-family:inherit;transition:all 0.15s;resize:vertical}
+        .input-group input:focus,.input-group textarea:focus{outline:none;border-color:var(--text)}
+        .input-group textarea{min-height:120px;font-family:'SF Mono','Fira Code',monospace;font-size:0.78rem;line-height:1.6}
+        .input-row{display:flex;gap:8px}
+        .input-row input{flex:1}
+        .toast{position:fixed;bottom:20px;right:20px;padding:10px 18px;border-radius:var(--radius);font-weight:600;font-size:0.75rem;z-index:999;animation:up 0.25s ease;background:var(--text);color:var(--bg)}
+        @keyframes up{from{transform:translateY(10px);opacity:0}to{transform:translateY(0);opacity:1}}
+        .loading{display:inline-block;width:14px;height:14px;border:2px solid var(--border2);border-top-color:var(--text);border-radius:50%;animation:spin 0.6s linear infinite}
+        @keyframes spin{to{transform:rotate(360deg)}}
+        .tag{display:inline-block;padding:3px 8px;border-radius:3px;font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:1px}
+        .tag-green{background:rgba(255,255,255,0.06);color:#aaa}
+        .tag-rare{background:rgba(255,255,255,0.08);color:#fff}
+        .lb-item{display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:4px;transition:all 0.1s}
+        .lb-item:hover{border-color:var(--border2)}
+        .lb-rank{font-size:0.85rem;font-weight:800;width:30px;text-align:center;color:var(--text2)}
+        .lb-avatar{width:32px;height:32px;border-radius:50%;object-fit:cover;background:var(--bg3);border:1px solid var(--border2)}
+        .lb-info{flex:1;min-width:0}
+        .lb-name{font-weight:700;font-size:0.82rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+        .lb-id{color:var(--text3);font-size:0.65rem}
+        .lb-total{font-weight:700;font-size:0.85rem;text-align:right}
+        .footer{border-top:1px solid var(--border);padding:24px 0;margin-top:40px;text-align:center}
+        .footer p{color:var(--text3);font-size:0.65rem;letter-spacing:1px}
+        .footer a{color:var(--text2);text-decoration:none}
+        .footer a:hover{color:var(--text)}
+        .profile-header{text-align:center;padding:30px 0}
+        .profile-avatar{width:64px;height:64px;border-radius:50%;border:2px solid var(--border2);object-fit:cover;margin-bottom:12px}
+        .profile-name{font-size:1.2rem;font-weight:800}
+        .profile-id{color:var(--text3);font-size:0.72rem;margin-bottom:16px}
+        .stats-row{display:flex;gap:0;justify-content:center;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;max-width:400px;margin:0 auto}
+        .stats-row .stat-card{padding:14px 12px}
+        .stats-row .stat-number{font-size:1.3rem}
+        @media(max-width:768px){.hero-title{font-size:3rem}.hero{padding:80px 0 40px}.nav-link{padding:5px 8px;font-size:0.68rem}.section-title{font-size:1.3rem}.grid-2 .grid-item:nth-child(2n),.grid-3 .grid-item:nth-child(3n){border-right:1px solid var(--border)}.grid-2 .grid-item:nth-child(1n),.grid-3 .grid-item:nth-child(1n){border-right:none}}
+        @media(max-width:480px){.hero-title{font-size:2.2rem}.nav{flex-wrap:wrap}.hero-buttons{flex-direction:column;align-items:center}.hero-stats{flex-direction:column}.stat-card{border-right:none;border-bottom:1px solid var(--border)}.stat-card:last-child{border-bottom:none}}
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="top-tabs">
-            <a href="#home" class="tab-link">Home</a>
-            <a href="#features" class="tab-link">Features</a>
-            <a href="#plans" class="tab-link">Plans</a>
-            <a href="https://discord.gg/qhVBb8Yj6V" class="tab-link discord-tab" target="_blank">Discord</a>
-            <a href="mailto:support@s4names.com" class="tab-link">Support</a>
+        <nav class="nav">
+            <a class="nav-brand" onclick="showPage('home')"><span>◈</span>S4Names</a>
+            <div class="nav-links">
+                <button class="nav-link active" onclick="showPage('home')">Home</button>
+                <button class="nav-link" id="navSnipe" onclick="showPage('snipe')">Snipe</button>
+                <button class="nav-link" onclick="showPage('leaderboard')">LB</button>
+                <a href="https://discord.gg/qhVBb8Yj6V" class="nav-link" target="_blank">Discord</a>
+            </div>
+            <div class="nav-right">
+                <div class="user-chip" id="userChip" style="display:none;" onclick="showPage('profile')">
+                    <img id="navAvatar" src="" alt="">
+                    <span id="navName"></span>
+                </div>
+                <button class="btn btn-sm btn-ghost" id="btnSignIn" onclick="signInWithGoogle()">Sign in</button>
+            </div>
+        </nav>
+
+        <div id="page-home" class="page active">
+            <section class="hero">
+                <h1 class="hero-title">S4Names</h1>
+                <p class="hero-subtitle">Snipes 4 Names</p>
+                <div class="hero-buttons">
+                    <button class="btn" onclick="showPage('snipe')">Start Sniping</button>
+                    <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-ghost" target="_blank">Discord</a>
+                </div>
+                <div class="hero-stats" id="heroStats">
+                    <div class="stat-card"><span class="stat-number">...</span><span class="stat-label">Snipes</span></div>
+                    <div class="stat-card"><span class="stat-number">...</span><span class="stat-label">Rare</span></div>
+                    <div class="stat-card"><span class="stat-number">...</span><span class="stat-label">Users</span></div>
+                </div>
+            </section>
+            <section class="section">
+                <div class="section-label">Features</div>
+                <h2 class="section-title">Built Different</h2>
+                <p class="section-desc">The only sniper you need.</p>
+                <div class="grid-2">
+                    <div class="grid-item"><span class="icon">⚡</span><h3>Blazing Fast</h3><p>Multi-threaded checking. Thousands per minute.</p></div>
+                    <div class="grid-item"><span class="icon">💎</span><h3>Rare Gems</h3><p>3-letter names. The ones nobody finds.</p></div>
+                    <div class="grid-item"><span class="icon">🎯</span><h3>Smart Patterns</h3><p>Optimal character distribution for max hits.</p></div>
+                    <div class="grid-item"><span class="icon">🏆</span><h3>Rank Up</h3><p>V1 to V10. Earn your place.</p></div>
+                </div>
+            </section>
+            <section class="section">
+                <div class="section-label">Ranks</div>
+                <h2 class="section-title">Tiers</h2>
+                <p class="section-desc">Every snipe counts.</p>
+                <div class="grid-3">
+                    <div class="grid-item" style="text-align:center"><span style="font-size:1.5rem">⭐</span><h3>V1 Beginner</h3><p>15 snipes</p></div>
+                    <div class="grid-item" style="text-align:center"><span style="font-size:1.5rem">🌟</span><h3>V2 Apprentice</h3><p>30 snipes</p></div>
+                    <div class="grid-item" style="text-align:center"><span style="font-size:1.5rem">💫</span><h3>V3 Pro</h3><p>45 snipes</p></div>
+                    <div class="grid-item" style="text-align:center"><span style="font-size:1.5rem">✨</span><h3>V4 Elite</h3><p>60 snipes</p></div>
+                    <div class="grid-item" style="text-align:center"><span style="font-size:1.5rem">🔥</span><h3>V5 Master</h3><p>75 snipes</p></div>
+                    <div class="grid-item" style="text-align:center"><span style="font-size:1.5rem">💀</span><h3>V6 Hunter</h3><p>100 snipes</p></div>
+                    <div class="grid-item" style="text-align:center"><span style="font-size:1.5rem">👻</span><h3>V7 Phantom</h3><p>150 snipes</p></div>
+                    <div class="grid-item" style="text-align:center"><span style="font-size:1.5rem">🏆</span><h3>V8 Legend</h3><p>250 snipes</p></div>
+                    <div class="grid-item" style="text-align:center"><span style="font-size:1.5rem">👑</span><h3>V9 Mythic</h3><p>500 snipes</p></div>
+                </div>
+            </section>
         </div>
 
-        <div class="free-banner">
-            ⚠️ FREE-TIER IN DISCORD
-            <span class="info-icon">i
-                <div class="free-tooltip">
-                    <div class="tooltip-title">Free Tier</div>
-                    <div class="pros"><span>✅ Gets</span><ul><li>Basic sniper</li><li>5–7 char names</li><li>25 snipes/day</li></ul></div>
-                    <div class="cons"><span>❌ No</span><ul><li>Slow as hell</li><li>No custom length</li><li>No future snipers</li><li>No priority support</li></ul></div>
+        <div id="page-snipe" class="page">
+            <section class="section">
+                <div class="section-label">Sniper</div>
+                <h2 class="section-title">Check Usernames</h2>
+                <p class="section-desc">Paste your list. Get results.</p>
+                <div class="card card-wide">
+                    <div class="input-group">
+                        <label>Usernames</label>
+                        <textarea id="usernameList" placeholder="Paste usernames here...&#10;One per line.&#10;&#10;Example:&#10;test&#10;coolname&#10;abc&#10;xy_12"></textarea>
+                    </div>
+                    <div style="display:flex;gap:8px;margin-bottom:16px">
+                        <input type="text" id="discordIdInput" placeholder="Your Discord ID (optional)" style="flex:1;padding:10px 14px;background:var(--bg);border:1px solid var(--border2);border-radius:var(--radius);color:var(--text);font-size:0.8rem;font-family:inherit">
+                    </div>
+                    <div style="display:flex;gap:8px">
+                        <button class="btn" onclick="startSniping()" id="btnStartSnipe">Check All</button>
+                        <button class="btn btn-ghost" onclick="document.getElementById('usernameList').value=''">Clear</button>
+                    </div>
+                    <div id="snipeProgress" style="margin-top:16px;display:none">
+                        <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:0.7rem;color:var(--text2)">
+                            <span id="snipeStatus">Checking...</span>
+                            <span id="snipeCount">0/0</span>
+                        </div>
+                        <div style="width:100%;height:2px;background:var(--border);border-radius:1px;overflow:hidden">
+                            <div id="snipeBar" style="width:0%;height:100%;background:var(--text);transition:width 0.3s"></div>
+                        </div>
+                    </div>
+                    <div id="snipeResults" style="margin-top:16px;max-height:300px;overflow-y:auto;font-family:'SF Mono','Fira Code',monospace;font-size:0.75rem;line-height:1.8"></div>
                 </div>
-            </span>
+            </section>
         </div>
 
-        <section id="home" class="hero">
-            <h1 class="hero-title">S4NAMES</h1>
-            <p class="hero-subtitle">The Best Username Sniper</p>
-            <div class="hero-stats">
-                <div class="stat-card">
-                    <span class="stat-number">10k+</span>
-                    <span class="stat-label">Snipes / Day</span>
+        <div id="page-profile" class="page">
+            <section class="section">
+                <div class="profile-header" id="profileContent">
+                    <img class="profile-avatar" id="profileAvatar" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23111'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='%23555' font-size='40'%3E?%3C/text%3E%3C/svg%3E" alt="">
+                    <h2 class="profile-name" id="profileName">Sign in</h2>
+                    <p class="profile-id" id="profileId"></p>
+                    <div id="profileEdit" style="display:none;margin-bottom:16px">
+                        <div class="input-row" style="max-width:300px;margin:0 auto">
+                            <input type="text" id="editName" placeholder="Username" maxlength="20">
+                            <button class="btn btn-sm" onclick="updateProfile()">Save</button>
+                        </div>
+                    </div>
+                    <button class="btn-google" id="profileSignIn" onclick="signInWithGoogle()" style="margin:0 auto">
+                        <svg width="16" height="16" viewBox="0 0 24 24"><path fill="#fff" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#fff" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#fff" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#fff" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+                        Sign in with Google
+                    </button>
+                    <div id="profileStats" style="display:none;margin-top:20px">
+                        <div class="stats-row">
+                            <div class="stat-card"><span class="stat-number" id="pTotal">0</span><span class="stat-label">Total</span></div>
+                            <div class="stat-card"><span class="stat-number" id="pRare">0</span><span class="stat-label">Rare</span></div>
+                            <div class="stat-card"><span class="stat-number" id="pGood">0</span><span class="stat-label">Good</span></div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </div>
 
-        <section id="features" class="section">
-            <div class="section-header reveal">
-                <h2 class="section-title">Why S4N</h2>
-                <p class="section-desc">Fast. Clean. Works.</p>
-            </div>
-            <div class="feature-grid">
-                <div class="feature-card reveal"><span class="feature-icon">⚡</span><h3>Fast</h3><p>Thousands per minute. You get it first.</p></div>
-                <div class="feature-card reveal"><span class="feature-icon">💎</span><h3>Rare</h3><p>3-letters. OGs. The good stuff.</p></div>
-                <div class="feature-card reveal"><span class="feature-icon">🎯</span><h3>Smart</h3><p>Knows what's worth sniping before it drops.</p></div>
-                <div class="feature-card reveal"><span class="feature-icon">🔧</span><h3>Tweakable</h3><p>Set length, speed, patterns. Your call.</p></div>
-                <div class="feature-card reveal"><span class="feature-icon">🔒</span><h3>Private</h3><p>No tracking. No BS. Just snipes.</p></div>
-                <div class="feature-card reveal"><span class="feature-icon">🚀</span><h3>Updates</h3><p>New snipers drop. Paid gets em first.</p></div>
-            </div>
-        </section>
-
-        <section id="plans" class="section">
-            <div class="section-header reveal">
-                <h2 class="section-title">Plans</h2>
-                <p class="section-desc">Pick one. Start sniping.</p>
-            </div>
-            <div class="plans-grid">
-                <div class="plan-card reveal">
-                    <span class="plan-badge">🟢</span><h3 class="plan-name">Basic</h3>
-                    <div class="plan-price">50</div><p class="plan-duration">Robux • 1 Week</p>
-                    <p class="plan-snipes">150 / day</p>
-                    <ul class="plan-features"><li>Slow speed</li><li>7–10 char</li><li>Basic support</li></ul>
-                    <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-outline" target="_blank">Buy <span class="arrow">→</span></a>
-                </div>
-                <div class="plan-card reveal">
-                    <span class="plan-badge">🔵</span><h3 class="plan-name">Mid</h3>
-                    <div class="plan-price">150</div><p class="plan-duration">Robux • 2 Weeks</p>
-                    <p class="plan-snipes">500 / day</p>
-                    <ul class="plan-features"><li>Faster</li><li>5–7 char</li><li>Custom length</li><li>Future snipers</li><li>Priority support</li></ul>
-                    <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-outline" target="_blank">Buy <span class="arrow">→</span></a>
-                </div>
-                <div class="plan-card best reveal">
-                    <span class="plan-badge">🟠</span><h3 class="plan-name">Fast</h3>
-                    <div class="plan-price">400</div><p class="plan-duration">Robux • 1 Month</p>
-                    <p class="plan-snipes">2.5k / day</p>
-                    <ul class="plan-features"><li>Fast</li><li>3–7 char</li><li>Custom length</li><li>All snipers</li><li>Priority support</li></ul>
-                    <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-white" target="_blank">Buy <span class="arrow">→</span></a>
-                </div>
-                <div class="plan-card reveal">
-                    <span class="plan-badge">🔴</span><h3 class="plan-name">Pro</h3>
-                    <div class="plan-price">555</div><p class="plan-duration">Robux • 2 Months</p>
-                    <p class="plan-snipes">5k / day</p>
-                    <ul class="plan-features"><li>Very fast</li><li>3–10 char</li><li>Custom length</li><li>All snipers</li><li>VIP support</li></ul>
-                    <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-outline" target="_blank">Buy <span class="arrow">→</span></a>
-                </div>
-                <div class="plan-card reveal">
-                    <span class="plan-badge">👑</span><h3 class="plan-name">Ultimate</h3>
-                    <div class="plan-price">1,000</div><p class="plan-duration">Robux • Lifetime</p>
-                    <p class="plan-snipes">∞ / day</p>
-                    <ul class="plan-features"><li>Fastest</li><li>3–10 char</li><li>Custom length</li><li>All snipers</li><li>Early access</li><li>VIP support</li></ul>
-                    <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-outline" target="_blank">Buy <span class="arrow">→</span></a>
-                </div>
-            </div>
-        </section>
-
-        <section class="cta-section reveal">
-            <h2>Ready?</h2>
-            <p>Join Discord. Pick a plan. Get names.</p>
-            <div class="cta-buttons">
-                <a href="https://discord.gg/qhVBb8Yj6V" class="btn btn-white" target="_blank">Join Discord <span class="arrow">→</span></a>
-                <a href="mailto:support@s4names.com" class="btn btn-outline">Support</a>
-            </div>
-        </section>
+        <div id="page-leaderboard" class="page">
+            <section class="section">
+                <div class="section-label">Rankings</div>
+                <h2 class="section-title">Leaderboard</h2>
+                <p class="section-desc">Top snipers.</p>
+                <div id="leaderboardList" style="max-width:500px;margin:0 auto"><div style="text-align:center;padding:30px;"><span class="loading"></span></div></div>
+            </section>
+        </div>
 
         <footer class="footer">
-            <div class="footer-content">
-                <div class="footer-brand">S4NAMES<p>Snipes 4 Names</p></div>
-                <div class="footer-links">
-                    <a href="#home">Home</a><a href="#features">Features</a><a href="#plans">Plans</a><a href="https://discord.gg/qhVBb8Yj6V" target="_blank">Discord</a><a href="mailto:support@s4names.com">Support</a>
-                </div>
-            </div>
-            <div class="footer-bottom"><p>&copy; 2026 S4NAMES. Not affiliated with Roblox.</p></div>
+            <p>S4Names &copy; 2026 &middot; <a href="https://discord.gg/qhVBb8Yj6V" target="_blank">Discord</a></p>
         </footer>
     </div>
 
     <script>
-        document.querySelectorAll('a[href^="#"]').forEach(a=>{
-            a.addEventListener('click',function(e){
-                e.preventDefault();
-                const t=document.querySelector(this.getAttribute('href'));
-                if(t)t.scrollIntoView({behavior:'smooth',block:'start'});
-            });
+        var firebaseConfig={apiKey:"AIzaSyAqDelwa7xmrVA8pqyJFy7y687hMxZSGeg",authDomain:"s4names-50d2f.firebaseapp.com",projectId:"s4names-50d2f",storageBucket:"s4names-50d2f.firebasestorage.app",messagingSenderId:"842479839528",appId:"1:842479839528:web:44cead73f33405e592c81d"};
+        firebase.initializeApp(firebaseConfig);
+        var auth=firebase.auth(),db=firebase.firestore(),currentUser=null;
+
+        auth.onAuthStateChanged(function(u){
+            if(u){currentUser={id:u.uid,name:u.displayName,email:u.email,picture:u.photoURL,username:u.displayName?u.displayName.split(' ')[0]:'User'};localStorage.setItem('s4n_u',JSON.stringify(currentUser));syncDB()}else{currentUser=null;localStorage.removeItem('s4n_u')}updateUI()
         });
 
-        const observer = new IntersectionObserver((entries)=>{
-            entries.forEach(entry=>{
-                if(entry.isIntersecting) entry.target.classList.add('visible');
-            });
-        },{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
-        document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+        function signInWithGoogle(){auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then(function(){toast('Signed in');showPage('profile')}).catch(function(e){toast('Failed: '+e.message)})}
+        function signOut(){auth.signOut();toast('Signed out');showPage('home')}
+
+        function showPage(p){
+            document.querySelectorAll('.page').forEach(function(e){e.classList.remove('active')});
+            document.querySelectorAll('.nav-link').forEach(function(e){e.classList.remove('active')});
+            var el=document.getElementById('page-'+p);if(el)el.classList.add('active');
+            document.querySelectorAll('.nav-link').forEach(function(b){if(b.textContent.toLowerCase().includes(p)||(p==='leaderboard'&&b.textContent==='LB'))b.classList.add('active')});
+            if(p==='leaderboard')loadLB();if(p==='home')loadStats();if(p==='profile')updateUI();
+            window.scrollTo({top:0,behavior:'smooth'})
+        }
+
+        function updateUI(){
+            if(currentUser){
+                document.getElementById('profileAvatar').src=currentUser.picture||'';
+                document.getElementById('profileName').textContent=currentUser.username||currentUser.name||'User';
+                document.getElementById('profileId').textContent='@'+(currentUser.username||currentUser.id.slice(-10));
+                document.getElementById('profileSignIn').style.display='none';
+                document.getElementById('profileEdit').style.display='block';
+                document.getElementById('editName').value=currentUser.username||'';
+                document.getElementById('profileStats').style.display='block';
+                document.getElementById('userChip').style.display='flex';
+                document.getElementById('navAvatar').src=currentUser.picture||'';
+                document.getElementById('navName').textContent=currentUser.username||'';
+                document.getElementById('btnSignIn').style.display='none';
+                loadMyStats()
+            }else{
+                document.getElementById('profileAvatar').src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23111'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='%23555' font-size='40'%3E?%3C/text%3E%3C/svg%3E";
+                document.getElementById('profileName').textContent='Sign in';
+                document.getElementById('profileId').textContent='';
+                document.getElementById('profileSignIn').style.display='inline-flex';
+                document.getElementById('profileEdit').style.display='none';
+                document.getElementById('profileStats').style.display='none';
+                document.getElementById('userChip').style.display='none';
+                document.getElementById('btnSignIn').style.display='inline-flex'
+            }
+        }
+
+        async function syncDB(){if(!currentUser)return;try{await api('/sync','POST',{uid:currentUser.id,name:currentUser.name,email:currentUser.email,picture:currentUser.picture,username:currentUser.username})}catch(e){}}
+
+        async function updateProfile(){var n=document.getElementById('editName').value.trim();if(!n||!currentUser)return;currentUser.username=n;localStorage.setItem('s4n_u',JSON.stringify(currentUser));try{await api('/updateprofile','POST',{uid:currentUser.id,username:n,picture:currentUser.picture});updateUI();toast('Updated')}catch(e){toast('Error')}}
+
+        async function api(url,method,body){var o={method:method||'GET',headers:{'Content-Type':'application/json'}};if(body)o.body=JSON.stringify(body);var r=await fetch('/api'+url,o);return r.json()}
+
+        function toast(m){var t=document.createElement('div');t.className='toast';t.textContent=m;document.body.appendChild(t);setTimeout(function(){t.remove()},2000)}
+
+        async function loadStats(){try{var d=await api('/stats');document.getElementById('heroStats').innerHTML='<div class="stat-card"><span class="stat-number">'+(d.totalSnipes||0).toLocaleString()+'</span><span class="stat-label">Snipes</span></div><div class="stat-card"><span class="stat-number">'+(d.rareSnipes||0).toLocaleString()+'</span><span class="stat-label">Rare</span></div><div class="stat-card"><span class="stat-number">'+(d.verifiedCount||0).toLocaleString()+'</span><span class="stat-label">Users</span></div>'}catch(e){}}
+
+        async function loadMyStats(){if(!currentUser)return;try{var d=await api('/check?uid='+currentUser.id);if(d.stats){document.getElementById('pTotal').textContent=(d.stats.totalSnipes||0).toLocaleString();document.getElementById('pRare').textContent=(d.stats.rareSnipes||0).toLocaleString();document.getElementById('pGood').textContent=(d.stats.goodSnipes||0).toLocaleString()}}catch(e){}}
+
+        async function loadLB(){var c=document.getElementById('leaderboardList');c.innerHTML='<div style="text-align:center;padding:30px;"><span class="loading"></span></div>';try{var d=await api('/stats');if(!d.leaderboard||!d.leaderboard.length){c.innerHTML='<p style="text-align:center;color:var(--text3);padding:30px;">No data yet.</p>';return}var h='';for(var i=0;i<d.leaderboard.length;i++){var u=d.leaderboard[i];var avatar=u.picture?'<img class="lb-avatar" src="'+u.picture+'" alt="">':'<div class="lb-avatar" style="display:flex;align-items:center;justify-content:center;font-size:0.9rem;background:var(--bg3);border:1px solid var(--border2);width:32px;height:32px;border-radius:50%">◈</div>';var name=u.username||u.name||'Unknown';h+='<div class="lb-item"><span class="lb-rank">#'+(i+1)+'</span>'+avatar+'<div class="lb-info"><div class="lb-name">'+name+'</div><div class="lb-id">@'+(u.username||'')+'</div></div><span class="lb-total">'+(u.totalSnipes||0).toLocaleString()+'</span></div>'}c.innerHTML=h}catch(e){c.innerHTML='<p style="text-align:center;color:var(--text3);padding:30px;">Error.</p>'}}
+
+        async function startSniping(){
+            var list=document.getElementById('usernameList').value.trim();
+            var did=document.getElementById('discordIdInput').value.trim();
+            if(!list){toast('Enter usernames');return}
+            var usernames=list.split('\n').filter(function(l){return l.trim()}).map(function(l){return l.trim().toLowerCase().replace(/[^a-z0-9_]/g,'').substring(0,20)}).filter(function(l){return l.length>=3});
+            if(!usernames.length){toast('No valid usernames');return}
+
+            document.getElementById('btnStartSnipe').disabled=true;
+            document.getElementById('snipeProgress').style.display='block';
+            document.getElementById('snipeResults').innerHTML='';
+            var results=document.getElementById('snipeResults');
+            var total=usernames.length,checked=0,found=0,rare=0,good=0,normal=0;
+
+            for(var i=0;i<usernames.length;i++){
+                try{
+                    var r=await fetch('https://auth.roblox.com/v1/usernames/validate?Username='+encodeURIComponent(usernames[i])+'&Birthday=2000-01-01');
+                    var d=await r.json();checked++;
+                    var tag='',color='';
+                    if(d.code===0){found++;var cl=usernames[i].replace(/_/g,'').length;if(cl<=3){rare++;tag='RARE';color='var(--text)'}else if(cl<5){good++;tag='GOOD';color='#aaa'}else{normal++;tag='NORMAL';color='#888'}
+                        if(did)await api('/addsnipe','POST',{discordId:did,username:usernames[i],type:tag.toLowerCase()})
+                    }else if(d.code===1){tag='TAKEN';color='var(--text3)'}else if(d.code===2){tag='BANNED';color='#600'}else{tag='UNKNOWN';color='var(--text3)'}
+                    results.innerHTML+='<div style="color:'+color+'"><span style="color:var(--text3)">['+(i+1)+'/'+total+']</span> ['+tag+'] '+usernames[i]+'</div>';
+                    results.scrollTop=results.scrollHeight;
+                }catch(e){checked++;results.innerHTML+='<div style="color:var(--text3)">['+(i+1)+'/'+total+'] [ERR] '+usernames[i]+'</div>'}
+                document.getElementById('snipeCount').textContent=checked+'/'+total;
+                document.getElementById('snipeBar').style.width=(checked/total*100)+'%';
+                document.getElementById('snipeStatus').textContent='Found: '+found+' (R:'+rare+' G:'+good+' N:'+normal+')';
+                await new Promise(function(r){setTimeout(r,40)})
+            }
+            document.getElementById('btnStartSnipe').disabled=false;
+            document.getElementById('snipeStatus').textContent='Done! Found: '+found+' (R:'+rare+' G:'+good+' N:'+normal+')';
+            if(did){toast('Results saved to your account');loadMyStats()}
+            loadStats()
+        }
+
+        var saved=localStorage.getItem('s4n_u');if(saved){currentUser=JSON.parse(saved);updateUI()}
+        loadStats();
     </script>
 </body>
 </html>
